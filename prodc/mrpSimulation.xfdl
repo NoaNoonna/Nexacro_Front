@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="MrpSimulation" width="1220" height="460" titletext="MRP전개" onload="MrpSimulation_onload">
+    <Layouts>
+      <Layout height="460" width="1220">
+        <Radio id="Radio00" taborder="0" left="30" top="29" width="190" height="34" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" direction="vertical" onitemchanged="Tab00_Tabpage1_Div01_Radio00_onitemclick" cssclass="radio_normal">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="datacolumn">현재일자</Col>
+                <Col id="codecolumn">todayAsMrpDate</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">직접입력</Col>
+                <Col id="codecolumn">userInputAsMrpDate</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Radio>
+        <Calendar id="Calendar00" taborder="1" left="252" top="29" width="236" height="35" dateformat="yyyy-MM-dd" visible="false" color="orangered"/>
+        <Button id="btn_regist_mrp" taborder="2" text="전개된 결과 MRP등록" left="637" top="30" width="203" height="35" onclick="Tab00_Tabpage1_Div01_btn_regist_mrp_onclick" cssclass="btn_normal" background="black"/>
+        <Grid id="Grid01" taborder="3" left="20" top="80" width="1192" height="364" binddataset="gds_mrpOpenTemp" color="orangered">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="27"/>
+                <Column size="134"/>
+                <Column size="112"/>
+                <Column size="70"/>
+                <Column size="69"/>
+                <Column size="163"/>
+                <Column size="116"/>
+                <Column size="148"/>
+                <Column size="66"/>
+                <Column size="80"/>
+                <Column size="62"/>
+                <Column size="64"/>
+                <Column size="41"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell/>
+                <Cell col="1" text="MPS번호"/>
+                <Cell col="2" text="BOM번호"/>
+                <Cell col="3" text="품목구분"/>
+                <Cell col="4" text="품목코드"/>
+                <Cell col="5" text="품목명"/>
+                <Cell col="6" text="발주/작업지시기한"/>
+                <Cell col="7" text="발주/작업지시 완료기한"/>
+                <Cell col="8" text="계획수량"/>
+                <Cell col="9" text="누적손실율"/>
+                <Cell col="10" text="계산수량"/>
+                <Cell col="11" text="필요수량"/>
+                <Cell col="12" text="단위"/>
+              </Band>
+              <Band id="body">
+                <Cell expr="currow+1" textAlign="center"/>
+                <Cell col="1" text="bind:MPS_NO" textAlign="center"/>
+                <Cell col="2" text="bind:BOM_NO" textAlign="center"/>
+                <Cell col="3" text="bind:ITEM_CLASSIFICATION" textAlign="center"/>
+                <Cell col="4" text="bind:ITEM_CODE" textAlign="center"/>
+                <Cell col="5" text="bind:ITEM_NAME" textAlign="left"/>
+                <Cell col="6" text="bind:ORDER_DATE" displaytype="normal" calendardateformat="yyyy-MM-dd" calendardisplaynulltype="none" textAlign="center" calendarheadformat="yyyy-MM-dd"/>
+                <Cell col="7" text="bind:REQUIRED_DATE" displaytype="normal" calendardateformat="yyyy-MM-dd" calendardisplaynulltype="none" textAlign="center" calendarheadformat="yyyy-MM-dd"/>
+                <Cell col="8" text="bind:PLAN_AMOUNT" textAlign="center"/>
+                <Cell col="9" text="bind:TOTAL_LOSS_RATE" textAlign="center"/>
+                <Cell col="10" text="bind:CACULATED_AMOUNT" textAlign="center"/>
+                <Cell col="11" text="bind:REQUIRED_AMOUNT" textAlign="center"/>
+                <Cell col="12" text="bind:UNIT_OF_MRP" textAlign="center"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[// field variables
+include "Lib::commLib.xjs";
+var tToday;
+var nexa = nexacro.getApplication();
+var mpsNoCollection =[];
+
+
+// this page onload
+this.MrpSimulation_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{	
+
+	
+		mpsNoCollection.push(nexa.gds_mrpOpenTemp.getColumn(0,"MPS_NO"));
+};
+
+this.Tab00_Tabpage1_Div01_Radio00_onitemclick = function(obj:nexacro.Radio,e:nexacro.ItemChangeEventInfo)
+{
+	if(this.Radio00.value=="todayAsMrpDate"){
+			this.Calendar00.set_visible("false");
+			var now=new Date();
+			 tToday = now.getFullYear() + "-" +('0' + (now.getMonth() +1 )).slice(-2) + "-" + ('0' + now.getDate()).slice(-2);
+			
+	}else if(this.Radio00.value=="userInputAsMrpDate"){
+			this.Calendar00.set_visible("true");
+	}
+};
+
+this.Tab00_Tabpage1_Div01_btn_regist_mrp_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	
+	trace("mpsNoCollection::"+mpsNoCollection);
+	trace("tToday::"+tToday);
+	trace("this.Radio00.value::"+this.Radio00.value);
+	trace("this.Calendar00.value::"+this.Calendar00.value);
+	if(this.Radio00.value==null){
+		alert("날짜 선택 바랍니다");
+		return;
+	}else if(this.Radio00.value=="userInputAsMrpDate"){
+		if(this.Calendar00.value==null){
+		alert("날짜 선택 바랍니다");
+		return;
+		}else{
+			tToday=nexa.changeDate(this.Calendar00.value);
+		}
+	}
+	
+	
+		var confirmMsg = "선택한 주생산계획 ( 총 "+
+					 mpsNoCollection.length+
+					 " 건 ) : "+
+					 mpsNoCollection+
+					 "\r\n"+
+					 "소요량전개 등록일자 : "+
+					 tToday+
+					 "\r\n"+
+					 "위 목록에 대한 소요량전개 결과 총 "+
+					 mpsNoCollection.length+ 
+					 " 건을 저장합니다. \r\n계속하시겠습니까?";	
+	var confirmStatus = confirm(confirmMsg);
+	
+
+		if(confirmStatus == true){
+		var rowCount = nexa.gds_mrpOpenTemp.rowcount;
+		for(var i=0; i<rowCount; i++){
+			var sChangeDate=this.changeDate1(nexa.gds_mrpOpenTemp.getColumn(i,"ORDER_DATE"));
+				trace(nexa.gds_mrpOpenTemp.setColumn(i,"ORDER_DATE",sChangeDate));
+			var eChangeDate=this.changeDate1(nexa.gds_mrpOpenTemp.getColumn(i,"REQUIRED_DATE"));
+			trace(nexa.gds_mrpOpenTemp.setColumn(i,"REQUIRED_DATE",eChangeDate));
+			
+		}
+		
+		
+		this.transaction(
+			"registerMrp",
+			"svcProduction::mrp",
+			"gds_mrp=gds_mrpOpenTemp",
+			"",
+			"mpsNoCollection='"+mpsNoCollection+"' mrpRegisterDate='"+tToday+"'",
+			"callback",
+			false
+		);
+		}else if(confirmStatus == false){ 
+			this.reload();
+		}
+		alert("등록이 완료되었습니다");
+		this.reload();
+};
+
+this.callback =function callback(trId , ErrorCode, ErrorMsg)
+{
+	trace("		@@@@@ trId: "+trId);
+	if(ErrorCode < 0){
+		alert(trId+"  Error: "+ErrorMsg);
+		return;
+	}if(trId=="registerMrp"){
+		this.close();
+		return;
+	}
+}
+//20/07/21
+this.changeDate1 = function (date1)
+{ 
+	var tDate = new Date();
+	var year = tDate.getFullYear() + "";
+	var month = date1.substr(3,2);
+	var day = date1.substr(6,2);
+	return year+"-"+month+"-"+day;
+	
+
+}]]></Script>
+  </Form>
+</FDL>

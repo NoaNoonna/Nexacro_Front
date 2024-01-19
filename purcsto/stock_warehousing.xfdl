@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="stock_warehousing" width="880" height="500" titletext="입고처리 및 검사" onload="stock_warehousing_onload">
+    <Layouts>
+      <Layout height="500" width="880">
+        <GroupBox id="GroupBox00" taborder="0" text="체크리스트 입고" left="33" top="24" width="232" height="55" cssclass="grpBox_normal"/>
+        <Button id="Button00" taborder="1" text="현재 체크된 발주품목 입고" left="48" top="42" width="204" height="28" onclick="Button00_onclick" cssclass="btn_normal" background="black"/>
+        <Grid id="Grid00" taborder="2" left="33" top="100" width="827" height="367" binddataset="gds_orderInfo" oncellclick="Grid00_oncellclick" onheadclick="Grid00_onheadclick" color="orangered">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="25"/>
+                <Column size="28"/>
+                <Column size="152"/>
+                <Column size="119"/>
+                <Column size="67"/>
+                <Column size="85"/>
+                <Column size="80"/>
+                <Column size="120"/>
+                <Column size="66"/>
+                <Column size="87"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell/>
+                <Cell col="1" displaytype="checkboxcontrol"/>
+                <Cell col="2" text="발주번호"/>
+                <Cell col="3" text="발주날짜"/>
+                <Cell col="4" text="상태"/>
+                <Cell col="5" text="발주구분"/>
+                <Cell col="6" text="품목코드"/>
+                <Cell col="7" text="품목명"/>
+                <Cell col="8" text="수량"/>
+                <Cell col="9" text="원재료검사"/>
+              </Band>
+              <Band id="body">
+                <Cell expr="currow+1"/>
+                <Cell col="1" displaytype="checkboxcontrol" text="bind:CHECKED"/>
+                <Cell col="2" text="bind:ORDER_NO"/>
+                <Cell col="3" text="bind:ORDER_DATE"/>
+                <Cell col="4" text="bind:ORDER_INFO_STATUS"/>
+                <Cell col="5" text="bind:ORDER_SORT"/>
+                <Cell col="6" text="bind:ITEM_CODE"/>
+                <Cell col="7" text="bind:ITEM_NAME"/>
+                <Cell col="8" text="bind:ORDER_AMOUNT"/>
+                <Cell col="9" text="bind:INSPECTION_STATUS"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="Button00_01" taborder="3" text="현재 체크된 발주품목 원재료검사" left="280" top="42" width="204" height="28" onclick="Button00_01_onclick" cssclass="btn_normal" background="black"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[include "Lib::commLib.xjs";
+var nexa = nexacro.getApplication();
+
+
+this.stock_warehousing_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo) //온로드
+{
+	this.transaction(
+				"search_stock_warehousing_list",
+				"svcPurchase::order/delivery",
+				"",
+				"gds_orderInfo=gds_orderInfo",
+				"",
+				"callback"
+				);
+};
+ 
+
+this.Grid00_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo) //셀클릭
+{
+	var check = nexa.gds_orderInfo.getColumn(e.row,"CHECKED");
+	
+	if(e.col==1){
+		if(check==null || check=='0'){
+			nexa.gds_orderInfo.setColumn(e.row,"CHECKED",'1');
+		}else{
+			nexa.gds_orderInfo.setColumn(e.row,"CHECKED",'0');
+		}
+	}
+};
+ 
+
+this.Grid00_onheadclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo) //헤드셀 클릭
+{
+	var size = nexa.gds_orderInfo.getRowCount();
+	var num = null;
+	var headCheck = obj.getCellProperty('Head',1,'text');
+	if(e.col==1){
+		if(headCheck=='0'||headCheck==null){
+			num = '1';
+		}else{
+			num = '0';
+		}
+		for(var i=0; i<size; i++){
+			nexa.gds_orderInfo.setColumn(i,"CHECKED",num);
+		}
+		obj.setCellProperty('Head',1,'text',num);
+	}
+};
+
+
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) //입고
+{
+	var orderNo=[];
+	for(var n=0; n<nexa.gds_orderInfo.rowcount; n++){
+		if(nexa.gds_orderInfo.getColumn(n,"CHECKED")=="1"){
+				if(nexa.gds_orderInfo.getColumn(n,"INSPECTION_STATUS")!="Y"){
+		alert("원재료 검사가 시작되거나 끝나지 않았습니다."); 
+		return;
+		}
+			orderNo.push(nexa.gds_orderInfo.getColumn(n,"ORDER_NO"));
+		}
+	}
+	var orderNoList="["+orderNo.toString()+"]";
+		
+	this.transaction(
+				"stock_warehousing",
+				"svcStock::sto/warehousing",
+				"",
+				"",
+				"orderNoList="+orderNoList,
+				"callback");
+	//nexa.gds_stock.clear();
+};
+
+
+
+this.Button00_01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var orderNo=[];
+	var row = nexa.gds_orderInfo.rowcount;
+	for(var n=0; n<row; n++){
+		if(nexa.gds_orderInfo.getColumn(n,"CHECKED")=="1"){
+			orderNo.push(nexa.gds_orderInfo.getColumn(n,"ORDER_NO"));
+		}
+	}
+	var orderNoList="["+orderNo.toString()+"]";
+	
+		this.transaction(
+				"stock_inspection",
+				"svcPurchase::orderinfo",
+				"",
+				"",
+				"orderNoList="+orderNoList,
+				"callback");
+};
+
+
+this.callback = function (trid , ErrorCode, ErrorMsg){ //콜백
+	if(trid.indexOf("search")!=-1){
+		if(ErrorCode <0){
+			alert("조회 실패 : " + ErrorMsg);
+	
+		}
+	}else if(trid=="stock_warehousing"){
+		alert("완료되었습니다");
+		this.close();
+		return;
+	}else if(trid=="stock_inspection"){
+		alert("검사완료");
+			this.transaction(
+			    "search_stock_warehousing_list",
+				"svcPurchase::order/delivery",
+				"",
+				"gds_orderInfo=gds_orderInfo",
+				"",
+				"callback"
+				);
+				
+	}
+}]]></Script>
+  </Form>
+</FDL>

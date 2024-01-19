@@ -1,0 +1,253 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script version="1.0" type="xscript5.1"><![CDATA[/**
+*  techtip  popup sample library
+*  @MenuPath   techtip > popupsample
+*  @FileName   popup.xjs 
+*  @Desction   modal and modeless popup library
+**************************************************************************
+*  2019.03.20      nana         최초 생성
+**************************************************************************
+**/
+
+/**************************************************************************
+ * 사용자 FUNCTION 영역
+ **************************************************************************/
+
+
+/**************************************************************************
+ * @MethodName:  gfn_initForm
+ * @description: form onload --> define a user variable
+ * @param objForm   : form
+ *        objConfig : { popupWidth, popupHeight, objTextArea, objFunction }
+ * @return
+**************************************************************************/
+this.gfn_initForm = function(objForm, objConfig)
+{
+   objForm.config = objConfig;
+}
+
+
+/**************************************************************************
+ * 공통 함수 처리 영역
+ * 해당 함수의 경우 프로젝트 사용 시 프로젝트 공통함수로 전환을 권장 드립니다.
+ * @MethodName:  gfn_isNull
+ * @description: 파리미터 값이 Null 인지 체크하는 함수
+ * @param:       {All} val – 체크할 문자열
+ * @return:      {boolean} Val이 undefined, null, NaN, "", Array.length=0 인 경우 = true 
+																	이 외의 경우 = false
+ **************************************************************************/
+this.gfn_isNull = function (Val)
+{
+	if (new String(Val).valueOf() == "undefined") return true;
+	if (Val == null) return true;
+	// NaN(Not a Number)은 연산 과정에서 잘못된 입력을 받았음을 나타내는 기호;
+	if (("x" + Val == "xNaN") && (new String(Val.length).valueOf() == "undefined")) return true;
+	if (Val.length == 0) return true;
+	//default value
+	return false;
+}
+
+
+/**************************************************************************
+ * @MethodName:  gfn_showModal;
+ * @description: Common showModal
+ * @param	sPopupId   : form
+ *       	arrArguments : ChildFrame 에 추가될 변수리스트를 "{변수명:변수값 , 변수명:변수값}" 형식으로 설정;
+ *			sPopupUrl : ChildFrame 에 속할 Form 의 위치정보를 문자열로 설정;
+ *			popupCallback : ChildFrame 이 종료된 후 결과를 받을 때 호출될 콜백 함수를 설정; 콜백 함수는 strID 값과 반환값을 인수로 받음;
+ *			obj : 이 메서드를 호출한 Form
+ *			nPopupWidth: ChildFrame 넓이
+ *			nPopupHeight: ChildFrame 높이
+ *			bShowFrameTitle: true or false  &&&
+ *			bShowFrameStatus: true or false &&&
+ *			sAlignType: &&&
+ * @return	ChildFrame.showModal
+ **************************************************************************/
+//this.gfn_openPopup = function(sPopupId, arrArguments, sPopupUrl, obj, nPopupWidth, nPopupHeight, bShowFrameTitle, bShowFrameStatus, sAlignType)
+this.gfn_showModal = function (sPopupId, arrArguments, sPopupUrl, popupCallback, obj, nPopupWidth, nPopupHeight, bShowFrameTitle, bShowFrameStatus, sAlignType)
+{
+	// 현재 구동되는 정보를 업데이트 한다.
+	var childFrame = new ChildFrame();
+	//FrameSet.getOwnerFrame(); FrameSet 이 소속된 부모 Frame 을 반환하는 메소드;
+	var parentFrame = obj.getOwnerFrame();
+	// text align
+	var sOpenAlignType = "center middle";
+
+	// TO-DO 팝업사이즈 미지정 시 디폴트 값 적용; &&& 소스코드가 이상하다.
+	if (this.gfn_isNull(nPopupWidth)) {
+		nPopupWidth = obj.confing.popupWidth;
+	}
+
+	if (this.gfn_isNull(nPopupHeight)) {
+		nPopupHeight = obj.confing.popupHeight;
+	}
+
+	var sShowStatus;
+	if (this.gfn_isNull(bShowFrameStatus) || bShowFrameStatus == false) {
+		sShowStatus = false;
+	}
+	else if (bShowFrameStatus == true) {
+		sShowStatus = true;
+	}
+
+	if (!this.gfn_isNull(sAlignType)) {
+		sOpenAlignType = sAlignType;
+	}
+
+	var nPopupLeft = "";
+	var nPopupTop = "";
+
+	// 팝업 포지션 값 위치 설정
+	nPopupLeft = 0;
+	nPopupTop = 0;
+
+	/* ===== Statusbar 옵션 추가 - Start ===== */
+	if (sShowStatus == true) {
+		childFrame.init(
+			sPopupId,
+			nPopupLeft,	// 0
+			nPopupTop,	// 0
+			nexacro.toNumber(nPopupWidth) + 4,
+			nexacro.toNumber(nPopupHeight) + 20 + 4 + 25,	//&&&
+			null,
+			null,
+			sPopupUrl
+		);
+		// ChildFrame 의 StatusBar 높이를 설정하는 속성;
+		childFrame.set_statusbarheight(25);
+		// ChildFrame 에 StatusBar 표시 여부를 설정하는 속성;
+		childFrame.set_showstatusbar(true);
+	} else {
+		// sShowStatus == false
+		childFrame.init(
+			sPopupId,
+			nPopupLeft,
+			nPopupTop,
+			nexacro.toNumber(nPopupWidth) + 4,
+			nexacro.toNumber(nPopupHeight) + 20 + 4,	//&&& 차이는?
+			null,
+			null,
+			sPopupUrl
+		);
+	}
+
+	/* ===== Statusbar 옵션 추가 - End   ===== */
+	// set_openalign: 어플리케이션이 실행될 때 전체화면에서 표시될 위치를 설정하는 속성;
+	// sOpenAlignType default: center middle
+	childFrame.set_openalign(sOpenAlignType);
+	// set_autosize: ChildFrame 이 화면에 표시될 때 formurl 속성에 설정된 Form 의 크기에 맞춰질 지 설정하는 속성;
+	childFrame.set_autosize(false);
+	// set_dragmovetype: ChildFrame 을 드래그로 이동시킬 때 드래그가 가능한 영역을 설정하는 속성;
+	childFrame.set_dragmovetype("all");
+	
+	/**
+	* set_overlaycolor: ChildFrame 이 Modal 로 띄워진 경우에 부모 Frame 전체에 적용될 색을 설정하는 속성;
+	* childFrame.style.set_overlaycolor("#ffffff39"); // 색상정보 6자리 + 투명도 2자리;
+	* childFrame.set_overlaycolor("RGBA(255, 255, 255, 0.75)");
+	**/
+	
+	if (this.gfn_isNull(bShowFrameTitle) || bShowFrameTitle == true) 
+	{
+		// set_showtitlebar: ChildFrame 의 TitleBar 표시 여부를 설정하는 속성;
+		childFrame.set_showtitlebar(true);
+		// set_border: ChildFrame 의 배경 영역을 설정하는 속성;
+		childFrame.set_border("3 solid #351b6f");
+		childFrame.set_border("normal");
+	} else {
+		childFrame.set_showtitlebar(false);
+	}
+
+	// 동적으로 생성한 ChildFrame을 Modal Dialog로 표시하는 메소드
+	// ChildFrame.showModal( [strID,] objParentFrame, [{objArguList} [, objOpener [, callbackFunc]]] );
+	childFrame.showModal(
+		parentFrame,
+		arrArguments,
+		obj,	// 값 생략 시 objParentFrame 파라미터에 설정된 Frame 의 Form 이 설정됨.
+		popupCallback,
+		true
+	);
+};
+
+
+/**************************************************************************
+ * @MethodName:  gfn_openPopup
+ * @description: Common showModalLess Window
+ * @param	sPopupId   : form
+ *       	arrArguments : ChildFrame 에 추가될 변수리스트를 "{변수명:변수값 , 변수명:변수값}" 형식으로 설정;
+ *			sPopupUrl : ChildFrame 에 속할 Form 의 위치정보를 문자열로 설정;
+ *			obj : 이 메서드를 호출한 Form
+ *			nPopupWidth: ChildFrame 넓이
+ *			nPopupHeight: ChildFrame 높이
+ *			bShowFrameTitle: true or false  &&&
+ *			bShowFrameStatus: true or false &&&
+ *			sAlignType: &&&
+ * @return	nexacro.open
+ **************************************************************************/
+this.gfn_openPopup = function(sPopupId, arrArguments, sPopupUrl, obj, nPopupWidth, nPopupHeight, bShowFrameTitle, bShowFrameStatus, sAlignType)
+{
+	var sShowStatus = "";
+	var sShowTitle = "";
+	var popupLeft = 0;
+	var popupTop = 0;
+	var sOpenAlignType = "center middle";
+	var parentFrame = obj.getOwnerFrame();
+
+	if (this.gfn_isNull(bShowFrameStatus) || bShowFrameStatus == false) {
+		sShowStatus = false;
+	  
+	} else if (bShowFrameStatus == true) {
+		sShowStatus = true;
+	  
+	}
+
+	if (this.gfn_isNull(bShowFrameTitle) || bShowFrameTitle == false) {
+	  sShowTitle = false;
+	  
+	} else if (bShowFrameTitle == true) {
+		sShowTitle = true;
+	  
+	}
+
+	if (!this.gfn_isNull(sAlignType)) {
+		sOpenAlignType = sAlignType;
+	  
+	}
+
+	//only runtime
+	var sOpt = "showtitlebar="+sShowTitle+" showstatusbar="+sShowStatus+" openalign='"+sOpenAlignType+"'";
+
+	/*
+	for (var i = 0; i < nexacro.getPopupFrames().length; i++) 
+	{
+	  if (nexacro.getPopupFrames()[i].name == sID) 
+	  {
+		 alert("화면이 열려있습니다.");
+		 nexacro.getPopupFrames()[i].form.setFocus();
+		 return false;
+	  }
+	}
+	*/
+
+	// 신규(동적으로 생성한 ChildFrame) Modeless 팝업(Window)을 호출하는 메소드
+	/*	application.open(
+			sID,
+			sURL,
+			objMyFrame,	//objParentFrame
+			sArg,		//{objArguList}
+			sOpt,		//strOpenStyle
+			popupLeft,
+			popupTop,
+			nWidth,
+			nHeight,
+			this		//objOpener: opener 로 설정할 Form 을 오브젝트 형태로 설정;
+		);*/
+	nexacro.open(
+		sPopupId,
+		sPopupUrl,
+		parentFrame,
+		arrArguments,
+		sOpt,
+		100,
+		100
+	);
+};]]></Script>

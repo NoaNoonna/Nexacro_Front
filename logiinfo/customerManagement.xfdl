@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="customerManagement" width="1280" height="720" titletext="거래처목록" onload="customerManagement_onload">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="1280">
+        <Grid id="Grid00" taborder="0" left="4" top="114" width="1256" height="560" binddataset="gds_customer" oncellclick="Grid00_oncellclick" onheadclick="Grid00_onheadclick" cellsizingtype="col">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="20"/>
+                <Column size="55"/>
+                <Column size="55"/>
+                <Column size="68"/>
+                <Column size="55"/>
+                <Column size="55"/>
+                <Column size="125"/>
+                <Column size="80"/>
+                <Column size="105"/>
+                <Column size="115"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="55"/>
+                <Column size="65"/>
+              </Columns>
+              <Rows>
+                <Row size="30" band="head"/>
+                <Row size="30"/>
+              </Rows>
+              <Band id="head">
+                <Cell displaytype="checkboxcontrol" font="8px/normal &quot;Gulim&quot;" edittype="checkbox"/>
+                <Cell col="1" text="고객코드" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="2" text="직장코드" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="3" text="고객이름" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="4" text="고객유형" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="5" text="고객CEO" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="6" text="비지니스라이센스번호" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="7" text="사회보장번호" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="8" text="고객비지니스조건" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="9" text="고객비지니스아이템" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="10" text="고객우편번호" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="11" text="고객기본주소" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="12" text="고객정보주소" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="13" text="고객전화번호" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="14" text="고객팩스번호" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="15" text="고객노트" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="16" text="생산된제품" font="12px/normal &quot;Gulim&quot;"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:CHECKED" displaytype="checkboxcontrol" edittype="none"/>
+                <Cell col="1" text="bind:CUSTOMER_CODE" font="12px/normal &quot;Gulim&quot;" edittype="none"/>
+                <Cell col="2" text="bind:WORKPLACE_CODE" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="3" text="bind:CUSTOMER_NAME" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="4" text="bind:CUSTOMER_TYPE" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="5" text="bind:CUSTOMER_CEO" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="6" text="bind:BUSINESS_LICENSE_NUMBER" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="7" text="bind:SOCIAL_SECURITY_NUMBER" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="8" text="bind:CUSTOMER_BUSINESS_CONDITIONS" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="9" text="bind:CUSTOMER_BUSINESS_ITEMS" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="10" text="bind:CUSTOMER_ZIP_CODE" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="11" text="bind:CUSTOMER_BASIC_ADDRESS" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="12" text="bind:CUSTOMER_DETAIL_ADDRESS" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="13" text="bind:CUSTOMER_TEL_NUMBER" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="14" text="bind:CUSTOMER_FAX_NUMBER" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="15" text="bind:CUSTOMER_NOTE" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="16" text="bind:PRODUCED_PRODUCT" font="12px/normal &quot;Gulim&quot;"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="reverse00_00" taborder="1" text="삭제" left="920" top="48" width="150" height="50" font="normal 11pt/normal &quot;Arial&quot;" onclick="reverse00_00_onclick" cssclass="btn_normal" background="black"/>
+        <Button id="reverse00_01" taborder="2" text="저장" left="1095" top="48" width="150" height="50" font="normal 11pt/normal &quot;Arial&quot;" onclick="reverse00_01_onclick" cssclass="btn_normal" background="black"/>
+        <Static id="Static00" taborder="3" text="거래처 목록" left="53" top="48" width="194" height="50" font="bold 28pt/normal &quot;Arial&quot;" color="black"/>
+        <Button id="reverse00_02" taborder="4" text="추가" left="745" top="48" width="150" height="50" font="normal 11pt/normal &quot;Arial&quot;" cssclass="btn_normal" background="black" onclick="reverse00_02_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[include "Lib::commLib.xjs";
+
+nexa = nexacro.getApplication();
+this.customerManagement_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.transaction(
+		"search_customer",
+		"svcCompinfo::customer/alllist",
+		"",
+		"gds_customer=gds_customer gds_codeDetail=gds_codeDetail",
+		"divisionCode=CO-02",
+		"callback"
+	);
+	nexa.gds_customer.set_keystring("S:CUSTOMER_CODE");
+};
+
+
+
+this.Grid00_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	var rowNO = nexa.gds_customer.rowposition;
+	
+	// 체크박스 체크; 하나씩 체크해서 전부 체크하면 head부분도 체크;
+	var yn    = nexa.gds_customer.getColumn(rowNO,"CHECKED");
+	if(yn==null || yn=="0"){
+		nexa.gds_customer.setColumn(rowNO,"CHECKED","1");
+	}else{
+		nexa.gds_customer.setColumn(rowNO,"CHECKED","0");
+	}
+	var gdsRowCount = nexa.gds_customer.getRowCount();
+	if(nexa.gds_customer.getCaseCount("CHECKED == '1'") == gdsRowCount){
+		obj.setCellProperty('Head',0,'text',"1");
+	}else{
+		obj.setCellProperty('Head',0,'text',"0");
+	}
+};
+
+this.Grid00_onheadclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	var size = nexa.gds_customer.getRowCount();
+	var num = null;
+	var headCheck = obj.getCellProperty('Head',0,'text');
+	if(e.col==0){
+		if(headCheck=='0'||headCheck==null){
+			num = '1';
+		}else{
+			num = '0';
+		}
+		for(var i=0; i<size; i++){
+			nexa.gds_customer.setColumn(i,"CHECKED",num);
+		}
+		obj.setCellProperty('Head',0,'text',num);
+	}
+};
+
+this.reverse00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var size = nexa.gds_customer.getRowCount();
+	var row = null;
+	var count = 0;
+	for(var i=0; i<size; i++){
+		row = nexa.gds_customer.findRow("CHECKED","1");
+		if(row!=-1){
+			nexa.gds_customer.deleteRow(row); //해당번호삭제
+			count++;
+		}
+	}
+	alert(count+"개 회사가 삭제됩니다.");
+};
+
+this.reverse00_01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.transaction(
+		"batch_customer",
+		"svcCompinfo::customer/allbatch",
+		"gds_customer=gds_customer:U",
+		"",
+		"",
+		"callback"
+	);
+};
+this.callback = function (trid , ErrorCode, ErrorMsg){ //콜백
+	if(trid.indexOf("search")!=-1){
+		if(ErrorCode <0){
+			alert("조회 실패 : " + ErrorMsg);
+		}
+	}else if(trid.indexOf("batch")!=-1){
+		if(ErrorCode <0){
+			alert("오류 : 실패 : " + ErrorMsg);
+		}else{
+			alert("완료!");
+			this.reload();
+		}
+	}
+}
+this.reverse00_02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	trace("추가");
+	this.gfn_openPopup (
+		"newCustomer",
+		"",
+		"logiinfo::newCustomer.xfdl",
+		this,
+		500,
+		100,
+		true,
+		false
+	);
+};
+]]></Script>
+  </Form>
+</FDL>

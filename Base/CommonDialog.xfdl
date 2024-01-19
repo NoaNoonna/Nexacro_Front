@@ -1,0 +1,499 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="CommDialog" width="550" height="360" titletext="코드모달" onload="fn_cDialog_onload">
+    <Layouts>
+      <Layout height="360" width="550">
+        <Grid id="grd_commonDialog" taborder="1" left="15" top="20" width="510" height="310" oncellclick="fn_grd_commonDialog_oncellclick" autofittype="none">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="139"/>
+                <Column size="127"/>
+              </Columns>
+              <Rows>
+                <Row size="30" band="head"/>
+                <Row size="30"/>
+              </Rows>
+              <Band id="head" background="antiquewhite">
+                <Cell text="코드" font="normal 12px/normal &quot;맑은 고딕&quot;" background="blue" color="yellow"/>
+                <Cell col="1" text="이름" font="normal 12px/normal &quot;맑은 고딕&quot;" background="blue" color="yellow"/>
+              </Band>
+              <Band id="body">
+                <Cell color="black" font="normal 12px/normal &quot;맑은 고딕&quot;" text="bind:DETAIL_CODE"/>
+                <Cell col="1" color="black" font="normal 12px/normal &quot;맑은 고딕&quot;" text="bind:DETAIL_CODE_NAME"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/******************
+* field variables *
+******************/
+var parentName  = null;
+var parentRow   = null;
+var parentFrame = this.parent;
+var nexa = nexacro.getApplication();
+
+/***********************
+ * CommonDialog_onload *
+************************/
+this.fn_cDialog_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{   
+      
+      // gfn_showModal 의 1번 value : ex)Customer
+   trace("      @ 필드로 선언한 부모 프레임의 이름 : "+parentFrame.name);
+      // gfn_showModal 의 1번 value : ex)Customer
+   trace("      @ CommonDialog.parentName: "+obj.parent.name);
+      // modal을 open한 form.name : ex)estimate
+   trace("      @ 오프너의 이름 : "+this.opener.name);
+      // 부모 폼의 함수 gfn_showModal 실행할 때 넘기는 arrArguments; ex)estimate
+   trace("      @ 부모 프레임에서 넘긴 변수 parentFrame : "+parentFrame.parentFrame);
+      // 부모 폼의 함수 gfn_showModal 실행할 때 넘기는 arrArguments; ex)CL-01
+   trace("      @ 부모 프레임에서 넘긴 변수 구분코드(divisionCode) : "+parentFrame.pFrame);
+      // 부모 프레임에서 넘긴 grid ex)estimate.xfdl -> regEstimate -> Grid00;
+   trace("      @ eForm : "+parentFrame.eForm);
+
+   
+   // Dataset init ?
+   //nexa.gds_codeDetail.clearData();
+   
+   // gfn_showModal의 sPopupId(1번 value)
+   parentName = obj.parent.name;
+   trace("      @ 공통폼의 부모 이름 : "+parentName);
+   //this.title.text = parentName;
+
+   switch(parentName){
+      
+      /***********************
+       * "회사코드" 클릭시 *
+      ************************/
+      case "CompanyCode" :
+         trace("회사코드 클릭");
+         // Dialog Grid와 Dataset 연동
+         this.grd_commonDialog.set_binddataset( "gds_company" );
+         // column Name
+         var companyHead = [
+                        "회사코드",
+                        "회사명",
+                        "회사구분",
+                        "사업자번호"
+                        ];
+         // column Value
+         var companyBody = [
+                        "bind:COMPANY_CODE",
+                        "bind:COMPANY_NAME",
+                        "bind:COMPANY_DIVISION",
+                        "bind:BUSINESS_LICENSE_NUMBER"
+                        ];
+         //this.title.text="회사 검색";
+         this.addColumns(companyHead, companyBody);
+         break;
+       
+       
+       
+
+      /*************************
+       * "사업장코드" 클릭시 *
+      **************************/
+      case "WorkplaceCode" :         
+         // Dialog Grid와 Dataset 연동
+         this.grd_commonDialog.set_binddataset( "gds_workplace" );
+         trace("사업장코드 클릭");
+         var workplaceHead = [
+                        "회사코드",
+                        "사업장코드",
+                        "사업장명",
+                        "사업장번호"
+                        ];
+         var workplaceBody = [
+                        "bind:COMPANY_CODE",
+                        "bind:WORKPLACE_CODE",
+                        "bind:WORKPLACE_NAME",
+                        "bind:BUSINESS_LICENSE_NUMBER"
+                        ];
+         this.addColumns(workplaceHead, workplaceBody);
+         break;
+
+//*******************      견적-거래처,      *******************
+      case "DetailCodeAndUseCheck" :
+         // gds_codeDetail을 사용하는 것들을 하나로 구분하기;
+         this.grd_commonDialog.set_binddataset( "gds_codeDetail" );
+         var customerHead = [
+                        "상세코드번호",
+                        "상세코드명",
+                        "사용여부"
+                        ];
+         var customerBody = [
+                        "bind:DETAIL_CODE",
+                        "bind:DETAIL_CODE_NAME",
+                        "bind:CODE_USE_CHECK"
+                        ];
+         // Dialog Grid와 Dataset 연동
+         this.addColumns(customerHead, customerBody);
+         this.grd_commonDialog.deleteContentsCol("body",3);
+         this.grd_commonDialog.deleteContentsCol("body",2);
+         
+         this.transaction(
+                  "dCodeAndUseCheck", 
+                  "svcCompinfo::codedetail/list", 
+                  "", 
+                  "gds_codeDetail=gds_codeDetail", 
+                  "divisionCode='"+parentFrame.divisionCode+"'", 
+                  "fn_callback"
+                  );
+         break;
+      case "CustomerCode" :   
+      
+         var customerHead =  [
+                        "상세코드번호",
+                        "상세코드명",
+                        "사용여부"
+                        ];
+         var customerBody =  [
+                        "bind:DETAIL_CODE",
+                        "bind:DETAIL_CODE_NAME",
+                        "bind:CODE_USE_CHECK"
+                        ];
+   
+         this.grd_commonDialog.set_binddataset( "gds_codeDetail" );
+         this.addColumns(customerHead, customerBody);
+         
+         
+         this.transaction(
+                  "findContractType", 
+                  "svcCompinfo::codedetail/list", 
+                  "", 
+                  "gds_codeDetail=gds_codeDetail", 
+                  "divisionCode='"+parentFrame.divisionCode+"'", 
+                  "callback"
+                  );
+         break;
+         
+      /*************************
+       * "품목코드검색" 클릭시 *
+      **************************/   
+      case "itemCFCode" :   
+      
+         var customerHead =  [
+                        "상세코드번호",
+                        "상세코드명",
+                        "사용여부"
+                        ];
+         var customerBody =  [
+                        "bind:DETAIL_CODE",
+                        "bind:DETAIL_CODE_NAME",
+                        "bind:CODE_USE_CHECK"
+                        ];
+   
+         this.grd_commonDialog.set_binddataset( "gds_codeDetail" );
+         this.addColumns(customerHead, customerBody);
+         
+         trace("aa"+parentFrame.itemCf)
+         this.transaction(
+               "findContractType", 
+                  "svcCompinfo::codedetail/list", 
+                   "", 
+                  "gds_codeDetail=gds_codeDetail", 
+                   "divisionCode='"+parentFrame.itemCf+"'", 
+            "callback"
+               );
+      break;   
+        
+      /***********************
+       * "품목구분" 클릭시 *
+      ************************/
+      case "itemCode" :
+        var customerHead =  [
+                        "품목구분코드",
+                        "품목구분명",
+                        "사용여부"
+                        ];
+         var customerBody =  [
+                        "bind:DETAIL_CODE",
+                        "bind:DETAIL_CODE_NAME",
+                        "bind:CODE_USE_CHECK"
+                        ];
+   
+         this.grd_commonDialog.set_binddataset( "gds_codeDetail" );
+         this.addColumns(customerHead, customerBody);
+         this.transaction(
+               "findContractType", 
+                  "svcCompinfo::codedetail/list", 
+                   "", 
+                  "gds_codeDetail=gds_codeDetail", 
+                   "divisionCode='IT'", 
+            "callback"
+               );
+      break;   
+        
+
+    
+         
+         
+      /***********************
+       * "부서코드" 클릭시 *
+      *********************** 
+         */
+      case "DepartmentCode" :
+         trace("부서코드 클릭");
+         // Dialog Grid와 Dataset 연동
+         this.grd_commonDialog.set_binddataset( "gds_codeDetail" );
+         
+         // column Name
+         var companyHead = [
+                        "부서코드",
+                        "부서명"
+                        ];
+         // column Value
+         var companyBody = [
+                        "bind:DETAIL_CODE",
+                        "bind:DETAIL_CODE_NAME"
+                        ];
+         this.title.text="부서 검색";
+         this.addColumns(companyHead, companyBody);
+         break;
+        
+         
+      /***********************
+       * "직급코드" 클릭시 *
+      ************************/
+      case "PositionCode" :
+         trace("직급코드 클릭");
+         // Dialog Grid와 Dataset 연동
+         this.grd_commonDialog.set_binddataset( "gds_codeDetail" );
+         
+         // column Name
+         var companyHead = [
+                        "직급코드",
+                        "직급명"
+                        ];
+         // column Value
+         var companyBody = [
+                        "bind:DETAIL_CODE",
+                        "bind:DETAIL_CODE_NAME"
+                        ];
+         this.title.text="직급 검색";
+         this.addColumns(companyHead, companyBody);
+         break;
+   
+
+   }
+   
+   this.grd_commonDialog.autoFitCol();
+};
+
+
+this.fn_callback = function(trId, ErrorCode, ErrorMsg)
+{
+   trace("      @ commDialog.trId: "+trId);
+   if(ErrorCode < 0){
+      alert(trId+"  Error: "+ErrorMsg);
+      return;
+   }
+   
+   switch(trId){
+      case "dCodeAndUseCheck" :
+         //alert("transaction complete");
+         break;
+   }
+}
+
+
+
+/*******************************
+ * 동적 column 생성 및 값 할당 *
+********************************/
+this.addColumns =function(gridHead, gridBody)
+{
+   // column의 length
+   var cLength=gridHead.length;
+      //trace("      @ CommonGrid's Head 길이: "+cLength);
+   for(var i = 0; i<cLength; i++){
+      // 기본 2개의 칼럼 있다; 2개 이상의 칼럼 필요할 때 생성;
+      if(i >= cLength-2){ //0,1,2,3 >=2
+         this.grd_commonDialog.appendContentsCol(); // 칼럼추가
+         this.grd_commonDialog.setFormatColProperty(i, "size", 100);
+         this.grd_commonDialog.setCellProperty("Head", i, "background","antiquewhite");
+         this.grd_commonDialog.setCellProperty("Head", i, "font","normal 12px/normal '맑은 고딕'");         
+      }
+      this.grd_commonDialog.setCellProperty("Body", i, "color", "black");
+      // Head = commonDialog.Grid의 Head;
+      this.grd_commonDialog.setCellProperty("Head", i, "text", gridHead[i]);
+      // Body = commonDialog.Grid의 Body;
+      this.grd_commonDialog.setCellProperty("Body", i, "text", gridBody[i]);
+      this.grd_commonDialog.setCellProperty("body", i, "textAlign", "center");   
+   }
+   this.grd_commonDialog.set_autofittype( "col" );
+}
+
+
+/**********************
+ * Grid cell onclick *
+***********************/
+this.fn_grd_commonDialog_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+   var eRow   = e.row;
+   var opener = this.opener.name;
+   trace("      @ eRow: "+eRow);
+   trace("      @ commonDialog_oncellclick: "+parentName);
+   trace("      @ opener: "+opener);
+   
+   switch(parentName){
+      case "CompanyCode" :
+         this.opener.edt_company.set_value(nexa.gds_company.getColumn(eRow, "COMPANY_NAME"));
+         this.close();
+         break;
+       
+    case "itemCode" :
+       var bRow = nexa.gds_bom.rowposition;
+    var aa = nexa.gds_codeDetail.getColumn(eRow, "DETAIL_CODE_NAME");
+      nexa.gds_bom.setColumn(bRow,"ITEM_CLASSFICATION_NAME" ,aa);
+    trace("야야"+aa+bRow)
+         this.close();
+         break;
+         
+      case "DepartmentCode" :
+         this.opener.edit_deptCode.set_value(nexa.gds_codeDetail.getColumn(eRow, "DETAIL_CODE"));
+         this.opener.edit_deptName.set_value(nexa.gds_codeDetail.getColumn(eRow, "DETAIL_CODE_NAME"));
+         this.close();
+         break;
+      
+      case "PositionCode" :
+         this.opener.edit_positionCode.set_value(nexa.gds_codeDetail.getColumn(eRow, "DETAIL_CODE"));
+         this.opener.edit_positionName.set_value(nexa.gds_codeDetail.getColumn(eRow, "DETAIL_CODE_NAME"));
+         this.close();
+         break;
+         
+      case "WorkplaceCode" :
+         if(opener=="empRegistForm"){
+            this.opener.edit_workplaceCode.set_value(nexa.gds_workplace.getColumn(eRow, "WORKPLACE_CODE"));
+            this.opener.edit_workplaceName.set_value(nexa.gds_workplace.getColumn(eRow, "WORKPLACE_NAME"));
+            
+            this.close();
+            
+            break;
+            
+         }else if(this.opener.name=="workorder_simul"){
+            this.opener.Edit00.set_value(nexa.gds_workplace.getColumn(eRow, "WORKPLACE_NAME"));
+            this.close();
+            return;
+         }
+         
+         this.opener.Div00.form.edt_workplace.set_value(nexa.gds_workplace.getColumn(eRow, "WORKPLACE_NAME"));
+         // id, pw, btn_login 활성화
+         this.opener.Div00.form.btn_goLogin.set_enable(true);
+         this.opener.Div00.form.edt_id.set_enable(true);
+         this.opener.Div00.form.edt_pw.set_enable(true);   
+         this.close();
+         break;
+         
+      
+      case "DetailCodeAndUseCheck" :
+         var dCode      = nexa.gds_codeDetail.getColumn(eRow, "DETAIL_CODE");
+         var dCodeName  = nexa.gds_codeDetail.getColumn(eRow, "DETAIL_CODE_NAME");
+         var uCheck     = nexa.gds_codeDetail.getColumn(eRow, "CODE_USE_CHECK");
+         
+         if(uCheck == "N"){
+            alert("사용 가능한 코드가 아닙니다");
+            this.close();
+            return;
+         }   
+         trace("0: "+this.opener.name);
+         trace("1: "+dCode);
+         trace("2: "+dCodeName);
+         trace("3: "+uCheck);
+         trace("5: "+parentFrame.divisionCode);
+         
+         if(opener == "estimate") {
+         
+            var eDetailRow = nexa.gds_estimateDetail.rowposition;
+         
+            if(parentFrame.divisionCode == "CL-01"){
+               nexa.gds_estimate.setColumn(0, "CUSTOMER_CODE", dCode);
+               parentFrame.eForm.setCellProperty('body', 1, 'text', dCodeName);
+         
+               this.close();
+               return;
+               
+            } else if(parentFrame.divisionCode == "IT-_I") {
+            
+            
+               nexa.gds_estimateDetail.setColumn(eDetailRow, "ITEM_CODE", dCode);
+               nexa.gds_estimateDetail.setColumn(eDetailRow, "ITEM_NAME", dCodeName);
+               this.close();
+               return;
+
+            } else if(parentFrame.divisionCode == "UT") {
+               nexa.gds_estimateDetail.setColumn(eDetailRow, "UNIT_OF_ESTIMATE", dCode);
+               this.close();
+               return;
+            }
+            
+         } else if(opener == "contract") {
+         
+            if(parentFrame.divisionCode == "CT"){
+               var ctRow = nexa.gds_contract.rowposition;
+               nexa.gds_contract.setColumn(ctRow, "CONTRACT_TYPE", dCode);
+               this.close();
+               return;
+            } else if(parentFrame.divisionCode == "CL-01") {
+               this.opener.contract.searchContract.form.Edit00.set_value(dCodeName);
+               this.opener.contract.searchContract.form.Edit01.set_value(dCode);
+               
+                              //g_customerName = gds_codeDetail.getColumn(eRow, "DETAIL_CODE_NAME");
+         nexa.g_customerCode=nexa.gds_codeDetail.getColumn(eRow, "DETAIL_CODE");
+         trace("g_customerCode: "+nexa.g_customerCode);
+         
+               this.close();
+               return;
+            }
+         }
+         break;
+         case "itemCFCode" :
+
+         trace("@@ edRposition: "+parentFrame.pFrame);
+         
+         if(parentFrame.pFrame=="bom1"){
+         trace("sibal"+   nexa.gds_codeDetail.getColumn(eRow,"DETAIL_CODE"))
+            this.opener.bomInfo.deploy.form.Edit00.set_value(nexa.gds_codeDetail.getColumn(e.row, "DETAIL_CODE"));
+
+            this.close();
+            break;   
+         }
+       else{
+       trace("이건두번쨰다")
+        this.opener.bomInfo.regist.form.Edit00.set_value(nexa.gds_codeDetail.getColumn(e.row, "DETAIL_CODE"));
+         
+            this.close();
+            break;   
+       }
+   
+         
+      case "CustomerCode" :
+      
+         var edRposition= nexa.gds_codeDetail.rowposition;
+         trace("@@ edRposition: "+edRposition);
+         if(this.opener.name=="deliver"){
+               this.opener.deliver.deliver.form.Edit00.set_value(nexa.gds_codeDetail.getColumn(e.row, "DETAIL_CODE_NAME"));
+               g_customerCode =nexa.gds_codeDetail.getColumn(e.row, "DETAIL_CODE");
+               trace("@@누른회사 코드"+g_customerCode)
+            this.close();
+            return;
+         }
+
+
+         this.opener.Edit01.set_value(nexa.gds_codeDetail.getColumn(e.row, "DETAIL_CODE_NAME"));
+         g_customerCode =nexa.gds_codeDetail.getColumn(e.row, "DETAIL_CODE");
+         this.close();
+         break;
+         
+   
+            
+         
+   }
+   
+   
+};]]></Script>
+  </Form>
+</FDL>

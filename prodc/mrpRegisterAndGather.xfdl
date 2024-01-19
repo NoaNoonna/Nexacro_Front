@@ -1,0 +1,477 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="mrpRegisterAndGather" width="1280" height="720" titletext="MRP취합등록" onload="mrpRegisterAndGather_onload">
+    <Layouts>
+      <Layout height="720" width="1280" stepcount="0">
+        <Tab id="Tab00" taborder="0" tabindex="0" left="22" top="25" width="1248" height="685" onchanged="Tab00_onchanged" color="orangered">
+          <Tabpages>
+            <Tabpage id="Tabpage1" text="소요량전개">
+              <Layouts>
+                <Layout>
+                  <GroupBox id="GroupBox00" taborder="0" text="MRP취합&amp;등록" left="10" top="10" width="1253" height="690" font="normal 300 23pt/normal &quot;Arial&quot;" cssclass="grpBox_normal" color="black"/>
+                  <GroupBox id="GroupBox00_00" taborder="1" text="MRP적용" left="27" top="48" width="199" height="60" cssclass="grpBox_normal"/>
+                  <Radio id="includeMrpApply" taborder="2" left="34" top="73" width="203" height="21" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" direction="vertical" cssclass="radio_normal">
+                    <Dataset id="innerdataset">
+                      <ColumnInfo>
+                        <Column id="codecolumn" size="256"/>
+                        <Column id="datacolumn" size="256"/>
+                      </ColumnInfo>
+                      <Rows>
+                        <Row>
+                          <Col id="datacolumn">적용</Col>
+                          <Col id="codecolumn">includeMrpApply</Col>
+                        </Row>
+                        <Row>
+                          <Col id="datacolumn">미적용</Col>
+                          <Col id="codecolumn">excludeMrpApply</Col>
+                        </Row>
+                      </Rows>
+                    </Dataset>
+                  </Radio>
+                  <GroupBox id="GroupBox01" taborder="3" text="주생산계획 검색" left="241" top="48" width="410" height="60" cssclass="grpBox_normal"/>
+                  <Calendar id="startC" taborder="4" left="255" top="67" width="134" height="35" onchanged="Tab00_Tabpage1_Div00_startC_onchanged" dateformat="yyyy-MM-dd" headformat="yyyy.MM" displaynulltext="시작일" color="orangered"/>
+                  <Calendar id="endC" taborder="5" left="396" top="67" width="134" height="35" dateformat="yyyy-MM-dd" displaynulltext="종료일" color="orangered"/>
+                  <Button id="btn_searchMps" taborder="6" text="MPS조회" left="544" top="67" width="92" height="35" onclick="Tab00_Tabpage1_Div00_btn_searchMps_onclick" cssclass="btn_normal" background="black"/>
+                  <Button id="btn_simulate_mrp" taborder="7" text="선택한 MPS로 모의전개" left="695" top="67" width="141" height="35" onclick="Tab00_Tabpage1_Div00_btn_simulate_mrp_onclick" cssclass="btn_normal" background="black"/>
+                  <Grid id="Grid00" taborder="8" left="22" top="114" width="1190" height="482" binddataset="gds_mps" oncellclick="Tab00_Tabpage1_Grid00_oncellclick" color="orangered">
+                    <Formats>
+                      <Format id="default">
+                        <Columns>
+                          <Column size="21"/>
+                          <Column size="32"/>
+                          <Column size="127"/>
+                          <Column size="76"/>
+                          <Column size="138"/>
+                          <Column size="83"/>
+                          <Column size="114"/>
+                          <Column size="70"/>
+                          <Column size="97"/>
+                          <Column size="80"/>
+                          <Column size="100"/>
+                          <Column size="98"/>
+                          <Column size="87"/>
+                          <Column size="47"/>
+                        </Columns>
+                        <Rows>
+                          <Row size="24" band="head"/>
+                          <Row size="24"/>
+                        </Rows>
+                        <Band id="head">
+                          <Cell edittype="normal"/>
+                          <Cell col="1" text="선택"/>
+                          <Cell col="2" text="MPS번호"/>
+                          <Cell col="3" text="계획구분"/>
+                          <Cell col="4" text="수주일련번호"/>
+                          <Cell col="5" text="품목코드"/>
+                          <Cell col="6" text="품목명"/>
+                          <Cell col="7" text="단위"/>
+                          <Cell col="8" text="계획일자"/>
+                          <Cell col="9" text="계획수량"/>
+                          <Cell col="10" text="납기일"/>
+                          <Cell col="11" text="예정마감일자"/>
+                          <Cell col="12" text="MRP적용상태"/>
+                          <Cell col="13" text="비고"/>
+                        </Band>
+                        <Band id="body">
+                          <Cell expr="currow+1" textAlign="center"/>
+                          <Cell col="1" displaytype="expr:CHECKED==null?&quot;checkboxcontrol&quot;:CHECKED==&quot;0&quot;?&quot;checkboxcontrol&quot;:CHECKED==&quot;1&quot;?&quot;checkboxcontrol&quot;:CHECKED==&quot;3&quot;?&quot;none&quot;:&quot;&quot;" textAlign="center" text="bind:CHECKED" edittype="checkbox"/>
+                          <Cell col="2" text="bind:MPS_NO" textAlign="center"/>
+                          <Cell col="3" text="bind:MPS_PLAN_CLASSIFICATION" textAlign="center"/>
+                          <Cell col="4" text="bind:CONTRACT_DETAIL_NO" textAlign="center"/>
+                          <Cell col="5" text="bind:ITEM_CODE" textAlign="center"/>
+                          <Cell col="6" text="bind:ITEM_NAME" textAlign="center"/>
+                          <Cell col="7" text="bind:UNIT_OF_MPS" textAlign="center"/>
+                          <Cell col="8" text="bind:MPS_PLAN_DATE" displaytype="normal" edittype="none" textAlign="center"/>
+                          <Cell col="9" text="bind:MPS_PLAN_AMOUNT" textAlign="center"/>
+                          <Cell col="10" text="bind:DUE_DATE_OF_MPS" displaytype="normal" edittype="none" textAlign="center"/>
+                          <Cell col="11" text="bind:SCHEDULED_END_DATE" displaytype="normal" edittype="none" textAlign="center"/>
+                          <Cell col="12" text="bind:MRP_APPLY_STATUS" textAlign="center"/>
+                          <Cell col="13" text="bind:DESCRIPTION" textAlign="center"/>
+                        </Band>
+                      </Format>
+                    </Formats>
+                  </Grid>
+                </Layout>
+              </Layouts>
+            </Tabpage>
+            <Tabpage id="Tabpage2" text="소요량취합">
+              <Layouts>
+                <Layout>
+                  <Button id="Button00" taborder="0" text="소요량 모의 취합결과조회" left="14" top="7" width="176" height="30" onclick="Tab00_Tabpage2_Button00_onclick" cssclass="btn_normal" background="black"/>
+                  <Grid id="Grid00" taborder="1" left="12" top="44" width="1196" height="255" binddataset="gds_mrp" color="orangered">
+                    <Formats>
+                      <Format id="default">
+                        <Columns>
+                          <Column size="24"/>
+                          <Column size="144"/>
+                          <Column size="126"/>
+                          <Column size="108"/>
+                          <Column size="97"/>
+                          <Column size="170"/>
+                          <Column size="130"/>
+                          <Column size="155"/>
+                          <Column size="90"/>
+                          <Column size="94"/>
+                        </Columns>
+                        <Rows>
+                          <Row size="24" band="head"/>
+                          <Row size="24"/>
+                        </Rows>
+                        <Band id="head">
+                          <Cell/>
+                          <Cell col="1" text="소요량전개번호"/>
+                          <Cell col="2" text="주생산계획번호"/>
+                          <Cell col="3" text="품목분류"/>
+                          <Cell col="4" text="품목코드"/>
+                          <Cell col="5" text="품목명"/>
+                          <Cell col="6" text="발주/작업지시 기한"/>
+                          <Cell col="7" text="발주/작업지시 완료기한"/>
+                          <Cell col="8" text="필요수량"/>
+                          <Cell col="9" text="단위"/>
+                        </Band>
+                        <Band id="body">
+                          <Cell expr="currow+1" textAlign="center"/>
+                          <Cell col="1" text="bind:MRP_NO" textAlign="center"/>
+                          <Cell col="2" text="bind:MPS_NO" textAlign="center"/>
+                          <Cell col="3" text="bind:ITEM_CLASSIFICATION" textAlign="center"/>
+                          <Cell col="4" text="bind:ITEM_CODE" textAlign="center"/>
+                          <Cell col="5" text="bind:ITEM_NAME" textAlign="left"/>
+                          <Cell col="6" text="bind:ORDER_DATE" displaytype="normal" textAlign="center"/>
+                          <Cell col="7" text="bind:REQUIRED_DATE" displaytype="normal" textAlign="center"/>
+                          <Cell col="8" text="bind:REQUIRED_AMOUNT" textAlign="center"/>
+                          <Cell col="9" text="bind:UNIT_OF_MRP" textAlign="center"/>
+                        </Band>
+                      </Format>
+                    </Formats>
+                  </Grid>
+                  <GroupBox id="GroupBox00" taborder="2" text="소요량취합 등록일자" left="17" top="305" width="206" height="52" cssclass="grpBox_normal" color="black"/>
+                  <Radio id="Radio00" taborder="3" left="38" top="322" width="187" height="33" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" direction="vertical" font="normal 10pt/normal &quot;Arial&quot;" onitemchanged="Tab00_Tabpage2_Radio00_onitemchanged" cssclass="edit_normal" color="black">
+                    <Dataset id="innerdataset">
+                      <ColumnInfo>
+                        <Column id="codecolumn" size="256"/>
+                        <Column id="datacolumn" size="256"/>
+                      </ColumnInfo>
+                      <Rows>
+                        <Row>
+                          <Col id="codecolumn">todayAsMrpDate</Col>
+                          <Col id="datacolumn">현재일자</Col>
+                        </Row>
+                        <Row>
+                          <Col id="codecolumn">userInputAsMrpDate</Col>
+                          <Col id="datacolumn">직접입력</Col>
+                        </Row>
+                      </Rows>
+                    </Dataset>
+                  </Radio>
+                  <Calendar id="Calendar00" taborder="4" left="248" top="310" width="141" height="47" dateformat="yyyy-MM-dd" visible="false" color="orangered"/>
+                  <Button id="btn_regist_zippedmrp" taborder="5" text="현재취합된 결과를 등록" left="248" top="310" width="176" height="43" onclick="Tab00_Tabpage2_btn_regist_zippedmrp_onclick" cssclass="btn_normal" background="black"/>
+                  <Grid id="Grid01" taborder="6" left="12" top="359" width="1192" height="256" binddataset="gds_mrpGathering" color="orangered">
+                    <Formats>
+                      <Format id="default">
+                        <Columns>
+                          <Column size="36"/>
+                          <Column size="117"/>
+                          <Column size="110"/>
+                          <Column size="120"/>
+                          <Column size="80"/>
+                          <Column size="131"/>
+                          <Column size="137"/>
+                          <Column size="80"/>
+                        </Columns>
+                        <Rows>
+                          <Row size="24" band="head"/>
+                          <Row size="24"/>
+                        </Rows>
+                        <Band id="head">
+                          <Cell/>
+                          <Cell col="1" text="구매 및 생산여부"/>
+                          <Cell col="2" text="품목코드"/>
+                          <Cell col="3" text="품목명"/>
+                          <Cell col="4" text="단위"/>
+                          <Cell col="5" text="발주/작업지시 기한"/>
+                          <Cell col="6" text="발주/작업지시 기한"/>
+                          <Cell col="7" text="필요수량"/>
+                        </Band>
+                        <Band id="body">
+                          <Cell expr="currow+1" textAlign="center"/>
+                          <Cell col="1" text="bind:ORDER_OR_PRODUCTION_STATUS" textAlign="center"/>
+                          <Cell col="2" text="bind:ITEM_CODE" textAlign="center"/>
+                          <Cell col="3" text="bind:ITEM_NAME" textAlign="center"/>
+                          <Cell col="4" text="bind:UNIT_OF_MRP_GATHERING" textAlign="center"/>
+                          <Cell col="5" text="bind:CLAIM_DATE" displaytype="normal" textAlign="center"/>
+                          <Cell col="6" text="bind:DUE_DATE" displaytype="normal" textAlign="center"/>
+                          <Cell col="7" text="bind:NECESSARY_AMOUNT" textAlign="center"/>
+                        </Band>
+                      </Format>
+                    </Formats>
+                  </Grid>
+                </Layout>
+              </Layouts>
+            </Tabpage>
+          </Tabpages>
+        </Tab>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[include "Lib::commLib.xjs";
+var nexa = nexacro.getApplication();
+var startDate;
+var endDate;
+var includeMrpApply;
+var rowNo;
+var yn;
+var mpsNoList=[];
+var mpsNo;
+var tToday;
+var mrpNoAndItemCode;
+var mrpNo=[];
+
+this.mrpRegisterAndGather_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	nexa.gds_mps.clearData();
+	nexa.gds_mrpGathering.clearData();
+};
+
+this.Tab00_Tabpage1_Div00_btn_searchMps_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	includeMrpApply=this.Tab00.Tabpage1.form.includeMrpApply.value;
+	if(includeMrpApply==null){
+		alert("MPS적용 포함여부 확인 바랍니다");
+		return;
+	}if(this.Tab00.Tabpage1.form.startC.value==null || this.Tab00.Tabpage1.form.endC.value==null){
+		alert("날짜 선택 바랍니다");
+		return;
+	}
+	startDate=nexa.changeDate(this.Tab00.Tabpage1.form.startC.value);
+	endDate=nexa.changeDate(this.Tab00.Tabpage1.form.endC.value);
+	this.transaction
+		("searchMps",
+		 "svcProduction::mps/list",
+		 "",
+		 "gds_mps=gds_mps",
+		 "startDate="+ startDate + " endDate=" + endDate + " includeMrpApply=" + includeMrpApply,
+		 "callBack",
+		 false
+		);
+
+trace("startDate: "+startDate);
+trace("endDate: "+endDate);
+};
+
+this.Tab00_Tabpage1_Grid00_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	 rowNo =nexa.gds_mps.rowposition
+	var m_status=nexa.gds_mps.getColumn(rowNo,"MRP_APPLY_STATUS");
+	 yn = nexa.gds_mps.getColumn(rowNo,"CHECKED");
+	if(m_status=="Y"){
+		alert("MPS 적용 완료되었습니다.");
+		return;
+	}
+//else if(e.col == this.Tab00.Tabpage1.form.Grid00.getBindCellIndex("body", "CHECKED")) {// 체크박스 선택했을 경우
+// 		for(var i = 0; i<nexa.gds_mps.rowcount; i++) { // 데이터셋 전체 확인
+// 			//if(e.row == i) {// 현재 행의 체크박스를 눌렀을 경우
+// 				nexa.gds_mps.setColumn(i, "CHECKED", currentValue === "1" ? "0" : "1")
+// 				// 무반응 (체크 해제 안함)
+// 			//} else if(e.row != i) {
+// 				//nexa.gds_mps.setColumn(i,"CHECKED","0"); // 클릭한 행의 체크박스를 제외한 나머지 체크박스는 체크 해제
+// 			//}
+// 		}
+	//}
+};
+
+//fn_popupCallbac
+this.fn_popupCallbac = function(){
+trace("꺼짐");
+		this.transaction(
+			"searchMps",
+			"svcProduction::mps/list",
+			"",
+			"gds_mps=gds_mps",
+			"startDate="+startDate+" endDate="+endDate+" includeMrpApply="+includeMrpApply,
+			"",
+			false
+		);
+}
+
+//선택한 MPS로 모의전개
+this.Tab00_Tabpage1_Div00_btn_simulate_mrp_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	 mpsNo =nexa.gds_mps.getColumn(rowNo,"MPS_NO");
+	if(nexa.gds_mps.getCaseCount("CHECKED == '1'")==0){
+		alert("체크박스 선택 바랍니다");
+		return;
+	}
+	
+
+	trace("mpsNoList::"+mpsNo);
+	trace("obj.getOwnerFrame():::"+this.getOwnerFrame());
+	nexa.gds_mrpOpenTemp.clearData();
+	
+	this.transaction(
+		"MrpSimulation",
+		"svcProduction::mrp/open",
+		"",
+		"gds_mrpOpenTemp=gds_mrpOpenTemp",
+		"mpsNoList="+mpsNo,
+		"callBack",
+		false
+	);
+		
+		this.gfn_showModal(
+			"estimateCal",
+			null,
+			"prodc::mrpSimulation.xfdl",
+			"fn_popupCallbac",
+			this,
+			1200,
+			500,
+			true,
+			true,
+			null
+		);
+
+	
+	trace("mpsNoList::11:"+mpsNo);
+	if(gatherSimul)
+	{				
+		this.transaction(
+			"getMrpList",
+			"svcProduction::getMrpList",
+			"",
+			"gds_mrp=gds_mrp",
+			"mrpGatheringStatusCondition='null' dateSearchCondition='' mrpStartDate='' mrpEndDate='' mrpGatheringNo=''",
+			"",
+			false
+		);
+		
+		this.transaction(
+			"searchMps",
+			"svcProduction::mps/list",
+			"",
+			"gds_mps=gds_mps",
+			"startDate="+startDate+" endDate="+endDate+" includeMrpApply="+includeMrpApply,
+			"",
+			false
+		);
+	}
+	
+};
+
+// 탭 페이지2로 변경
+this.Tab00_onchanged = function(obj:nexacro.Tab,e:nexacro.TabIndexChangeEventInfo)
+{
+	trace("변경");
+	nexa.gds_mrp.clearData();
+	
+	this.transaction(
+			"getMrpList",
+			"svcProduction::mrp/list",
+			"",
+			"gds_mrp=gds_mrp",
+			"mrpGatheringStatusCondition='null' dateSearchCondition='' mrpStartDate='' mrpEndDate='' mrpGatheringNo=''",
+			"",
+			false
+	);
+};
+this.Tab00_Tabpage2_Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	nexa.gds_mrpGathering.clearData();
+
+	var size = nexa.gds_mrp.rowcount;
+	
+	 mrpNoAndItemCode="{";
+
+	if(size==0){
+      alert("현재 취합 대기중인 소요량 전개 결과가 없습니다.");
+      return;
+	}
+	
+	for(var i=0; i<size; i++){
+		mrpNo.push(nexa.gds_mrp.getColumn(i,"MRP_NO"));
+		mrpNoAndItemCode = mrpNoAndItemCode + nexa.gds_mrp.getColumn(i,"MRP_NO")+":"+nexa.gds_mrp.getColumn(i,"ITEM_CODE")+",";
+	}
+
+	this.transaction(
+			"getMrpGatheringList",
+			"svcProduction::mrp/gathering-list",
+			"",
+			"gds_mrpGathering=gds_mrpGathering",
+			"mrpNoList="+mrpNo,
+			"fn_callBack",
+			false
+	);
+};
+
+this.Tab00_Tabpage2_Radio00_onitemchanged = function(obj:nexacro.Radio,e:nexacro.ItemChangeEventInfo)
+{
+	trace(this.Tab00.Tabpage2.form.Radio00.value);
+	if(this.Tab00.Tabpage2.form.Radio00.value=="todayAsMrpDate"){
+			this.Tab00.Tabpage2.form.Calendar00.set_visible("false");
+			var now=new Date();
+			 tToday = now.getFullYear() + "-" +('0' + (now.getMonth() +1 )).slice(-2) + "-" + ('0' + now.getDate()).slice(-2);
+			 trace("tToday:::"+tToday);
+			 this.Tab00.Tabpage2.form.btn_regist_zippedmrp.move(248,310);//원래위치 복귀
+	}else if(this.Tab00.Tabpage2.form.Radio00.value=="userInputAsMrpDate"){
+			this.Tab00.Tabpage2.form.Calendar00.set_visible("true");
+			this.Tab00.Tabpage2.form.btn_regist_zippedmrp.move(418,310);
+	}
+};
+
+this.Tab00_Tabpage2_btn_regist_zippedmrp_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{	
+	trace("mrpNo::::"+mrpNo);
+	mrpNoList="["+mrpNo.toString()+"]";
+	mrpNoAndItemCodeList=mrpNoAndItemCode.substring(0,mrpNoAndItemCode.length-1)+"}";
+	var gCount=nexa.gds_mrpGathering.getRowCount();
+		trace("mrpNoAndItemCode:::"+mrpNoAndItemCodeList);
+	if (this.Tab00.Tabpage2.form.Radio00.value==null){
+		
+		alert("날짜 선택 바랍니다");
+		return;
+	}else if(this.Tab00.Tabpage2.form.Radio00.value=="userInputAsMrpDate"){
+		
+		if(this.Tab00.Tabpage2.form.Calendar00.value==null){
+				
+				alert("날짜 선택 바랍니다");
+				return;
+		}else{
+		tToday=nexa.changeDate(this.Tab00.Tabpage2.form.Calendar00.value);
+		}
+	}
+	var confirmMsg = "소요량전개"+ "\r\n" + 
+			"소요량취합 등록일자 : " + tToday  + "\r\n" +
+			"위 목록에 대한 소요량취합 결과 총 " + gCount + 
+			" 건을 저장합니다. \r\n계속하시겠습니까?"
+					
+	var confirmStatus = confirm(confirmMsg);
+		
+	if( confirmStatus == true ) {
+		
+		this.transaction(
+			"mrpGatheringRegister",
+			"svcProduction::mrp/gathering",
+			"gds_mrpGathering=gds_mrpGathering",
+			"",
+			"mrpGatheringRegisterDate="+tToday+" mrpNoList="+mrpNoList+" mrpNoAndItemCodeList="+mrpNoAndItemCodeList,
+			"callback"
+		);
+	
+	}else{
+		alert("취소하셨습니다");
+		return;
+	}
+};
+
+this.callback =function callback(trId , ErrorCode, ErrorMsg)
+{
+	trace("		@@@@@ trId: "+trId);
+	if(ErrorCode < 0){
+		alert(trId+"  Error: "+ErrorMsg);
+		return;
+	}else if(trId=="mrpGatheringRegister"){
+	 alert("저장완료");
+	 this.reload();
+	 return;
+	}
+}]]></Script>
+  </Form>
+</FDL>

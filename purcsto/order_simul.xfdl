@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="order_simul" width="1280" height="720" titletext="재고처리 및 발주" onload="order_simul_onload" color="azure">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <GroupBox id="GroupBox00" taborder="0" text="모의재고처리 및 취합발주" left="21" top="17" width="979" height="477" background="transparent" font="normal bold 20pt/normal &quot;Arial&quot;" cssclass="grpBox_normal" color="black"/>
+        <GroupBox id="GroupBox01" taborder="1" text="발주 등록 일자" left="42" top="65" width="128" height="60" titlealign="topcenter" cssclass="grpBox_normal"/>
+        <GroupBox id="GroupBox02" taborder="2" text="발주" left="203" top="65" width="247" height="60" titlealign="topcenter" cssclass="grpBox_normal"/>
+        <Radio id="Radio00" taborder="3" left="64" top="86" width="96" height="31" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" font="normal 11pt/normal &quot;Arial&quot;" onitemchanged="Radio00_onitemchanged" cssclass="radio_normal">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="codecolumn">todayAsMrpDate</Col>
+                <Col id="datacolumn">현재일자</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Radio>
+        <Button id="Button00" taborder="4" text="현재 전개된 결과 발주 및 재고처리" left="223" top="86" width="214" height="31" onclick="Button00_onclick" color="white" cssclass="btn_normal" background="black"/>
+        <Grid id="Grid00" taborder="5" left="43" top="155" width="920" height="323" binddataset="gds_orderDialogTemp" color="orangered">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="27"/>
+                <Column size="92"/>
+                <Column size="136"/>
+                <Column size="71"/>
+                <Column size="100"/>
+                <Column size="107"/>
+                <Column size="112"/>
+                <Column size="109"/>
+                <Column size="109"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell/>
+                <Cell col="1" text="아이템코드"/>
+                <Cell col="2" text="아이템명"/>
+                <Cell col="3" text="단위"/>
+                <Cell col="4" text="총발주필요량"/>
+                <Cell col="5" text="사용가능재고량"/>
+                <Cell col="6" text="실제발주필요량"/>
+                <Cell col="7" text="단가"/>
+                <Cell col="8" text="합계금액"/>
+              </Band>
+              <Band id="body">
+                <Cell expr="currow+1"/>
+                <Cell col="1" text="bind:ITEM_CODE"/>
+                <Cell col="2" text="bind:ITEM_NAME"/>
+                <Cell col="3" text="bind:UNIT_OF_MRP"/>
+                <Cell col="4" text="bind:REQUIRED_AMOUNT"/>
+                <Cell col="5" text="bind:STOCK_AMOUNT"/>
+                <Cell col="6" text="bind:CALCULATED_REQUIRED_AMOUNT"/>
+                <Cell col="7" text="bind:STANDARD_UNIT_PRICE"/>
+                <Cell col="8" text="bind:SUM_PRICE"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[include "Lib::commLib.xjs";
+var nexa = nexacro.getApplication();
+var day;
+var mrpGatheringNoList;
+
+////////////////////////////////////////////////////  온로드  ////////////////////////////////////////////////////
+
+this.order_simul_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	obj.titletext = "재고처리및 취합발주";
+	mrpGatheringNoList="["+obj.parent.mrpNo.toString()+"]";
+	
+	this.transaction(
+				"search_order_dialog_list",
+				"svcPurchase::order/dialog",
+				"",
+				"gds_orderDialogTemp=gds_orderDialogTemp",
+				"mrpGatheringNoList="+mrpGatheringNoList,
+				"callback");
+};
+
+////////////////////////////////////////////////////  취합발주  ////////////////////////////////////////////////////
+this.Radio00_onitemchanged = function(obj:nexacro.Radio,e:nexacro.ItemChangeEventInfo) //등록일자 클릭
+{
+	var now=new Date();
+	var today = now.getFullYear() + "-" +('0' + (now.getMonth() +1 )).slice(-2) + "-" + ('0' + now.getDate()).slice(-2);
+	day=today;
+};
+
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) //현재 전개된 결과 발주 및 재고처리
+{
+	var itemList = "";
+	var totalPrice = "0";
+	var rCount = nexa.gds_orderDialogTemp.rowcount;
+	for(var i=0; i<rCount; i++){
+		var iCode = nexa.gds_orderDialogTemp.getColumn(i,"ITEM_CODE");
+		var amount = nexa.gds_orderDialogTemp.getColumn(i,"CALCULATED_REQUIRED_AMOUNT");
+		var sumPrice = nexa.gds_orderDialogTemp.getColumn(i,"SUM_PRICE");
+		itemList = itemList.concat(iCode+" : "+amount+"개\n");
+		totalPrice = parseInt(totalPrice)+parseInt(sumPrice);
+	}
+	if(day==null){
+		alert("발주등록일자를 선택해주세요"); 
+		return;
+	}else{
+		var rowCnt = nexa.gds_orderDialogTemp.rowcount;
+		var msg = "일자 :'"+day+"'\n아래품목들에 대해 발주 처리합니다.\n"+itemList+"\n계속하시겠습니까?";
+		if(confirm(msg)){
+			this.transaction(
+					"batch_order_dialog_list",
+					"svcPurchase::order",
+					"",
+					"",
+					"mrpGatheringNoList="+mrpGatheringNoList,
+					"callback");
+		}
+	}
+};
+
+this.callback = function (trid , ErrorCode, ErrorMsg){ //콜백
+	if(trid.indexOf("search")!=-1){
+		if(ErrorCode <0){
+			alert("조회 실패 : " + ErrorMsg);
+		}
+	}else if(trid.indexOf("batch")!=-1){
+		if(ErrorCode <0){
+			alert("오류 : 발주 실패 : " + ErrorMsg);
+			this.close("false");
+		}else{
+			alert("발주 완료!");
+			this.close("true");
+		}
+	}
+}]]></Script>
+  </Form>
+</FDL>

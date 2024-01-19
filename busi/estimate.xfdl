@@ -1,0 +1,799 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="estimate" width="1280" height="720" titletext="견적관리" onload="estimateForm_onload">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <GroupBox id="estimateManage" taborder="0" text="견적관리" left="20" top="15" width="1200" height="650" titlealign="topcenter" font="normal bold 25pt/normal &quot;Arial&quot;" cssclass="grpBox_normal"/>
+        <Tab id="estimate" taborder="1" tabindex="0" left="36" top="66" width="1109" height="587" onchanged="estimate_onchanged" font="normal 9pt/normal &quot;Arial&quot;" selectedtabbuttonheight="30" selectedtabbuttonwidth="100" tabposition="top" color="orangered">
+          <Tabpages>
+            <Tabpage id="searchEstimate" text="견적 조회/수정">
+              <Layouts>
+                <Layout>
+                  <Calendar id="Calendar00" taborder="0" left="214" top="8" width="133" height="34" dateformat="yyyy-MM-dd" displaynulltext="시작일" font="normal bold 12pt/normal &quot;Arial&quot;" color="orangered"/>
+                  <Button id="Button00" taborder="1" text="견적조회" left="503" top="8" width="98" height="34" font="normal 12pt/normal &quot;Arial&quot;" onclick="estimateForm_searchEstimate_Button00_onclick" cssclass="btn_normal"/>
+                  <Grid id="Grid00" taborder="2" left="4" top="63" width="1098" height="217" binddataset="gds_estimate" oncellclick="estimate_searchEstimate_Grid00_oncellclick" color="orangered">
+                    <Formats>
+                      <Format id="default">
+                        <Columns>
+                          <Column size="35"/>
+                          <Column size="178"/>
+                          <Column size="167"/>
+                          <Column size="142"/>
+                          <Column size="109"/>
+                          <Column size="99"/>
+                          <Column size="114"/>
+                          <Column size="101"/>
+                          <Column size="81"/>
+                        </Columns>
+                        <Rows>
+                          <Row size="30" band="head"/>
+                          <Row size="26"/>
+                        </Rows>
+                        <Band id="head">
+                          <Cell/>
+                          <Cell col="1" text="견적일련번호"/>
+                          <Cell col="2" text="거래처코드"/>
+                          <Cell col="3" text="견적일자"/>
+                          <Cell col="4" text="수주여부"/>
+                          <Cell col="5" text="견적요청자"/>
+                          <Cell col="6" text="유효일자"/>
+                          <Cell col="7" text="견적담당자코드"/>
+                          <Cell col="8" text="비고"/>
+                        </Band>
+                        <Band id="body">
+                          <Cell expr="currow+1" textAlign="center"/>
+                          <Cell col="1" text="bind:ESTIMATE_NO" textAlign="center"/>
+                          <Cell col="2" text="bind:CUSTOMER_CODE" textAlign="center"/>
+                          <Cell col="3" text="bind:ESTIMATE_DATE" textAlign="center"/>
+                          <Cell col="4" text="bind:CONTRACT_STATUS" textAlign="center"/>
+                          <Cell col="5" text="bind:ESTIMATE_REQUESTER" textAlign="center"/>
+                          <Cell col="6" text="bind:EFFECTIVE_DATE" textAlign="center"/>
+                          <Cell col="7" text="bind:PERSON_CODE_IN_CHARGE" textAlign="center"/>
+                          <Cell col="8" text="bind:DESCRIPTION" textAlign="center"/>
+                        </Band>
+                      </Format>
+                    </Formats>
+                  </Grid>
+                  <Grid id="Grid01" taborder="3" left="4" top="332" width="1098" height="221" binddataset="gds_estimateDetail" oncellclick="estimate_searchEstimate_Grid01_oncellclick" onheadclick="estimate_searchEstimate_Grid01_onheadclick" color="orangered">
+                    <Formats>
+                      <Format id="default">
+                        <Columns>
+                          <Column size="30"/>
+                          <Column size="33"/>
+                          <Column size="132"/>
+                          <Column size="130"/>
+                          <Column size="146"/>
+                          <Column size="50"/>
+                          <Column size="105"/>
+                          <Column size="82"/>
+                          <Column size="98"/>
+                          <Column size="93"/>
+                          <Column size="104"/>
+                          <Column size="63"/>
+                        </Columns>
+                        <Rows>
+                          <Row size="30" band="head"/>
+                          <Row size="26"/>
+                        </Rows>
+                        <Band id="head">
+                          <Cell/>
+                          <Cell col="1" displaytype="checkboxcontrol" edittype="checkbox" text="expr:0"/>
+                          <Cell col="2" text="견적상세일련번호"/>
+                          <Cell col="3" text="품목코드"/>
+                          <Cell col="4" text="품목명"/>
+                          <Cell col="5" text="단위"/>
+                          <Cell col="6" text="납기일"/>
+                          <Cell col="7" text="견적수량"/>
+                          <Cell col="8" text="견적단가"/>
+                          <Cell col="9" text="합계액"/>
+                          <Cell col="10" text="견적일련번호"/>
+                          <Cell col="11" text="비고"/>
+                        </Band>
+                        <Band id="body">
+                          <Cell expr="currow+1" textAlign="center"/>
+                          <Cell col="1" displaytype="checkboxcontrol" text="bind:CHECKED"/>
+                          <Cell col="2" text="bind:ESTIMATE_DETAIL_NO" textAlign="center"/>
+                          <Cell col="3" text="bind:ITEM_CODE" textAlign="center"/>
+                          <Cell col="4" text="bind:ITEM_NAME" textAlign="center"/>
+                          <Cell col="5" text="bind:UNIT_OF_ESTIMATE" textAlign="center"/>
+                          <Cell col="6" text="bind:DUE_DATE_OF_ESTIMATE" textAlign="center" edittype="date" calendardateformat="yyyy-MM-dd" displaytype="date"/>
+                          <Cell col="7" text="bind:ESTIMATE_AMOUNT" textAlign="center"/>
+                          <Cell col="8" text="bind:UNIT_PRICE_OF_ESTIMATE" textAlign="center"/>
+                          <Cell col="9" text="bind:SUM_PRICE_OF_ESTIMATE" textAlign="center"/>
+                          <Cell col="10" text="bind:ESTIMATE_NO" textAlign="center"/>
+                          <Cell col="11" text="bind:DESCRIPTION" textAlign="center"/>
+                        </Band>
+                      </Format>
+                    </Formats>
+                  </Grid>
+                  <Button id="Button03" taborder="4" text="일괄저장" left="121" top="288" width="106" height="34" font="normal 11pt/normal &quot;Arial&quot;" onclick="estimate_searchEstimate_Button03_onclick" cssclass="btn_normal"/>
+                  <Button id="Button02" taborder="5" text="체크한상세삭제" left="6" top="288" width="98" height="34" font="normal 9pt/normal &quot;Arial&quot;" onclick="estimate_searchEstimate_Button02_onclick" cssclass="btn_normal"/>
+                  <Calendar id="Calendar01" taborder="6" left="359" top="8" width="133" height="34" dateformat="yyyy-MM-dd" displaynulltext="종료일" font="normal bold 12pt/normal &quot;Arial&quot;" color="orangered"/>
+                  <Radio id="Radio00" taborder="7" left="12" top="14" width="193" height="24" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" direction="vertical" font="normal bold 11pt/normal &quot;Arial&quot;" cssclass="edit_normal">
+                    <Dataset id="innerdataset">
+                      <ColumnInfo>
+                        <Column id="codecolumn" size="256"/>
+                        <Column id="datacolumn" size="256"/>
+                      </ColumnInfo>
+                      <Rows>
+                        <Row>
+                          <Col id="codecolumn">0</Col>
+                          <Col id="datacolumn">견적일자</Col>
+                        </Row>
+                        <Row>
+                          <Col id="codecolumn">1</Col>
+                          <Col id="datacolumn">유효일자</Col>
+                        </Row>
+                      </Rows>
+                    </Dataset>
+                  </Radio>
+                  <Button id="Button01" taborder="8" left="614" top="8" width="98" height="34" text="PDF 출력" font="normal 11pt/normal &quot;Arial&quot;" onclick="estimate_searchEstimate_Button01_onclick" cssclass="btn_normal"/>
+                  <Button id="Button04" taborder="9" text="메일전송" left="722" top="8" width="98" height="34" font="normal 11pt/normal &quot;Arial&quot;" onclick="estimate_searchEstimate_Button04_onclick" cssclass="btn_normal"/>
+                  <Edit id="Edit00" taborder="10" left="840" top="8" width="208" height="34"/>
+                </Layout>
+              </Layouts>
+            </Tabpage>
+            <Tabpage id="regEstimate" text="견적 등록">
+              <Layouts>
+                <Layout>
+                  <Calendar id="Calendar00" taborder="0" left="3" top="8" width="133" height="34" dateformat="yyyy-MM-dd" displaynulltext="견적일자" font="normal bold 12pt/normal &quot;Arial&quot;" color="orangered"/>
+                  <Button id="Button00" taborder="1" text="견적추가" left="166" top="8" width="98" height="34" font="normal 12pt/normal &quot;Arial&quot;" onclick="estimate_regEstimate_Button00_onclick" cssclass="btn_normal"/>
+                  <Button id="Button01" taborder="2" text="일괄저장" left="276" top="8" width="98" height="34" font="normal 12pt/normal &quot;Arial&quot;" onclick="estimate_regEstimate_Button01_onclick" cssclass="btn_normal"/>
+                  <Grid id="Grid00" taborder="3" left="4" top="58" width="1098" height="217" binddataset="gds_estimate" oncellclick="estimate_regEstimate_Grid00_oncellclick" autofittype="col" color="orangered">
+                    <Formats>
+                      <Format id="default">
+                        <Columns>
+                          <Column size="30"/>
+                          <Column size="176"/>
+                          <Column size="79"/>
+                          <Column size="194"/>
+                          <Column size="176"/>
+                          <Column size="114"/>
+                          <Column size="102"/>
+                          <Column size="106"/>
+                          <Column size="109"/>
+                        </Columns>
+                        <Rows>
+                          <Row size="30" band="head"/>
+                          <Row size="26"/>
+                        </Rows>
+                        <Band id="head">
+                          <Cell/>
+                          <Cell col="1" text="거래처명"/>
+                          <Cell col="2" text="거래처코드"/>
+                          <Cell col="3" text="견적일자"/>
+                          <Cell col="4" text="유효일자"/>
+                          <Cell col="5" text="견적담당자"/>
+                          <Cell col="6" text="견적담당자코드" displaytype="normal"/>
+                          <Cell col="7" text="견적요청자"/>
+                          <Cell col="8" text="비고"/>
+                        </Band>
+                        <Band id="body">
+                          <Cell text="expr:currow+1" textAlign="center"/>
+                          <Cell col="1" textAlign="center"/>
+                          <Cell col="2" text="bind:CUSTOMER_CODE" textAlign="center"/>
+                          <Cell col="3" text="bind:ESTIMATE_DATE" textAlign="center" displaytype="date" edittype="date" calendardateformat="yyyy-MM-dd"/>
+                          <Cell col="4" text="bind:EFFECTIVE_DATE" textAlign="center" displaytype="date" edittype="date" calendardateformat="yyyy-MM-dd" calendardisplaynulltype="nulltext"/>
+                          <Cell col="5" textAlign="center"/>
+                          <Cell col="6" text="bind:PERSON_CODE_IN_CHARGE" displaytype="normal" textAlign="center"/>
+                          <Cell col="7" text="bind:ESTIMATE_REQUESTER" textAlign="center" edittype="text"/>
+                          <Cell col="8" text="bind:DESCRIPTION" textAlign="center" edittype="text"/>
+                        </Band>
+                      </Format>
+                    </Formats>
+                  </Grid>
+                  <Grid id="Grid01" taborder="4" left="4" top="332" width="1086" height="211" binddataset="gds_estimateDetail" oncellclick="estimate_regEstimate_Grid01_oncellclick" onheadclick="estimate_searchEstimate_Grid01_onheadclick" autofittype="col" color="orangered">
+                    <Formats>
+                      <Format id="default">
+                        <Columns>
+                          <Column size="26"/>
+                          <Column size="33"/>
+                          <Column size="151"/>
+                          <Column size="166"/>
+                          <Column size="57"/>
+                          <Column size="123"/>
+                          <Column size="81"/>
+                          <Column size="97"/>
+                          <Column size="118"/>
+                          <Column size="63"/>
+                        </Columns>
+                        <Rows>
+                          <Row size="30" band="head"/>
+                          <Row size="26"/>
+                        </Rows>
+                        <Band id="head">
+                          <Cell/>
+                          <Cell col="1" displaytype="checkboxcontrol" edittype="checkbox"/>
+                          <Cell col="2" text="품목코드"/>
+                          <Cell col="3" text="품목명"/>
+                          <Cell col="4" text="단위"/>
+                          <Cell col="5" text="납기일"/>
+                          <Cell col="6" text="견적수량"/>
+                          <Cell col="7" text="견적단가"/>
+                          <Cell col="8" text="합계액"/>
+                          <Cell col="9" text="비고"/>
+                        </Band>
+                        <Band id="body">
+                          <Cell text="expr:currow+1" textAlign="center"/>
+                          <Cell col="1" displaytype="checkboxcontrol" text="bind:CHECKED" textAlign="center"/>
+                          <Cell col="2" text="bind:ITEM_CODE" textAlign="center"/>
+                          <Cell col="3" text="bind:ITEM_NAME" textAlign="center"/>
+                          <Cell col="4" text="bind:UNIT_OF_ESTIMATE" textAlign="center"/>
+                          <Cell col="5" text="bind:DUE_DATE_OF_ESTIMATE" textAlign="center" displaytype="date" edittype="date" calendardateformat="yyyy-MM-dd" calendardisplaynulltype="nulltext"/>
+                          <Cell col="6" text="bind:ESTIMATE_AMOUNT" textAlign="center"/>
+                          <Cell col="7" text="bind:UNIT_PRICE_OF_ESTIMATE" textAlign="center"/>
+                          <Cell col="8" text="bind:SUM_PRICE_OF_ESTIMATE" textAlign="center"/>
+                          <Cell col="9" text="bind:DESCRIPTION" textAlign="center" edittype="text"/>
+                        </Band>
+                      </Format>
+                    </Formats>
+                  </Grid>
+                  <Button id="Button03" taborder="5" text="체크한 상세 삭제" left="114" top="288" width="106" height="34" font="normal 10pt/normal &quot;Arial&quot;" onclick="estimate_searchEstimate_Button02_onclick" cssclass="btn_normal"/>
+                  <Button id="Button02" taborder="6" text="견적상세추가" left="4" top="288" width="98" height="34" font="normal 10pt/normal &quot;Arial&quot;" onclick="estimate_regEstimate_Button02_onclick" cssclass="btn_normal"/>
+                </Layout>
+              </Layouts>
+            </Tabpage>
+          </Tabpages>
+        </Tab>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+* @Class Name  estimate.xfdl
+* @Modification Information
+*
+* @author 정대현
+* @since 2020-07-30
+* @version 1.0
+*  
+*  Copyright (C) Jeong Dae Hyun All rights reserved.
+*/
+
+/*********************
+* @ import js File *
+*********************/
+include "Lib::commLib.xjs";
+
+
+/*********************
+* @ declared field *
+*********************/
+var nexa = nexacro.getApplication();
+
+
+/***********************
+* @ this page onload *
+************************/
+this.estimateForm_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+   obj.set_titletext("견적");
+   nexa.gds_estimate.clearData();
+   nexa.gds_estimateDetail.clearData();
+};
+
+/////////////////////////////////////////////////////////  조회/수정탭  /////////////////////////////////////////////////////////
+
+
+/*****************************************
+*    @ 견적 조회 수정 탭 -> 견적조회 *
+******************************************/
+this.estimateForm_searchEstimate_Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+   nexa.gds_estimate.clearData();
+   
+   // tabPage0(==searchEstimate)의 form 주소
+   var tab1 = this.estimate.searchEstimate.form;
+   trace("tab1::::"+tab1);
+   
+   // 날짜조건, 시작일, 종료일에 값이 있을 때
+   if(tab1.Calendar00.value != null && tab1.Calendar01.value && tab1.Radio00.index != "-1") {
+      
+      // 날짜조건 == 견적일자
+      if(tab1.Radio00.index == 0) {
+         this.transaction(
+            "searchEstimateDate",
+            "svcLogisales::estimate/list",
+            "",
+            "gds_estimate=gds_estimate gds_estimateDetail=gds_estimateDetail",
+            "startDate='"+tab1.Calendar00.text+"' endDate='"+tab1.Calendar01.text+"' dateSearchCondition='estimateDate'",
+            "callback",
+            false);
+         // 날짜조건 == 유효일자
+      }else{
+         this.transaction("searchEffectiveDate",
+            "svcLogisales::estimate/list",
+            "",
+            "gds_estimate=gds_estimate gds_estimateDetail=gds_estimateDetail",
+            "startDate='"+tab1.Calendar00.text+"' endDate='"+tab1.Calendar01.text+"' dateSearchCondition='effectiveDate'",
+            "callback",
+            false);
+      }
+      // 날짜조건, 시작일, 종료일에 값이 없을 때
+   } else {   
+      alert("정보를 모두 입력해주세요.");
+   }
+   // filter 조건: 전부 안볼래
+   nexa.gds_estimateDetail.filter("ESTIMATE_NO==''");
+};
+
+
+/**************************************************
+*  @ 견적 조회 수정 탭 -> 견적 셀클릭         *
+*  @ description 선택한 수주의 상세만 보겠다;   *
+***************************************************/
+this.estimate_searchEstimate_Grid00_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+   var eNumber = nexa.gds_estimate.getColumn(e.row,"ESTIMATE_NO");
+   nexa.gds_estimateDetail.filter("ESTIMATE_NO =='"+eNumber+"'");
+};
+
+
+
+/**************************************************************
+*  @ 견적 조회 수정 탭 -> 견적상세 셀클릭;            *
+*  @ description 클릭한 셀에 해당하는 modal window open;   *
+***************************************************************/
+this.estimate_searchEstimate_Grid01_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+   var rowNO = nexa.gds_estimateDetail.rowposition;
+   var rowCount = nexa.gds_estimateDetail.rowcount;
+   
+   // checked
+   var yn = nexa.gds_estimateDetail.getColumn(rowNO,"CHECKED");
+   trace("      @ yn: "+yn);
+   
+   if(e.col==1){
+      if(yn==null || yn=="0"){
+         trace("..");
+         nexa.gds_estimateDetail.setColumn(rowNO,"CHECKED","1");
+      }else{
+         nexa.gds_estimateDetail.setColumn(rowNO,"CHECKED","0");
+      }
+   }
+   
+   //body쪽 체크박스가 모두 채워지면 head쪽 체크박스 체크
+   if(nexa.gds_estimateDetail.getCaseCount("CHECKED == '1'") == rowCount){
+      obj.setCellProperty('Head',1,'text','1');
+   }else{
+      obj.setCellProperty('Head',1,'text','0');
+   }
+   
+   // 3 == 품목코드; 4 == 품목명;
+   if(e.col==3 || e.col==4){
+      
+      this.gfn_showModal(
+         "DetailCodeAndUseCheck",
+         {pFrame:"estimate",
+            divisionCode:"IT-_I"},
+         "Base::CommonDialog.xfdl",
+         "popupCallBack",
+         this,
+         500,
+         300,
+         true,
+         true,
+         null
+      );
+      
+      // (견적)단위
+   }else if(e.col==5){
+      
+      this.gfn_showModal(
+         "DetailCodeAndUseCheck",
+         {pFrame:"estimate",divisionCode:"UT"},
+         "Base::CommonDialog.xfdl",
+         "popupCallBack",
+         this,
+         500,
+         300,
+         true,
+         true,
+         null
+      );
+      
+      // 7 == 견적수량; 8 == 견적단가; 9 == 합계액
+   }else if(e.col==7 || e.col==8 || e.col==9){
+      var iCode   = nexa.gds_estimateDetail.getColumn(e.row ,"ITEM_CODE");
+      var eRow = e.row;
+      trace("      @ eRow: "+eRow);
+      trace("      @ iCode: "+iCode);
+      this.gfn_showModal(
+         "estimateCal",
+         {eRow:eRow, itemCode:iCode},
+         "busi::calculator.xfdl",
+         "popupCallBack",
+         this,
+         500,
+         300,
+         true,
+         true,
+         null
+      );
+   }
+};
+
+
+/**************************************************************
+*  @ 견적 조회 수정 탭 -> PDF출력;            *
+*  @ description 견적상세 행 추가(Dataset에 addRow);   *
+*                수주된 견적은 상세 행 추가 x;      *
+***************************************************************/
+this.estimate_searchEstimate_Button01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+   var eRow = nexa.gds_estimate.rowposition;
+   var orderDraftNo = nexa.gds_estimate.getColumn(eRow,"ESTIMATE_NO");
+   system.execBrowser("http://localhost:9090/compinfo/report/estimate?orderDraftNo="+orderDraftNo);
+};
+
+
+/*****************************************************************
+*  @ 견적 조회 수정 탭 -> 일괄저장;                     *
+*  @ description Dataset에 있는 견적 상세 data를 DB에 update;   *
+*  @           수주된 견적은 일괄저장 x;
+******************************************************************/
+this.estimate_searchEstimate_Button03_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+   if(nexa.gds_estimate.getColumn(nexa.gds_estimate.rowposition,"CONTRACT_STATUS")=="Y"){
+      alert("이미 수주된 견적입니다.");
+      return;
+   }
+   
+   // 납기일을 바꾸면 230515 형식으로 변환됨. 수정하고 싶음. 예~~~ 성공!!!
+   var dDate = nexa.gds_estimateDetail.getColumn(i,"DUE_DATE_OF_ESTIMATE"); 
+   var eDetailRowCount  = nexa.gds_estimateDetail.rowcount;
+   for(var i=0; i<eDetailRowCount; i++){
+      if(dDate.indexOf("-")==-1){
+         nexa.gds_estimateDetail.setColumn(i, "DUE_DATE_OF_ESTIMATE", nexa.changeDate(dDate));
+      }
+   }
+
+   
+   this.transaction(
+      "batchEstimateDetail", 
+      "svcLogisales::estimatedetail/batch", 
+      "gds_estimateDetail=gds_estimateDetail:u", 
+      "", 
+      "", 
+      "callback"
+   );
+   nexa.gds_estimate.clearData();
+   nexa.gds_estimateDetail.clearData();
+};
+
+
+/////////////////////////////////////////////////////////  공통함수  /////////////////////////////////////////////////////////
+
+
+/**************************************************************
+*  @ 견적 조회 수정 탭 <-> 견적 등록 탭;         *
+*  @ description 견적, 견적 상세 Dataset 초기화;   *
+***************************************************************/
+this.estimate_onchanged = function(obj:nexacro.Tab,e:nexacro.TabIndexChangeEventInfo)
+{
+   nexa.gds_estimate.clearData();
+   nexa.gds_estimateDetail.clearData();
+};
+
+
+/**************************************************************
+*  @ 견적상세 체크박스 전체조작;      *
+*  @ description 체크박스 전체 선택;   *
+***************************************************************/
+this.estimate_searchEstimate_Grid01_onheadclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+   var size = nexa.gds_estimateDetail.getRowCount();
+   var num = null;
+   var headCheck = obj.getCellProperty('Head',1,'text');
+   if(e.col==1){
+      if(headCheck=='0'||headCheck==null){
+         num = '1';
+      }else{
+         num = '0';
+      }
+      for(var i=0; i<size; i++){
+         nexa.gds_estimateDetail.setColumn(i,"CHECKED",num);
+      }
+      obj.setCellProperty('Head',1,'text',num);
+   }
+};
+
+
+/**************************************************************
+*  @ 체크한 견적상세 삭제;                  *
+*  @ description 체크된 행들을 삭제;            *
+수주된 견적은 상세 행 삭제 x;   *
+***************************************************************/
+this.estimate_searchEstimate_Button02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+   var eRow = nexa.gds_estimate.rowposition;
+   if(nexa.gds_estimate.getColumn(eRow,"CONTRACT_STATUS")=="Y"){
+      alert("이미 수주된 견적입니다.");
+      return;
+   }
+   var size = nexa.gds_estimateDetail.getRowCount();
+   var row = null;
+   for(var i=0; i<size; i++){
+      row = nexa.gds_estimateDetail.findRow("CHECKED","1");
+      if(row!=-1){
+         nexa.gds_estimateDetail.deleteRow(row); //해당번호삭제
+      }
+   }
+};
+
+
+/**************************************************************
+*  @ 트랜잭션 콜백;                     *
+*  @ description ALERT ERROR_CODE, ERROR_MSG;   *
+***************************************************************/
+this.callback = function(trid , ErrorCode, ErrorMsg)
+{
+   if(trid.indexOf("search")!=-1){
+      if(ErrorCode <0){
+         alert("조회 실패 : " + ErrorMsg);
+      }
+   }else if(trid.indexOf("batch")!=-1){
+      if(ErrorCode <0){
+         alert("데이터 저장 실패 : " + ErrorMsg);
+      }else{
+         alert("저장 성공!");
+         this.reload();
+      }
+   }else if(trid.indexOf("send")!=-1){
+      alert("전송 성공!");
+      
+   }
+}
+
+
+/////////////////////////////////////////////////////////  등록탭  /////////////////////////////////////////////////////////
+
+
+/***************************************************************************
+*  @ 견적 등록 탭 -> 견적추가;                              *
+*  @ description 새로운 견적 행 추가;                           *
+*  @          날짜 선택 안하거나 이미 견적 진행 중이면 추가 x;   *
+****************************************************************************/
+this.estimate_regEstimate_Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+   // API 검색 안나온다; 역할 이해 x;
+   nexa.gds_estimate.enable = true;
+   // tabPage1(==regEstimate)의 form 주소
+   var tab2 = this.estimate.regEstimate.form;
+   var date = nexacro.trim( tab2.Calendar00.text );
+   //trace("      @ date: "+date);
+   
+   // date's value == not null; value == - -;
+   if(date.length<10){
+      alert("날짜를 먼저 선택해주세요");
+      return;
+   }
+   
+   // 견적은 하나씩만 추가 가능
+   if(nexa.gds_estimate.rowcount!=0){
+      alert("작업중인 견적이 있습니다");
+      return;
+   }
+   
+   // addRow를 하지 않으면 dataset에 column 추가 안됨;
+   var row = nexa.gds_estimate.addRow();
+   
+   // Login할 때 gds_employee에 값있음;
+   var empName = nexa.gds_employee.getColumn(0,"EMP_NAME");
+   var empCode = nexa.gds_employee.getColumn(0,"EMP_CODE");
+   
+   // grid에 값 세팅; 견적 담당자 column은 gds_estimate에 없어서 grid에 set;
+   tab2.Grid00.setCellProperty('Body',5,'text',empName);
+   nexa.gds_estimate.setColumn(row,"PERSON_CODE_IN_CHARGE",empCode);
+   nexa.gds_estimate.setColumn(row,"ESTIMATE_DATE",date);
+};
+
+
+/******************************************************************************
+*  @ 견적 등록 탭 -> 견적그리드 셀클릭;                           *
+*  @ description 거래처명, 거래처 코드 셀 클릭할 때 modal window open;   *
+*******************************************************************************/
+this.estimate_regEstimate_Grid00_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+   if(e.col==1||e.col==2){
+      this.gfn_showModal(
+         "DetailCodeAndUseCheck",
+         {parentFrame:"estimate", divisionCode:"CL-01", eForm:obj},
+         "Base::CommonDialog.xfdl",
+         "popupCallBack",
+         this,
+         500,
+         300,
+         true,
+         true,
+         null
+      );
+   }
+};
+
+
+/******************************************************
+*  @ 견적 등록 탭 -> 견적상세추가;            *
+*  @ description 견적상세 dataset addRow;         *
+*             견적을 먼저 추가하고 추가 가능;   *
+*******************************************************/
+this.estimate_regEstimate_Button02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+   if(nexa.gds_estimate.rowcount==0){
+      alert("견적을 먼저 추가한 후에\n견적상세를 추가해주세요");
+      return;
+   }
+   var row = nexa.gds_estimateDetail.addRow();
+};
+
+
+/*********************************************************
+*  @ 견적 등록 탭 -> 견적상세 셀클릭;               *
+*  @ description 체크박스 기능 and modal windows open;   *
+**********************************************************/
+this.estimate_regEstimate_Grid01_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+   var rowNO = nexa.gds_estimateDetail.rowposition;
+   
+   // 체크박스 체크; 하나씩 체크해서 전부 체크하면 head부분도 체크;
+   var yn    = nexa.gds_estimateDetail.getColumn(rowNO,"CHECKED");
+   if(e.col==1){
+      if(yn==null || yn=="0"){
+         nexa.gds_estimateDetail.setColumn(rowNO,"CHECKED","1");
+      }else{
+         nexa.gds_estimateDetail.setColumn(rowNO,"CHECKED","0");
+      }
+   }
+   var gdsRowCount = nexa.gds_estimateDetail.getRowCount();
+   if(nexa.gds_estimateDetail.getCaseCount("CHECKED == '1'") == gdsRowCount){
+      obj.setCellProperty('Head',1,'text',"1");
+   }else{
+      obj.setCellProperty('Head',1,'text',"0");
+   }
+   
+   // 품목코드, 품목명 body cell 클릭
+   if(e.col==2 || e.col==3){
+      
+      this.gfn_showModal(
+         "DetailCodeAndUseCheck",
+         {pFrame:"estimate", divisionCode:"IT-_I"},
+         "Base::CommonDialog.xfdl",
+         "popupCallBack",
+         this,
+         500,
+         300,
+         true,
+         true,
+         null
+      );
+      
+      // 단위 body cell 클릭
+   }else if(e.col==4){
+      
+      this.gfn_showModal(
+         "DetailCodeAndUseCheck",
+         {pFrame:"estimate",divisionCode:"UT"},
+         "Base::CommonDialog.xfdl",
+         "popupCallBack",
+         this,
+         500,
+         300,
+         true,
+         true,
+         null
+      );
+      
+      // 6 == 견적수량; 7 == 견적단가; 8 == 합계액 
+   }else if(e.col==6 || e.col==7 || e.col==8){
+      var iCode   = nexa.gds_estimateDetail.getColumn(e.row ,"ITEM_CODE");
+      var eRow = e.row;
+      
+      this.gfn_showModal(
+         "estimateCal",
+         {eRow:eRow, itemCode:iCode},
+         "busi::calculator.xfdl",
+         "popupCallBack",
+         this,
+         420,
+         370,
+         true,
+         true,
+         null
+      );
+   }
+};
+
+
+/*********************************************************
+*  @ 견적 등록 탭 -> 일괄저장;               *
+*  @ description ;   *
+**********************************************************/
+this.estimate_regEstimate_Button01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+   var estimateDate     = nexa.gds_estimate.getColumn(nexa.gds_estimate.rowposition,"ESTIMATE_DATE");
+   var eDetailRowCount  = nexa.gds_estimateDetail.rowcount;
+   var estimateRowCount = nexa.gds_estimate.rowcount;
+   
+   if(estimateRowCount==0){
+      alert("저장할 견적이 없습니다");
+      return;
+   }else if(eDetailRowCount==0){
+      alert("견적상세내역이 없습니다");
+      return;
+   }
+   
+   // 견적dataset 입력 안되어 있을 때;
+   for(var i=0; i<estimateRowCount; i++){
+      
+      var customerCode = nexa.gds_estimate.getColumn(i,"CUSTOMER_CODE");
+      var eDate        = nexa.gds_estimate.getColumn(i,"EFFECTIVE_DATE");
+      
+      if(customerCode==null){
+         alert("거래처를 선택해주세요");
+         return;
+      }else if(eDate==null){
+         alert("유효일자를 선택해주세요");
+         return;
+      }
+      
+      // nexa.changeDate(eDate) == gfn
+      // 20200731 -> 2020-07-31로 데이터 저장; 이렇게 안하면 발주 부분에서 진행 x;    
+      if(eDate.indexOf("-")==-1){
+         nexa.gds_estimate.setColumn(i, "EFFECTIVE_DATE", nexa.changeDate(eDate));
+      }
+   }
+   
+   
+   // 견적상세 Dataset 입력 안되 있을 때; colcount == 칼럼 수 확인;
+   for(var i=0; i<nexa.gds_estimateDetail.colcount; i++){
+      if(nexa.gds_estimateDetail.getColumn(0,i)==null){
+         var colName = nexa.gds_estimateDetail.getColID(i);
+         if(colName!="DESCRIPTION"&&colName!="ESTIMATE_NO"&&colName!="ESTIMATE_DETAIL_NO"&&colName!="CHECKED"){
+            alert("견적상세 내역을 입력해주세요");
+            return;
+         }
+      }
+   }
+   
+   // 납기일 20200731 -> 2020-07-31 형식으로 변경;
+   for(var i=0; i<eDetailRowCount; i++){
+      var edDate = nexa.gds_estimateDetail.getColumn(i,"DUE_DATE_OF_ESTIMATE");
+      if(edDate.indexOf("-")==-1){
+         nexa.gds_estimateDetail.setColumn(i, "DUE_DATE_OF_ESTIMATE", nexa.changeDate(edDate));
+      }
+   }
+   
+   if(confirm("견적일자: "+estimateDate+", 견적상세 "+eDetailRowCount+"건을 저장하시겠습니까?")){
+      for(var i=0; i<estimateRowCount; i++){
+         nexa.gds_estimate.setColumn(i,"CONTRACT_STATUS","N");
+      }
+      this.transaction(
+         "batchNewEstimate", 
+         "svcLogisales::estimate/new", 
+         "gds_estimate=gds_estimate:u gds_estimateDetail=gds_estimateDetail:u", 
+         "", 
+         "estimateDate='"+estimateDate+"'", 
+         "callback",
+         false
+      );
+   }
+};
+//메일전송
+this.estimate_searchEstimate_Button04_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+   var eRow = nexa.gds_estimate.rowposition;
+   var orderDraftNo = nexa.gds_estimate.getColumn(eRow,"ESTIMATE_NO");
+   var emailId = this.estimate.searchEstimate.form.Edit00.value;
+   this.transaction(
+      "sendEmail",
+      "svcCompinfo::estimatereportemail",
+      "",
+      "",
+      "orderDraftNo="+orderDraftNo+" emailId="+emailId,
+      "callback",
+         false
+   );
+};]]></Script>
+    <Objects>
+      <Dataset id="Dataset00"/>
+    </Objects>
+  </Form>
+</FDL>

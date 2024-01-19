@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="mpsRegister" width="1300" height="720" titletext="MPS 조회" onload="mpsRegister_onload">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="1300">
+        <GroupBox id="GroupBox00" taborder="0" text="주 생산 계획" left="15" top="10" width="1250" height="680" titlealign="topcenter" color="black" font="normal 300 23pt/normal &quot;Arial&quot;"/>
+        <GroupBox id="GroupBox00_00" taborder="1" text="MPS 로 등록할 계획 구분" left="31" top="50" width="250" height="70" color="darkslategray" background="transparent"/>
+        <GroupBox id="GroupBox00_00_00" taborder="2" text="MPS 등록" left="311" top="50" width="200" height="70" color="darkslategray"/>
+        <GroupBox id="GroupBox00_01" taborder="3" text="MPS 검색(By 계획일자)" left="561" top="50" width="430" height="70" color="darkslategray"/>
+        <Radio id="r_mpsDivision" taborder="4" left="113" top="70" height="40" width="115" innerdataset="ds_mps_division" codecolumn="data" datacolumn="id" direction="vertical" color="darkslategray"/>
+        <Button id="btn_addNewMps" taborder="5" text="등록" left="336" top="70" width="150" height="40" onclick="btn_addNewMps_onclick" color="white" background="black"/>
+        <Button id="btn_searchMps" taborder="6" text="MPS 조회" left="830" top="70" width="150" height="40" onclick="btn_searchMps_onclick" color="white" background="black"/>
+        <Grid id="Grid00" taborder="7" left="31" top="140" width="1200" height="500" autofittype="col" binddataset="gds_mps" color="darkslategray">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="110"/>
+                <Column size="64"/>
+                <Column size="141"/>
+                <Column size="56"/>
+                <Column size="89"/>
+                <Column size="48"/>
+                <Column size="80"/>
+                <Column size="63"/>
+                <Column size="64"/>
+                <Column size="91"/>
+                <Column size="94"/>
+                <Column size="61"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="주생산계획번호" autosizecol="limitmax"/>
+                <Cell col="1" text="계획구분" autosizecol="limitmax"/>
+                <Cell col="2" text="일련번호(수주/판매)" autosizecol="limitmax"/>
+                <Cell col="3" text="품목코드" autosizecol="limitmax"/>
+                <Cell col="4" text="품목명" autosizecol="limitmax"/>
+                <Cell col="5" text="단위" autosizecol="limitmax"/>
+                <Cell col="6" text="계획일자" autosizecol="limitmax"/>
+                <Cell col="7" text="계획수량" autosizecol="limitmax"/>
+                <Cell col="8" text="납기일" autosizecol="limitmax"/>
+                <Cell col="9" text="예정마감일자" autosizecol="limitmax"/>
+                <Cell col="10" text="MRP적용상태" autosizecol="limitmax"/>
+                <Cell col="11" text="비고" autosizecol="limitmax"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:MPS_NO"/>
+                <Cell col="1" text="bind:MPS_PLAN_CLASSIFICATION"/>
+                <Cell col="2" text="bind:CONTRACT_DETAIL_NO"/>
+                <Cell col="3" text="bind:ITEM_CODE"/>
+                <Cell col="4" text="bind:ITEM_NAME"/>
+                <Cell col="5" text="bind:UNIT_OF_MPS"/>
+                <Cell col="6" text="bind:MPS_PLAN_DATE"/>
+                <Cell col="7" text="bind:MPS_PLAN_AMOUNT"/>
+                <Cell col="8" text="bind:DUE_DATE_OF_MPS"/>
+                <Cell col="9" text="bind:SCHEDULED_END_DATE"/>
+                <Cell col="10" text="bind:MRP_APPLY_STATUS"/>
+                <Cell col="11" text="bind:DESCRIPTION"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Calendar id="c_sDate" taborder="8" left="571" top="70" width="120" height="40" color="orangered"/>
+        <Calendar id="c_eDate" taborder="9" left="705" top="70" width="120" height="40" color="orangered"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_mps_division">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="data" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">수주상세</Col>
+            <Col id="data">contractDetail</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[include "Lib::commLib.xjs";
+var nexa = nexacro.getApplication();
+var url;
+
+this.mpsRegister_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	nexa.gds_mps.clearData();
+};
+
+this.btn_addNewMps_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	trace(this.r_mpsDivision.value);
+	if(this.r_mpsDivision.value==null){
+		alert("mps 계획 구분 선택 바랍니다");
+		return;
+	}
+	if(this.r_mpsDivision.value=="contractDetail"){
+		url="prodc::newMpsByContract.xfdl";
+	}
+	
+
+	this.gfn_openPopup (
+		"newMpsByContract",
+		"",
+		url,
+		this,
+		1000,
+		700,
+		true,
+		false
+	);
+	
+};
+
+this.btn_searchMps_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(this.c_sDate.value==null || this.c_eDate.value==null){
+		alert("날짜 선택 바랍니다");
+		return;
+	}
+	var cg_sDate=nexa.changeDate(this.c_sDate.value);
+	var cg_eDate=nexa.changeDate(this.c_eDate.value);
+	this.transaction
+	("searchMainMps",
+	 "svcProduction::mps/Mainlist",
+	 "",
+	 "gds_mps=gds_mps",
+	"startDate='"+cg_sDate+"' endDate='"+cg_eDate+"' includeMrpApply='includeMrpApply'",
+	"callbaCK",
+	false
+	);
+};
+
+this.callback =function callback(trId , ErrorCode, ErrorMsg){
+	trace("		@@@@@ trId: "+trId);
+	if(ErrorCode < 0){
+		alert(trId+"  Error: "+ErrorMsg);
+		return;
+	}
+
+}]]></Script>
+  </Form>
+</FDL>

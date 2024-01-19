@@ -1,0 +1,307 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="orderRegister" width="1280" height="720" titletext="발주관리" onload="order_onload">
+    <Layouts>
+      <Layout height="720" width="1280" stepcount="0">
+        <GroupBox id="orderMng" taborder="0" text="발주관리" left="18" top="20" width="1162" height="650" titlealign="topcenter" font="normal bold 25pt/normal &quot;Arial&quot;" cssclass="grpBox_normal" color="black"/>
+        <Tab id="order" taborder="1" tabindex="0" left="30" top="66" width="1110" height="587" font="normal 9pt/normal &quot;Arial&quot;" selectedtabbuttonheight="30" selectedtabbuttonwidth="100" tabposition="top" color="orangered" onchanged="order_onchanged">
+          <Tabpages>
+            <Tabpage id="tab_order" text="발주">
+              <Layouts>
+                <Layout>
+                  <Grid id="Grid00" taborder="0" left="6" top="89" width="1098" height="344" binddataset="gds_orderTemp" onheadclick="order_tab_order_Grid00_onheadclick" oncellclick="order_tab_order_Grid00_oncellclick" color="orangered">
+                    <Formats>
+                      <Format id="default">
+                        <Columns>
+                          <Column size="35"/>
+                          <Column size="48"/>
+                          <Column size="143"/>
+                          <Column size="125"/>
+                          <Column size="194"/>
+                          <Column size="86"/>
+                          <Column size="97"/>
+                          <Column size="131"/>
+                          <Column size="107"/>
+                          <Column size="106"/>
+                        </Columns>
+                        <Rows>
+                          <Row size="30" band="head"/>
+                          <Row size="26"/>
+                        </Rows>
+                        <Band id="head">
+                          <Cell/>
+                          <Cell col="1" displaytype="checkboxcontrol" edittype="none"/>
+                          <Cell col="2" text="소요량취합번호"/>
+                          <Cell col="3" text="품목코드"/>
+                          <Cell col="4" text="품목명"/>
+                          <Cell col="5" text="단위"/>
+                          <Cell col="6" text="필요수량"/>
+                          <Cell col="7" text="현 재고량"/>
+                          <Cell col="8" text="발주기한"/>
+                          <Cell col="9" text="입고기한"/>
+                        </Band>
+                        <Band id="body">
+                          <Cell expr="currow+1" textAlign="center"/>
+                          <Cell col="1" displaytype="checkboxcontrol" edittype="none" text="bind:CHECKED"/>
+                          <Cell col="2" text="bind:MRP_GATHERING_NO" textAlign="center"/>
+                          <Cell col="3" text="bind:ITEM_CODE" textAlign="center"/>
+                          <Cell col="4" text="bind:ITEM_NAME" textAlign="center"/>
+                          <Cell col="5" text="bind:UNIT_OF_MRP" textAlign="center"/>
+                          <Cell col="6" text="bind:REQUIRED_AMOUNT" textAlign="center"/>
+                          <Cell col="7" text="bind:STOCK_AMOUNT" textAlign="center"/>
+                          <Cell col="8" text="bind:ORDER_DATE" textAlign="center"/>
+                          <Cell col="9" text="bind:REQUIRED_DATE"/>
+                        </Band>
+                      </Format>
+                    </Formats>
+                  </Grid>
+                  <GroupBox id="GroupBox00" taborder="1" text="취합발주 / 발주필요품목검색" left="2" top="5" width="638" height="68" font="normal bold 11pt/normal &quot;Arial&quot;" titlealign="topcenter" cssclass="grpBox_normal" color="black"/>
+                  <Calendar id="Calendar01" taborder="2" left="150" top="26" width="133" height="34" dateformat="yyyy-MM-dd" displaynulltext="종료일" font="normal bold 12pt/normal &quot;Arial&quot;" visible="true" color="orangered"/>
+                  <Calendar id="Calendar00" taborder="3" left="12" top="26" width="133" height="34" dateformat="yyyy-MM-dd" displaynulltext="시작일" font="normal bold 12pt/normal &quot;Arial&quot;" visible="true" color="orangered"/>
+                  <Button id="Button01" taborder="4" text="모의재고처리 및 취합발주" left="472" top="26" width="158" height="34" font="normal 10pt/normal &quot;Arial&quot;" onclick="estimate_searchEstimate_Button01_onclick" cssclass="btn_normal" background="black"/>
+                  <Button id="Button00" taborder="5" text="재고처리 / 발주필요 목록조회" left="290" top="26" width="170" height="34" font="normal 9pt/normal &quot;Arial&quot;" onclick="estimateForm_searchEstimate_Button00_onclick" cssclass="btn_normal" background="black"/>
+                  <GroupBox id="GroupBox01" taborder="6" text="임의발주 품목검색/수량입력" left="660" top="5" width="350" height="68" font="normal bold 11pt/normal &quot;Arial&quot;" titlealign="topcenter" cssclass="grpBox_normal" color="black"/>
+                  <Edit id="Edit00" taborder="7" left="677" top="26" width="123" height="34" displaynulltext="품목코드 검색" font="normal normal 11pt/normal &quot;Arial&quot;" visible="true" oneditclick="deliver_deliver_Edit00_oneditclick" cssclass="edit_normal"/>
+                  <Edit id="Edit01" taborder="8" left="807" top="26" width="83" height="34" displaynulltext="수량" font="normal normal 11pt/normal &quot;Arial&quot;" visible="true" oneditclick="deliver_deliver_Edit00_oneditclick" cssclass="edit_normal"/>
+                  <Button id="Button02" taborder="9" text="임의발주" left="912" top="26" width="78" height="34" font="normal 10pt/normal &quot;Arial&quot;" onclick="estimate_searchEstimate_Button01_onclick" cssclass="btn_normal" background="black"/>
+                  <Button id="Button03" taborder="10" text="프린트" left="1018" top="16" width="60" height="55" onclick="order_tab_order_Button03_onclick" cssclass="btn_normal" background="black"/>
+                </Layout>
+              </Layouts>
+            </Tabpage>
+            <Tabpage id="tab_orderInfo" text="발주현황">
+              <Layouts>
+                <Layout>
+                  <Grid id="Grid00" taborder="0" left="4" top="98" width="816" height="425" binddataset="gds_orderInfo" color="orangered">
+                    <Formats>
+                      <Format id="default">
+                        <Columns>
+                          <Column size="34"/>
+                          <Column size="106"/>
+                          <Column size="97"/>
+                          <Column size="168"/>
+                          <Column size="101"/>
+                          <Column size="91"/>
+                          <Column size="119"/>
+                          <Column size="80"/>
+                        </Columns>
+                        <Rows>
+                          <Row size="24" band="head"/>
+                          <Row size="24"/>
+                        </Rows>
+                        <Band id="head">
+                          <Cell/>
+                          <Cell col="1" text="발주번호"/>
+                          <Cell col="2" text="발주날짜"/>
+                          <Cell col="3" text="현재상태"/>
+                          <Cell col="4" text="발주유형"/>
+                          <Cell col="5" text="품목코드"/>
+                          <Cell col="6" text="품목명"/>
+                          <Cell col="7" text="발주수량"/>
+                        </Band>
+                        <Band id="body">
+                          <Cell text="currow+1" displaytype="none"/>
+                          <Cell col="1" text="bind:ORDER_NO"/>
+                          <Cell col="2" text="bind:ORDER_DATE"/>
+                          <Cell col="3" text="bind:ORDER_INFO_STATUS"/>
+                          <Cell col="4" text="bind:ORDER_SORT"/>
+                          <Cell col="5" text="bind:ITEM_CODE"/>
+                          <Cell col="6" text="bind:ITEM_NAME"/>
+                          <Cell col="7" text="bind:ORDER_AMOUNT"/>
+                        </Band>
+                      </Format>
+                    </Formats>
+                  </Grid>
+                  <GroupBox id="GroupBox00" taborder="1" text="발주현황조회" left="22" top="15" width="478" height="68" font="normal bold 11pt/normal &quot;Arial&quot;" titlealign="topcenter" cssclass="grpBox_normal"/>
+                  <Calendar id="Calendar00" taborder="2" left="37" top="36" width="133" height="34" dateformat="yyyy-MM-dd" displaynulltext="시작일" font="normal bold 12pt/normal &quot;Arial&quot;" visible="true" color="orangered"/>
+                  <Calendar id="Calendar01" taborder="3" left="175" top="36" width="133" height="34" dateformat="yyyy-MM-dd" displaynulltext="종료일" font="normal bold 12pt/normal &quot;Arial&quot;" visible="true" color="orangered"/>
+                  <Button id="Button00" taborder="4" text="발주현황조회" left="344" top="36" width="126" height="34" font="normal 11pt/normal &quot;Arial&quot;" onclick="estimate_regEstimate_Button00_onclick" cssclass="btn_normal"/>
+                </Layout>
+              </Layouts>
+            </Tabpage>
+          </Tabpages>
+        </Tab>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_order">
+        <ColumnInfo>
+          <Column id="MRP_GATHERING_NO" type="STRING" size="256"/>
+          <Column id="ITEM_CODE" type="STRING" size="256"/>
+          <Column id="ITEM_NAME" type="STRING" size="256"/>
+          <Column id="UNIT_OF_MRP" type="STRING" size="256"/>
+          <Column id="REQUIRED_AMOUNT" type="STRING" size="256"/>
+          <Column id="STOCK_AMOUNT" type="STRING" size="256"/>
+          <Column id="ORDER_DATE" type="STRING" size="256"/>
+          <Column id="REQUIRED_DATE" type="STRING" size="256"/>
+          <Column id="CHECKED" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[///////////////////////////////////////  	전역변수		///////////////////////////////////////
+
+include "Lib::commLib.xjs";
+var nexa = nexacro.getApplication();
+var startDate;
+var endDate;
+var price;
+
+///////////////////////////////////////  	온로드		///////////////////////////////////////
+
+
+this.order_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	nexa.gds_orderTemp.clearData();
+	nexa.gds_codeDetail.clearData();
+	nexa.gds_item.clearData();
+};
+
+
+///////////////////////////////////////  	발주 페이지		///////////////////////////////////////
+
+this.estimateForm_searchEstimate_Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) //목록조회
+{
+	this.order.tab_order.form.Calendar00.value;
+	this.order.tab_order.form.Calendar01.value;
+	if(this.order.tab_order.form.Calendar00.value==null || this.order.tab_order.form.Calendar01.value==null){
+		alert("날짜를 선택 바랍니다"); 
+		return;
+	}
+	startDate=nexa.changeDate(this.order.tab_order.form.Calendar00.value);
+	endDate=nexa.changeDate(this.order.tab_order.	form.Calendar01.value);
+		this.transaction(
+					"search_order_list",
+					"svcPurchase::order/list",
+					"",
+					"gds_orderTemp=gds_orderTemp",
+					"startDate="+startDate+" endDate="+endDate,
+					"callback");
+
+};
+
+this.order_tab_order_Grid00_onheadclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo) //그리드 헤드클릭
+{
+	var size = nexa.gds_orderTemp.getRowCount();
+	var num = null;
+	var headCheck = obj.getCellProperty('Head',1,'text');
+	if(e.col==1){
+		if(headCheck=='0'||headCheck==null){
+			num = '1';
+		}else{
+			num = '0';
+		}
+		for(var i=0; i<size; i++){
+			nexa.gds_orderTemp.setColumn(i,"CHECKED",num);
+		}
+		obj.setCellProperty('Head',1,'text',num);
+	}
+};
+
+this.order_tab_order_Grid00_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo) //그리드 셀클릭
+{
+	var yn = nexa.gds_orderTemp.getColumn(e.row,"CHECKED");
+	if(e.col==1){
+		if(yn==null || yn=='0'){
+			nexa.gds_orderTemp.setColumn(e.row,"CHECKED",'1');
+		}else{
+			nexa.gds_orderTemp.setColumn(e.row,"CHECKED",'0');
+		}
+	}
+	var gdsRowCount = nexa.gds_orderTemp.getRowCount();
+	if(nexa.gds_orderTemp.getCaseCount("CHECKED == '1'") == gdsRowCount){
+		obj.setCellProperty('Head',1,'text','1');
+	}else{
+		obj.setCellProperty('Head',1,'text','0');
+	}
+};
+
+this.estimate_searchEstimate_Button01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) //취합발주
+{
+	this.ds_order.clearData();
+	var mrpNo=[];
+	nexa.gds_orderTemp.filter("CHECKED == '1'");
+	var copyNo = this.ds_order.copyData(nexa.gds_orderTemp, true);
+	for(var n=0; n<this.ds_order.rowcount; n++){
+		mrpNo.push(this.ds_order.getColumn(n,"MRP_GATHERING_NO"));
+	}
+	if(this.ds_order.rowcount==0){
+		alert("발주할 물품을 선택하지 않았습니다."); 
+		return;
+	}else{
+		this.gfn_showModal(
+				"order_simul",
+				{"mrpNo":mrpNo},
+				"purcsto::order_simul.xfdl",
+				"popupCallBack",
+				this,
+				1000, 
+				550, 
+				true, 
+				true, 
+				null
+				);
+	}
+};
+
+///////////////////////////////////////  	공통		///////////////////////////////////////
+
+this.popupCallBack = function(strPopupID, strReturn)  //팝업콜백(showModal의 리턴값 받음)
+{
+	if(strPopupID=="order_simul"){
+		nexa.gds_orderTemp.filter("");
+		if(strReturn){
+			this.transaction(
+					"search_order_list",
+					"svcPurchase::order/list",
+					"",
+					"gds_orderTemp=gds_orderTemp",
+					"startDate="+startDate+" endDate="+endDate,
+					"callback");
+		}
+	}
+}
+//트랜잭션콜백
+this.callback = function (trid , ErrorCode, ErrorMsg){
+	
+	if(trid.indexOf("search")!=-1){
+		if(ErrorCode <0){
+			alert("조회 실패 : " + ErrorMsg);
+		}
+	}
+}
+
+
+///////////////////////////////////////  	발주현황 페이지		///////////////////////////////////////
+
+this.estimate_regEstimate_Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) //발주현황조회
+{
+	var startDate=nexacro.trim(this.order.tab_orderInfo.form.Calendar00.text);
+	var endDate=nexacro.trim(this.order.tab_orderInfo.form.Calendar01.text);
+	
+	if(startDate.length+endDate.length<20){
+		alert("날짜를 입력해주세요~"); return;
+	}
+	else{
+		this.transaction(
+					"search_order_info_list",
+					"svcPurchase::order/info",
+					"",
+					"gds_orderInfo=gds_orderInfo",
+					"startDate="+startDate+" endDate="+endDate,
+					"callback");
+	}
+};
+
+
+this.order_tab_order_Button03_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var orderRegisterObj = this.order.tab_order
+	var printSuccess = system.print(orderRegisterObj,false,'middle','center');
+	if(printSuccess){
+		trace('프린트에 성공하였습니다.');
+	}else {
+		this.alert('프린트에 실패하였습니다.');
+	}
+};
+]]></Script>
+  </Form>
+</FDL>

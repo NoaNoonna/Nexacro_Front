@@ -1,0 +1,425 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script version="1.0" type="xscript5.1"><![CDATA[/***************************************************************************
+ * Program ID    : commFrame.xjs
+ * Program Name  : Form Frame 관련함수
+ * Author        : shji
+ * Created Date  : 2019.01.14
+ *
+ * =========================================================================
+ * 수정일자     수정자    내    용
+ * =========================================================================
+ * 2019.01.14   shji      최초작성
+ **************************************************************************/
+
+/***************************************************************************
+ * this.gfn_formOnLoad       : 화면초기화함수
+ * this.gfn_allCallFunction  : Form에 속한 모든 컴포넌트를 함수의 인자로 넘겨주고 함수 호출처리
+ * this.gfn_formSetInit		: Form에 속한 컨트롤들의 초기화 처리
+ * this.gfn_formKeyDown      : form에서 Key Down시 단축키들 지정
+ * this.gfn_getObjType       : Object의 type을 문자열로 얻어온다.
+ **************************************************************************/
+
+/**
+ * @class 화면초기화함수
+ * @param obj    - Form object
+ * @param bCreateEvent - 자동으로 Event 생성 여부
+ * @return 없음
+ */
+this.gfn_formOnLoad = function(obj:Form, bCreateEvent, bLangCd, bCompSetting, strCallbackFunction)
+{
+    //trace("lib_form - gfn_formOnLoad");
+    // 기본값으로 콘테이너 내 Componet 처리
+    if (this.gfn_isNull(bCreateEvent)) bCreateEvent = true;
+    if (this.gfn_isNull(bLangCd)) bLangCd = true;
+    if (this.gfn_isNull(bCompSetting)) bCompSetting = true;
+    if (this.gfn_isNull(strCallbackFunction)) strCallbackFunction = "";
+
+    // 자동으로 Event 생성 여부 and obj가 Form 일때만
+    strType = obj.parent.toString().toUpperCase();
+    if ( bCreateEvent == true && (strType == "[OBJECT FORM]" || strType == "[OBJECT CHILDFRAME]") )
+    {
+        // form에서 Key Down시 단축키들 지정
+        var objEvent = obj.onkeydown.getHandler(0);
+        if (this.gfn_isNull(objEvent)) obj.onkeydown.addHandler(gfn_formKeyDown);
+    }
+
+    // 기본값으로 콘테이너 내 Componet 처리
+    var bSubComp = true;
+
+    // Form에 속한 컨트롤들의 초기화 처리
+    this.gfn_allCallFunction(obj, gfn_formSetInit, bCreateEvent, false, bSubComp, bLangCd, bCompSetting, strCallbackFunction);
+}
+
+
+/**
+ * @class Form에 속한 모든 컴포넌트를 함수의 인자로 넘겨주고 함수 호출처리
+ * @param obj - 컨테이너(Form, Div)
+ * @param FunctionObj - 호출할 함수
+ * @param paramObj - 함수에 넘겨줄 파라메터
+ * @param bObjects - Object 포함 여부
+ * @param bSubComp - 콘테이너 내 Componet 포함 여부
+ * @return retVal 함수의 리턴 값
+ */
+this.gfn_allCallFunction =  function(obj, FunctionObj, paramObj, bObjects, bSubComp, bLangCd, bCompSetting, strCallbackFunction)
+{
+    // 기본값으로 Object도 처리
+    if (this.gfn_isNull(bObjects)) bObjects = true;
+
+    // 기본값으로 콘테이너 내 Componet도 처리
+    if (this.gfn_isNull(bSubComp)) bSubComp = true;
+
+    var strType;
+    var retVal;
+
+    // Component 목록에 함수 실행
+    for (var i = 0; i < obj.components.length; i++)
+    {
+        strType = obj.components[i].toString().toUpperCase();
+        //strName = obj.components[i].name;
+        //trace("gfn_allCallFunction : strType : " + strType + " / strName : " + strName);
+
+        if (strType == "[OBJECT STATIC]") continue;
+        if (strType == "[OBJECT IMAGEVIEWER]") continue;
+        if (strType == "[OBJECT BUTTON]") continue;
+        if (strType == "[OBJECT CHECKBOX]") continue;
+        if (strType == "[OBJECT TEXTAREA]") continue;
+        if (strType == "[OBJECT OBJCALENDAR]") continue;
+        if (strType == "[OBJECT OBJCALMONTH]") continue;
+        if (
+            strType == "[OBJECT CALENDAR]" || 
+            strType == "[OBJECT MASKEDIT]" || 
+            strType == "[OBJECT EDIT]"
+           ) 
+        {
+			obj.components[i].autoselect = paramObj;	// 커서가 들어갔을때 자동 select
+			continue;
+		}
+        //if (strType == "[OBJECT COMBO]") continue;
+
+        // 기본 속성 및 이벤트 생성
+        // gfn_formSetInit 실행
+        FunctionObj.call(this, obj.components[i], paramObj);
+
+        // 내부 Component에 해당 함수 호출
+        if (bSubComp == true)
+        {
+            if (obj.components[i].components)
+            {
+                switch (strType)
+                {
+                    case "[OBJECT TAB]":
+                        retVal = this.gfn_allCallFunction(obj.components[i], FunctionObj, paramObj, bObjects, bSubComp);
+                        if (this.gfn_isNull(retVal) == false) return retVal;
+                        break;
+
+                    case "[OBJECT TABPAGE]":
+                    case "[OBJECT DIV]":
+                    case "[OBJECT POPUPDIV]":
+                        if (this.gfn_isNull(obj.components[i].url) == true)
+                        {
+                            retVal = this.gfn_allCallFunction(obj.components[i], FunctionObj, paramObj, bObjects, bSubComp);
+                            if (this.gfn_isNull(retVal) == false) return retVal;
+                        }
+                        break;
+                }
+            }
+        }
+    }
+
+    // Object 목록에 함수 실행
+    if (bObjects == true && obj.objects)
+    {
+        for (var i = 0; i < obj.objects.length; i++)
+        {
+            strObjType = obj.objects[i].toString().toUpperCase();
+            //strObjName = obj.objects[i].name;
+            //trace("strObjType : " + strObjType + " / strObjName : " + strObjName);
+
+            // 기본 속성 및 이벤트 생성
+            FunctionObj.call(this, obj.components[i], paramObj);
+        }
+    }
+
+    // component별 언어 조회
+    //trace(bLangCd + " , " + gv_isLogin + " ::: " + parent.fv_isScrnCall + " ... " + bCompSetting);
+    if (bLangCd == true && gv_isLogin == "Y")
+    {
+        // 프로그램 관리에서 Component 조회를 위해서 프로그램 관리에서
+        // url로 호출한 화면은 다국어 적용을 하지 않는다.
+        // 로그아웃 후 호출 방지
+        try {
+			if (
+				this.gfn_isNull(parent.fv_isScrnCall) &&
+				parent.fv_isScrnCall != "Y"
+			   )
+			{
+				if (this.gfn_isNull(strCallbackFunction))
+				{
+					//trace("1 strCallbackFunction >>> " + strCallbackFunction);
+					// 화면 component 언어 셋
+					HCCompLang.selectCompLangList(obj);
+					
+					// Valid Dataset 생성
+					// 로그아웃 후 호출 방지
+					HCDatasetValid.selectPrgValidList(obj);
+				}
+				else
+				{
+					//trace("2 strCallbackFunction >>> " + strCallbackFunction);
+					// 화면 component 언어 셋
+					HCCompLang.selectCompLangList(obj, strCallbackFunction);
+					
+					// Valid Dataset 생성
+					// 로그아웃 후 호출 방지
+					HCDatasetValid.selectPrgValidList(obj);
+				}
+			}
+        } catch(e) {}
+        
+        // 로그아웃 후 호출 방지
+        try {
+			if (
+				!this.gfn_isNull(parent.fv_isScrnCall) &&
+				parent.fv_isScrnCall == "Y"
+			   )
+			{
+				// CommonPrgMgt.xfdl 함수 호출
+				if (bCompSetting == true)
+				{
+					// CommonCompLangMgt 호출
+					//trace("bCompSetting >>> " + bCompSetting);
+					parent.getComponentName();
+				}
+				else
+				{
+					// 화면 component 언어 셋
+					HCCompLang.selectCompLangList(obj);
+					
+					// Valid Dataset 생성
+					HCDatasetValid.selectPrgValidList(obj);
+					
+				}
+			}
+        } catch(e) {}
+    }
+}
+
+
+/**
+ * @class Form에 속한 컨트롤들의 초기화 처리
+ * @param obj - 컨테이너(Form, Div)
+ * @param bEvent - 자동으로 Event 생성 여부
+ * @return 없음
+ */
+this.gfn_formSetInit = function(obj, bCreateEvent)
+{
+    var strType     = obj.toString().toUpperCase();	// Component Type
+    //var strName     = obj.name;						// Name
+    //trace("gfn_formSetInit : " + obj.name + " / bCreateEvent : " + bCreateEvent +" / strType : " + strType + " / strName : " + strName);
+
+    // Form내 Component 초기 설정
+    switch (strType)
+    {
+        case "[OBJECT GRID]":
+            // 자동으로 Event 생성
+            if (bCreateEvent == true)
+            {
+                // Sort 처리 : 해당 콤포넌트에 onheadclick 이벤트가 없을때만 생성
+                var objEvent = obj.onheadclick.getHandler(0);
+                if (this.gfn_isNull(objEvent)) obj.onheadclick.addHandler(gfn_gridSort);
+                
+                // 삭제 체크박스 oncellclick 이벤트
+                var objEvent2 = obj.oncellclick.getHandler(0);
+                if (this.gfn_isNull(objEvent2)) obj.oncellclick.addHandler(gfn_gridStateDel);
+                
+                // 2019.03.26 그리드 fillareatype을 none으로 강제로 변경하고
+                // [no data] 이미지를 그리드에 출력한다.
+                obj.fillareatype = "none";
+                obj.nodataimage = "URL('theme://images/grd_WF_NoDataImg.png')";
+                
+                //----------------------------------------------------------------------
+                // Grid 사이즈에 맞게 Column size를 변경한다.
+                //----------------------------------------------------------------------
+                if (obj.autofittype == "none")
+				{
+					obj.cellsizingtype = "col";
+					obj.onsize.addHandler(function(objComp, e) {
+						if (objComp.position.width > objComp.getRealColFullSize())
+						{
+							objComp.autofittype = "col";
+						}
+						else
+						{
+							objComp.autofittype = "none";
+						}
+					}); // resize 제어
+				}
+				//----------------------------------------------------------------------
+				
+				//----------------------------------------------------------------------
+				// Grid에서 Colsize 체크해서 Text보다 길이가 적으면 Tooltip을 보여준다.
+				// Div에서의 ExtCommon 오동작으로 인해 함수를 별도로 구현하여 사용한다.
+				//----------------------------------------------------------------------
+				obj.onmousemove.addHandler(gfn_gridCellTooltip);
+				//----------------------------------------------------------------------
+				
+                //----------------------------------------------------------------------
+                // Grid 클릭시 Edit 항목을 자동 AutoSelect 하여 보여준다.
+                //----------------------------------------------------------------------
+				var nCnt = obj.getCellCount("Body");
+				var edtType = "";
+				for (var j = 0; j < nCnt; j++)
+				{
+					// 2019.03.26 fillareatype을 none으로 강제로 변경함으로써 expand field는 show로 변경한다.
+					if (!this.gfn_isNull(obj.getCellProperty("body", j, "expandimage"))) obj.setCellProperty("body", j, "expandshow", "expr:currow==rowposition?'show':'hide'");
+					
+					edtType = obj.getCellProperty("body", j, "edittype");
+					if (typeof edtType != "undefined" && edtType != "none" && new String(edtType).toUpperCase().indexOf("EXPR") == -1)
+					{
+						switch (edtType)
+						{
+							case "date" :
+								// 그리드의 카렌터 선택 시 바로 dropdown되게 처리한다.
+								obj.oncellclick.addHandler(function(objComp, e) {
+									objComp.dropdownCalendar();
+								});
+								break;
+							case "combo" :
+								// 그리드의 콤보 선택 시 바로 dropdown되게 처리한다.
+								obj.oncellclick.addHandler(function(objComp, e) {
+									objComp.dropdownCombo();
+								});
+								break;
+							case "text" :
+							case "normal" :
+							case "currency" :
+							case "mask" :
+							case "masknumber" :
+								obj.setCellProperty("body", j, "editautoselect", bCreateEvent);
+								break;
+							default :
+								break;
+						}
+					}
+					//----------------------------------------------------------------------
+				}
+            }
+            break;
+
+        case "[OBJECT COMBO]":
+            // 해당 콤포넌트에 onsetfocus 이벤트가 없을때만 생성
+            if (obj.type == "filter" || obj.type == "search")
+            {
+                var objEvent = obj.onsetfocus.getHandler(0);
+                if (this.gfn_isNull(objEvent)) obj.onsetfocus.addHandler(this.gfn_comboSetFocus);
+
+                var objEvent2 = obj.oneditclick.getHandler(0);
+                if (this.gfn_isNull(objEvent2)) obj.oneditclick.addHandler(this.gfn_comboEditClick);
+            }
+            break;
+
+        case "[OBJECT MASKEDIT]":
+            obj.clipmode = "excludespace";
+            break;
+
+        default:
+            break;
+    }
+    return true;
+}
+
+
+/**
+ * @class form에서 Key Down시 단축키들 지정
+ * @param obj - obj
+ * @param e - event 객체
+ * @return 없음
+ */
+this.gfn_formKeyDown = function(obj, e)
+{
+	// alt + f2 키 입력 시 debug view 팝업
+	if ( e.altKey == true && e.keycode == 113 )
+	{
+		var objParam = {
+			"vObj": obj
+		};
+		
+		// modeless로 띄운다.
+		var rtnVal = this.gfn_dialog("debug_" + this.gfn_todayTime()				// dialogId
+						, "frm::frmDebug.xfdl"			// Url
+						, {fv_Contents: objParam}
+						, null, null, null, null, null, true, true, -1);
+	}
+	
+    //trace("gfn_formKeyDown : obj.name : " + obj.name + " / e.altKey : " + e.altKey + " / e.ctrlKey : " + e.ctrlKey + " / e.keycode : " + e.keycode);
+    var obj = getFocus();
+    var componentType = this.gfn_getObjType(obj);
+    var strCssclass = obj.class;					// CSS Class
+
+    var objNextComponent = getNextComponent(obj);
+    var nextComponentType = this.gfn_getObjType(objNextComponent);
+
+    //trace("Obj Name : " + obj.name + " - objNextComponent : " + objNextComponent.name);	
+    if (componentType == "Grid")
+    {
+        // Ctrl + C	: Cell clipboard 복사
+        if (e.ctrlKey == true && e.keycode == 67)
+        {
+			if (obj.selecttype == "area")
+			{
+				this.gfn_gridCopy(obj, e);
+			}
+			else
+			{
+				var objDataset = eval(obj.binddataset);
+				var v_clip = obj.getCellText(objDataset.rowposition, obj.getCellPos());
+	
+				//var v_clip = obj.getCellText(obj.currentrow, obj.currentcol);
+				system.clearClipboard();
+				system.setClipboard("CF_UNICODETEXT", v_clip);
+			}
+        }
+        // Ctrl + V	: Paste
+        else if (e.ctrlKey == true && e.keycode == 86)
+        {
+            gfn_gridPaste(obj, e);
+        }
+        // Enter 키
+        //else if (e.keycode == 13)
+        //{
+        //    var bSuccess = obj.moveToNextCell();	// 수정이 가능한 다음 셀로 이동
+        //    if (!bSuccess) objNextComponent.setFocus();	// 수정이 가능한 다음 셀 없을때 Next Comp로 이동
+        //}
+    }
+    
+    // 팝업에서 ESC 키 시 창닫기
+    var objOpener = opener;
+    if (e.keycode == 27 && this.gfn_isNull(objOpener) == false)
+    {
+        this.close();
+    }
+}
+
+
+/**
+ * @class Object의 type을 문자열로 얻어온다.
+ * @param obj - type을 얻어올 Object
+ * @return string Object의 type문자열(예 : "MainFrame", "ChildFrame", "Form", "Button",...)
+ */
+this.gfn_getObjType = function(oObj)
+{
+    var sType;
+
+    if (this.gfn_isNull(oObj))
+    {
+        return "";
+    }
+
+    sType = oObj.toString().valueOf().substr(1, 6);
+    if (sType.toLowerCase() == "object")
+    {
+        return this.gfn_midString(oObj.toString().valueOf(), " ", "]");
+    }
+
+    return "";
+}]]></Script>

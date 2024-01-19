@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="customerManagement" width="1280" height="720" titletext="거래처목록" onload="customerManagement_onload">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="1280">
+        <Div id="Div00" taborder="0" text="Div00" left="20" top="140" width="1220" height="296" border="1px solid">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="0" text="직장코드" left="0" top="0" width="279" height="30" font="normal 16px &quot;Ariel&quot;"/>
+              <Static id="Static00_00" taborder="1" text="고객이름" left="0" top="30" width="279" height="30" font="normal 16px &quot;Ariel&quot;"/>
+              <Static id="Static00_01" taborder="2" text="고객유형" left="0" top="60" width="329" height="30" font="normal 16px &quot;Ariel&quot;"/>
+              <Static id="Static00_02" taborder="3" text="고객CEO" left="0" top="90" width="329" height="30" font="normal 16px &quot;Ariel&quot;"/>
+              <Static id="Static00_03" taborder="4" text="비즈니스라이선스번호" left="0" top="120" width="329" height="30" font="normal 16px &quot;Ariel&quot;"/>
+              <Static id="Static00_04" taborder="5" text="사회보장번호" left="0" top="150" width="329" height="30" font="normal 16px &quot;Ariel&quot;"/>
+              <Static id="Static00_05" taborder="6" text="고객비즈니스조건" left="0" top="180" width="329" height="30" font="normal 16px &quot;Ariel&quot;"/>
+              <Static id="Static00_06" taborder="7" text="고객비즈니스아이템" left="0" top="210" width="329" height="30" font="normal 16px &quot;Ariel&quot;"/>
+              <Static id="Static00_00_00" taborder="8" text="고객우편번호" left="625" top="0" width="254" height="30" font="normal 16px &quot;Ariel&quot;"/>
+              <Static id="Static00_01_00" taborder="9" text="고객기본주소" left="625" top="30" width="124" height="30" font="normal 16px &quot;Ariel&quot;"/>
+              <Static id="Static00_02_00" taborder="10" text="고객정보주소" left="625" top="60" width="124" height="54" font="normal 16px &quot;Ariel&quot;"/>
+              <Static id="Static00_03_00" taborder="11" text="고객전화번호" left="625" top="114" width="124" height="30" font="normal 16px &quot;Ariel&quot;"/>
+              <Static id="Static00_04_00" taborder="12" text="고객팩스번호" left="625" top="144" width="124" height="30" font="normal 16px &quot;Ariel&quot;"/>
+              <Static id="Static00_05_00" taborder="13" text="고객노트" left="625" top="174" width="124" height="54" font="normal 16px &quot;Ariel&quot;"/>
+              <Static id="Static00_06_00" taborder="14" text="생산된제품" left="625" top="228" width="124" height="30" font="normal 16px &quot;Ariel&quot;"/>
+              <Combo id="workplaceCode" taborder="15" left="279" top="0" width="330" height="30" innerdataset="gds_codeDetail" codecolumn="DETAIL_CODE" datacolumn="DETAIL_CODE_NAME" text=""/>
+              <Edit id="customerName" taborder="16" left="279" top="30" width="330" height="30"/>
+              <Edit id="customerCeo" taborder="17" left="279" top="90" width="330" height="30"/>
+              <Edit id="businessLicenseNumber" taborder="18" left="279" top="120" width="330" height="30"/>
+              <Combo id="customerType" taborder="19" left="279" top="60" width="330" height="30" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">일반</Col>
+                      <Col id="datacolumn">일반</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">해외</Col>
+                      <Col id="datacolumn">해외</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+              <Edit id="socialSecurityNumber" taborder="20" left="279" top="150" width="330" height="30"/>
+              <Edit id="customerBusinessItems" taborder="21" left="279" top="210" width="330" height="30"/>
+              <Edit id="customerZipCode" taborder="22" left="879" top="0" width="240" height="30"/>
+              <Edit id="customerBasicAddress" taborder="23" left="879" top="30" width="330" height="30"/>
+              <TextArea id="customerDetailAddress" taborder="24" left="879" top="60" width="330" height="54"/>
+              <Edit id="customerTelNumber" taborder="25" left="879" top="114" width="330" height="30"/>
+              <Edit id="customerFaxNumber" taborder="26" left="879" top="144" width="330" height="30"/>
+              <TextArea id="customerNote" taborder="27" left="879" top="174" width="330" height="54"/>
+              <Edit id="producedProduct" taborder="28" left="879" top="228" width="330" height="30"/>
+              <Edit id="customerBusinessConditions" taborder="29" left="279" top="180" width="330" height="30"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="reverse" taborder="1" text="추가" left="507" top="490" width="248" height="60" font="normal 11pt/normal &quot;Arial&quot;" onclick="reverse_onclick" cssclass="btn_normal"/>
+        <Static id="Static00_00" taborder="2" text="추가 정보" left="506" top="45" width="248" height="50" font="bold 28pt/normal &quot;Arial&quot;" textAlign="center" color="black"/>
+        <Button id="Button00" taborder="3" text="검색" left="1140" top="161" width="90" height="30" color="white" background="black" onclick="Button00_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[include "Lib::commLib.xjs";
+nexa = nexacro.getApplication();
+
+
+this.reverse_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{	var div = this.Div00.form;
+	
+	if(div.workplaceCode.value==null){
+		alert("직원 코드를 선택해 주세요");
+		
+	}else if(div.workplaceCode.value!=null){
+	var row = nexa.gds_customer.addRow();
+	var lastCode = nexa.gds_customer.getColumn(row-1,"CUSTOMER_CODE");
+	lastCode = lastCode.substring(4);
+	nexa.gds_customer.setColumn(row,"CUSTOMER_CODE","PTN-"+(Number(lastCode)+1));
+	nexa.gds_customer.setColumn(row,"WORKPLACE_CODE",div.workplaceCode.value);
+	nexa.gds_customer.setColumn(row,"CUSTOMER_NAME",div.customerName.value);
+	nexa.gds_customer.setColumn(row,"CUSTOMER_TYPE",div.customerType.value);
+	nexa.gds_customer.setColumn(row,"CUSTOMER_CEO",div.customerCeo.value);
+	nexa.gds_customer.setColumn(row,"BUSINESS_LICENSE_NUMBER",div.businessLicenseNumber.value);
+	nexa.gds_customer.setColumn(row,"SOCIAL_SECURITY_NUMBER",div.socialSecurityNumber.value);
+	nexa.gds_customer.setColumn(row,"CUSTOMER_BUSINESS_CONDITIONS",div.customerBusinessConditions.value);
+	nexa.gds_customer.setColumn(row,"CUSTOMER_BUSINESS_ITEMS",div.customerBusinessItems.value);
+	nexa.gds_customer.setColumn(row,"CUSTOMER_ZIP_CODE",div.customerZipCode.value);
+	nexa.gds_customer.setColumn(row,"CUSTOMER_BASIC_ADDRESS",div.customerBasicAddress.value);
+	nexa.gds_customer.setColumn(row,"CUSTOMER_DETAIL_ADDRESS",div.customerDetailAddress.value);
+	nexa.gds_customer.setColumn(row,"CUSTOMER_TEL_NUMBER",div.customerTelNumber.value);
+	nexa.gds_customer.setColumn(row,"CUSTOMER_FAX_NUMBER",div.customerFaxNumber.value);
+	nexa.gds_customer.setColumn(row,"CUSTOMER_NOTE",div.customerNote.value);
+	nexa.gds_customer.setColumn(row,"PRODUCED_PRODUCT",div.producedProduct.value);
+	this.close();
+	}
+};
+
+
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var oArg = {};
+	this.gfn_showModal (
+		"addSearchPop",
+		oArg,
+		"Base::jusoapisearchpop_popup.xfdl",
+		"popupCallBack",
+		this,
+		570,
+		450,
+		true,
+		false
+	);
+};
+]]></Script>
+  </Form>
+</FDL>

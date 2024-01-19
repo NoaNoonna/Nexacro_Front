@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script version="1.0" type="xscript5.1"><![CDATA[/***************************************************************************
+ * Program ID    : commTrans.xjs
+ * Program Name  : Transaction 관련함수
+ * Author        : shji
+ * Created Date  : 2019.01.14
+ *
+ * =========================================================================
+ * 수정일자     수정자    내    용
+ * =========================================================================
+ * 2019.01.14   shji      최초작성
+ **************************************************************************/
+
+/***************************************************************************
+ * this.gfn_transaction     : Transaction 함수
+ * this.gfn_callBack        : 공통 Callback 서비스
+ * this.gfn_chkTransaction  : Transaction 호출 후 정리 처리등의 메세지 처리
+ **************************************************************************/
+
+/**
+ * @class Transaction 함수
+ * @param objForm - Form
+ * @param strId - transaction을 구분하기 위한 ID
+ * @param strURL - XUP 모델명
+ * @param strInDatasets - transaction을 요청할 때 입력값으로 보낼 Dataset 의 ID 리스트
+ * @param strOutDatasets - transaction을 처리 결과를 받을 Dataset의 ID 리스트
+ * @param strArgument - transaction을 요청할 때 입력값으로 보낼 변수
+ * @param strCallbackFunc - transaction callback 함수
+ * @param bAsync - 비동기 여부(true: Sync, false : UnSync)
+ * @param bProgress - Progress 여부
+ * @return
+ */
+this.gfn_transaction = function(objForm, strSvcID, strURL, strInDatasets, strOutDatasets, strArgument, strCallbackFunc, bAsync, bProgress) 
+{
+	//트랜잭션 발생시마다 세션 만료시간을 초기화(BottomFrame에서 사용)
+	gv_sessionInit = "Y";		//세션 만료시간 초기화 여부
+	
+	// Wait Cursor 표시여부
+    if ((bProgress != true) && (bProgress != false)) bProgress = true;
+    
+    // 비동기 여부
+    if ((bAsync != true) && (bAsync != false)) bAsync = true;
+    
+    // Wait Cursor 표시 설정
+    try 
+    {
+        if ( bProgress == true )
+        {
+            setWaitCursor(true, true);
+        }
+        else
+        {
+			setWaitCursor(false, false);
+        }
+    } 
+    catch(e) 
+    {
+        setWaitCursor(true, true);
+    }
+    
+    try 
+    {
+        //Frame ID
+        var strFrameId = objForm.getOwnerFrame().name;
+        
+        //Transaction Start Time
+        var objDate = new Date();
+        var nStartTime = objDate.getTime(); //Milliseconds
+        
+		var strURL = "svc::" + strURL;
+		
+		//전송형태 : 0(XML 타입), 1(Binary 타입), 2(SSV 타입)
+        var nDataType = 1; //성능테스트 시 0으로 변경
+        
+        //통신시 포스트데이터를 압축할지 여부
+        var bCompress = true; //성능테스트 시 false로 변경
+        bAsync = false;
+		
+		//Frame ID
+        var strFrameId = objForm.getOwnerFrame().name;
+		var strTranId = strFrameId + "|" + bProgress.toString() + "|" + strSvcID + "|" + strCallbackFunc;
+		
+		// Argument 처리 (Global변수 추가)
+        strArgument = strArgument + this.gfn_getGlobalVariable();
+		
+        transaction(strTranId, strURL, strInDatasets, strOutDatasets, strArgument, "gfn_callBack", bAsync, nDataType, bCompress);
+    } 
+    catch(e) 
+    {
+        this.gfn_alert(e.message);
+    }
+}
+
+
+/**
+ * @class 공통 Callback 서비스
+ * @param strTranId   - Client에서 임의로 생성하는 트랜잭션 ID
+ * @param nErrorCode  - 에러코드
+ * @param strErrorMag - 에러메시지
+ * @return 없음
+ */
+this.gfn_callBack = function(strTranId, nErrorCode, strErrorMsg) 
+{    
+    var arrTranId       = strTranId.split("|");
+    var strFrameId      = arrTranId[0];
+    var strProgress     = arrTranId[1];
+    var strSvcID        = arrTranId[2];
+    var strCallbackFunc = arrTranId[3];
+    
+    // savedToken 저장
+    if (strSvcID != "saveSysAcesLog")
+    {
+		gv_savedToken = outSavedToken;
+		//trace(strTranId + "=" + strFrameId + "|" + strProgress + "|" + strSvcID + "|" + strCallbackFunc + "|" + outSavedToken);
+	}
+    	
+    try 
+    {
+        if ( strProgress == "true" )
+        {
+            setWaitCursor(false, true);
+        }
+    } 
+    catch(e) 
+    {
+        setWaitCursor(false, true);
+    }
+    
+    // Error 및 세션 timeout 체크
+    if (this.gfn_chkTransaction(strTranId, nErrorCode, strErrorMsg)) 
+    {
+		nErrorCode = 0;
+		strErrorMsg = "";
+    }
+    
+    if ( this.gfn_isNull(strCallbackFunc) ) return;
+
+    eval(strCallbackFunc + "('" + strSvcID + "', nErrorCode, strErrorMsg)");
+}
+
+
+/**
+ * @class Transaction 호출 후 정리 처리등의 메세지 처리
+ * @param strTranId   - Client에서 임의로 생성하는 트랜잭션 ID
+ * @param nErrorCode  - 에러코드
+ * @param strErrorMag - 에러메시지
+ * @return 없음
+ */
+this.gfn_chkTransaction = function(strTranId, nErrorCode, strErrorMsg) 
+{
+    if (nErrorCode >= 0) 
+    {
+		if (nErrorCode == 0 && !this.gfn_isNull(strErrorMsg) && strErrorMsg != "SUCCESS") 
+		{
+			this.gfn_alert(strErrorMsg);
+		}
+        return true;
+    } 
+    else 
+    {
+        // nErrorCode == -100 인경우 Business Logic 에서 Error Check 한 경우
+        // Error Code == 0 과 동이하게 단위 업무 화면으로 넘긴다.
+        // 에러처리는 단위업무 화면에서 알아서 처리한다.
+        if (nErrorCode == -100) // || nErrorCode == 100) 
+        {
+            return true;        
+        }
+        // Session TimeOut 시 로그인창 호출        
+        else if (nErrorCode == -99) 
+        {
+			gv_isLogin = "N";	// 세션 종료로 인한 login 여부 세팅
+			
+			// web embed 여부
+			// web embed인 경우 재 로그인 페이지를 띄우지 않는다.
+			if (this.gfn_nvl(gv_isWeb, "N") == "Y")
+			{
+				// 접속이 끊어졌습니다. 재 접속 하시겠습니까?
+				if (this.gfn_confirm("msg.session.web.timeout"))
+				{
+					// 고객센터 재 로그인 처리
+					HCWebLogin.webLoginAction(this);
+				}
+				return false;
+			}
+			
+			//----------------------------------------------------------
+			// Frame이 수정되었다던가...소스 배포 후... 변경 소스 적용을 위해서 바로 종료 시킨다. 
+			//----------------------------------------------------------
+			//background에서 동작하는 mainframe window를 활성화(앞으로 이동)
+			application.mainframe.activate();
+			// 세션이 종료되었습니다. 다시 로그인해주세요.
+			this.gfn_alert("msg.session.timeout");
+			av_close = 'TIMEOUT';
+			application.exit();
+			//----------------------------------------------------------
+        } 
+        // 나머지는 에러메시지 팝업으로 표시        
+        else 
+        { 
+			var errorMsg = this.gfn_getMessage("msg.fail.serviceerror");
+			errorMsg += "\n\n" + strErrorMsg;
+			this.gfn_alert(errorMsg);
+			return false;
+        }
+    }
+
+    return true;
+}
+
+/**
+ * @class 서버에 전송할 Global 변수 정의
+ * @param 없음
+ * @return 공통변수값
+ */
+this.gfn_getGlobalVariable = function() 
+{
+	var strVal = "";
+	// 팝업 접근경로 조회
+	var popMenuUrl = getOwnerFrame().formurl.split("::");
+	trace(popMenuUrl);
+
+	// 프로그램 Service Path
+	var svcPath = "";
+	// 프로그램 ID
+	var progrmId = "";
+	// menu Id
+	var menuId = "";
+
+	try {
+		// 메뉴 화면
+		svcPath  = _fv_formUrl;
+		progrmId = _fv_progrmId.replace(".xfdl", "");
+		menuId   = _fv_menuId;
+	} catch(e) {
+	    // 팝업 화면
+		svcPath  = popMenuUrl[0];
+		progrmId = popMenuUrl[1].replace(".xfdl", "");
+	}
+
+	strVal += " gvSvcPath=" + wrapQuote(svcPath);	                // Syetem ID
+	strVal += " gvProgrmId=" + wrapQuote(progrmId);	                // 프로그램 ID    
+	strVal += " gvMenuId=" + wrapQuote(menuId);		                // 메뉴 ID
+	strVal += " scrnSaveYn=" + HCCompLang.BATCH_SCRN_SAVE_YN;       // 저장권한 여부
+	strVal += " ktagTokenField=" + wrapQuote(gv_ktagTokenField);   	// TokenField
+	strVal += " savedToken=" + wrapQuote(gv_savedToken);    		// savedToken
+	//trace("strVal >>> " + strVal);
+
+    return strVal;
+}]]></Script>

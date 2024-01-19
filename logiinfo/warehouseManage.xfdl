@@ -1,0 +1,429 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="WarehouseManage" width="1280" height="720" titletext="창고관리" onload="WarehouseManageForm_onload">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="1280">
+        <Div id="Div00" taborder="0" text="Div00" left="39" top="39" width="989" height="648">
+          <Layouts>
+            <Layout>
+              <GroupBox id="GroupBox00" taborder="0" text="창고 관리" left="-1.92%" top="-5" width="98.28%" height="692" titlealign="topcenter" cursor="help" font="bold 36px/normal &quot;Gulim&quot;" cssclass="grpBox_normal" color="black"/>
+              <Grid id="Grid00" taborder="1" left="1.11%" top="151" width="920" height="145" binddataset="ds_warehouseList" oncellclick="warehouseList_Grid01_oncellclick" onheadclick="warehouseList_Grid01_onheadclick">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="48"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="24" band="head"/>
+                      <Row size="24"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell displaytype="checkboxcontrol" edittype="checkbox" text="0"/>
+                      <Cell col="1" text="창고코드"/>
+                      <Cell col="2" text="창고이름"/>
+                      <Cell col="3" text="창고사용여부" edittype="none"/>
+                      <Cell col="4" text="비고"/>
+                      <Cell col="5" text="상태"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell displaytype="checkboxcontrol" text="bind:CHECKED" edittype="checkbox"/>
+                      <Cell col="1" text="bind:WAREHOUSE_CODE" textAlign="center" edittype="text"/>
+                      <Cell col="2" text="bind:WAREHOUSE_NAME" textAlign="center" edittype="text"/>
+                      <Cell col="3" text="bind:WAREHOUSE_USE_OR_NOT" textAlign="center" edittype="text"/>
+                      <Cell col="4" edittype="text"/>
+                      <Cell col="5" text="bind:DESCRIPTION" textAlign="center" edittype="text"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Grid id="Grid01" taborder="2" left="0.40%" top="396" width="926" height="225" oncellclick="warehouseList_Grid02_oncellclick" onheadclick="warehouseList_Grid02_onheadclick" binddataset="gds_stock">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="41"/>
+                      <Column size="120"/>
+                      <Column size="120"/>
+                      <Column size="120"/>
+                      <Column size="120"/>
+                      <Column size="120"/>
+                      <Column size="120"/>
+                      <Column size="121"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="24" band="head"/>
+                      <Row size="24"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell displaytype="checkboxcontrol"/>
+                      <Cell col="1" text="창고코드"/>
+                      <Cell col="2" text="자재코드"/>
+                      <Cell col="3" text="자재명"/>
+                      <Cell col="4" text="단위"/>
+                      <Cell col="5" text="안전재고량"/>
+                      <Cell col="6" text="가용재고량"/>
+                      <Cell col="7" text="전체재고량"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell edittype="checkbox" displaytype="checkboxcontrol" text="bind:CHECKED"/>
+                      <Cell col="1" text="bind:WAREHOUSE_CODE" edittype="text"/>
+                      <Cell col="2" text="bind:ITEM_CODE" edittype="text"/>
+                      <Cell col="3" text="bind:ITEM_NAME" edittype="text"/>
+                      <Cell col="4" text="bind:UNIT_OF_STOCK" edittype="text"/>
+                      <Cell col="5" text="bind:SAFETY_ALLOWANCE_AMOUNT" edittype="text"/>
+                      <Cell col="6" text="bind:STOCK_AMOUNT" edittype="text"/>
+                      <Cell col="7" text="bind:ORDER_AMOUNT" edittype="text"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Static id="Static00" taborder="3" text="📋 창고 관리" left="3.34%" top="38" width="11.93%" height="32" font="bold 18px/normal &quot;Gulim&quot;" color="black"/>
+              <Static id="Static00_00" taborder="4" text="창고 조회 및 정보 수정" left="3.74%" top="65" width="20.02%" height="32" font="bold 15px/normal &quot;Gulim&quot;" color="black"/>
+              <Button id="WarehouseInquiryB" taborder="5" text="창고 조회" left="3.64%" top="99" width="6.07%" height="30" border="0px none" background="black" font="bold 12px/normal &quot;Gulim&quot;" onclick="getWarehouseListyB_onclick" cssclass="btn_normal"/>
+              <Button id="WarehouseInsertB" taborder="6" text="창고 추가" left="10.72%" top="99" width="6.07%" height="30" background="black" font="bold 12px/normal &quot;Gulim&quot;" border="0px none" onclick="WarehouseInsertB_onclick" cssclass="btn_normal"/>
+              <Button id="WarehouseDeleteB" taborder="7" text="창고 삭제" left="17.80%" top="99" width="6.07%" height="30" background="black" font="bold 12px/normal &quot;Gulim&quot;" border="0px none" onclick="WarehouseDeleteB_onclick" cssclass="btn_normal"/>
+              <Static id="Static00_00_00" taborder="8" text="창고 자재 조회 및 정보 수정" left="3.54%" top="313" width="23.86%" height="32" font="bold 15px/normal &quot;Gulim&quot;" color="black"/>
+              <Button id="getWarehouseStockListB" taborder="9" text="자재 조회" left="3.64%" top="347" width="6.07%" height="30" border="0px none" background="black" font="bold 12px/normal &quot;Gulim&quot;" onclick="getWarehouseStockListB_onclick" cssclass="btn_normal"/>
+              <Button id="WarehouseStockInsertB" taborder="10" text="자재 추가" left="10.72%" top="347" width="6.07%" height="30" background="black" font="bold 12px/normal &quot;Gulim&quot;" border="0px none" onclick="WarehouseStockInsertB_onclick" cssclass="btn_normal"/>
+              <Button id="WarehouseStockDeleteB" taborder="11" text="자재 삭제" left="17.80%" top="347" width="6.07%" height="30" background="black" font="bold 12px/normal &quot;Gulim&quot;" border="0px none" onclick="WarehouseStockDeleteB_onclick" cssclass="btn_normal"/>
+              <Button id="WarehouseSaveB" taborder="12" text="창고일괄처리" left="73.71%" top="107" width="8.19%" height="30" background="black" font="bold 12px/normal &quot;Gulim&quot;" border="0px none" onclick="WarehouseSaveB_onclick" cssclass="btn_normal"/>
+              <Button id="WarehouseStockSaveB" taborder="13" text="자재일괄처리" left="73.71%" top="356" width="8.29%" height="30" background="black" font="bold 12px/normal &quot;Gulim&quot;" border="0px none" onclick="WarehouseStockSaveB_onclick" cssclass="btn_normal"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_warehouseList">
+        <ColumnInfo>
+          <Column id="WAREHOUSE_CODE" type="STRING" size="256"/>
+          <Column id="WAREHOUSE_NAME" type="STRING" size="256"/>
+          <Column id="WAREHOUSE_USE_OR_NOT" type="STRING" size="256"/>
+          <Column id="DESCRIPTION" type="STRING" size="256"/>
+          <Column id="CHECKED" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[
+/*********************
+* @ import js File *
+*********************/
+include "Lib::commLib.xjs";
+
+
+var nexa = nexacro.getApplication();
+
+this.WarehouseManageForm_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	obj.set_titletext("창고");
+	trace('RowCount값 : '+this.ds_warehouseList);
+	this.ds_warehouseList.clearData();
+	this.gds_stock.clearData();
+
+};
+
+
+/** 창고조회 **/
+ 
+this.getWarehouseListyB_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	trace("창고 조회");
+	this.transaction(
+			"getWarehouseList",
+             "svcLogiinfo::warehouse/list",
+             "",
+             "ds_warehouseList=ds_warehouseList",
+              "",
+             "callback"
+			 ); 
+};
+
+
+
+
+
+/** 창고추가 **/
+
+this.WarehouseInsertB_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// addRow를 하지 않으면 dataset에 column 추가 안됨
+	this.ds_warehouseList.addRow();
+};
+
+
+/** 창고삭제 **/
+this.WarehouseDeleteB_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+
+   var size = this.ds_warehouseList.getRowCount();
+   var row = null;
+   for(var i=0; i<size; i++){
+      row = this.ds_warehouseList.findRow("CHECKED","1");
+	  trace("row값 : "+row);
+      if(row!=-1){
+         this.ds_warehouseList.deleteRow(row); //해당번호삭제
+      }
+   }
+};
+
+
+
+
+/***************저장******************/
+this.WarehouseSaveB_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	  this.transaction(
+      "WarehouseListSave", 
+       "svcLogiinfo::warehouse/batch", 
+       "ds_warehouseList=ds_warehouseList:u",
+       "", 
+       "", 
+       "callback"
+   );
+   this.ds_warehouseList.clearData();
+};
+
+
+
+
+
+/******************************************자재************************************************/
+
+
+/**************체크박스 각각********/
+
+this.warehouseList_Grid02_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+
+   var rowNO = nexa.gds_stock.rowposition;
+   trace('클릭값체크'+nexa.gds_stock.getColumn(rowNO,"CHECKED"));
+   var check = nexa.gds_stock.getColumn(rowNO,"CHECKED");
+	
+	
+	/**체크박스 하나만 선택되도록**/
+	if(e.col == this.Grid01.getBindCellIndex("body", "CHECKED")) { // 체크박스 선택했을 경우
+		for(var i = 0; i<nexa.gds_stock.rowcount; i++) { // 데이터셋 전체 확인
+			if(e.row == i) {// 현재 행의 체크박스를 눌렀을 경우
+				// 무반응 (체크 해제 안함)
+			} else {
+				nexa.gds_stock.setColumn(i,"CHECKED","0"); 
+                		// 클릭한 행의 체크박스를 제외한 나머지 체크박스는 체크 해제
+			}
+		}
+	}
+		
+};
+
+
+
+   
+  
+
+/** 공통 그리드 체크박스 시작 **/
+this.warehouseList_Grid02_onheadclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+   trace("obj이름은? : "+obj.name);
+   if(e.col == 0){
+      this.clickHeadCheckBox(obj, "CHECKED");
+   }
+};
+
+
+
+/** 공통 그리드 헤드체크박스 적용 및 해제  **/
+this.clickHeadCheckBox = function (obj, strColName)
+{      
+   var headerCell = obj.getBindCellIndex("body", strColName);
+   trace('이거 헤더셀 작동함? : '+headerCell);
+
+
+   var checkValue = "1";
+   if(obj.getCellProperty("Head", 0, "displaytype") == "checkboxcontrol") {
+      trace('첫이프문통과');
+      if (obj.getCellProperty("Head", 0, "text") == "0") { //현재 체크박스 값과 반대되게
+          obj.setCellProperty("Head", 0, "text", checkValue);
+      } else {
+         checkValue=0;
+         obj.setCellProperty("Head", 0, "text", checkValue);
+      }
+   }
+   
+   obj.setCellProperty("Head", 0, "text", checkValue); //헤더 체크박스 값 변경
+   
+   var objDataset = obj.getBindDataset(); //그리드에 바인드되어있는 dataset 가져옴
+   trace("objDataset : " + objDataset.name);
+   if(objDataset.getRowCount() > 0) {
+      trace('지금이거됨? : '+objDataset.getRowCount());
+      //objDataset.set_enableevent(false); //이벤트 비활성화
+      for (var i=0; i<objDataset.getRowCount(); i++) {         
+          objDataset.setColumn(i, "CHECKED", checkValue); //체크박스를 checkValue로 설정
+      }
+      objDataset.set_enableevent(true); //이벤트 활성화
+   }
+};
+
+
+
+/*******************조회***********************/
+this.getWarehouseStockListB_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	trace("창고자재 조회");
+	var row = this.ds_warehouseList.findRow("CHECKED","1");
+	var houseCode = this.ds_warehouseList.getColumn(row,"WAREHOUSE_CODE");
+	this.transaction(
+			 "getWarehouseStockList",
+             "svcStock::sto/warehousestocklist",
+             "",
+             "gds_stock=gds_stock",
+             "houseCode='"+houseCode+"'",
+             "callback"
+			 ); 
+};
+
+
+
+/********행추가********/
+
+this.WarehouseStockInsertB_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// addRow를 하지 않으면 dataset에 column 추가 안됨
+	nexa.gds_stock.addRow();
+};
+
+
+/********행 삭제. 체크한 행 전부 삭제********/
+this.WarehouseStockDeleteB_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+
+   var size = nexa.gds_stock.getRowCount();
+   var row = null;
+   for(var i=0; i<size; i++){
+      row = nexa.gds_stock.findRow("CHECKED","1");
+      if(row!=-1){
+         nexa.gds_stock.deleteRow(row); //해당번호삭제
+      }
+   }
+};
+
+
+/***************저장******************/
+this.WarehouseStockSaveB_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	  this.transaction(
+      "WarehouseStockListSave", 
+       "svcStock::sto/batch", 
+       "gds_stock=gds_stock:u", 		
+       "", 
+       "", 
+       "callback"
+   );
+   this.ds_warehouseList.clearData();
+   nexa.gds_stock.clearData();
+};
+
+
+
+
+/**************************************************************
+*  @ 트랜잭션 콜백;                     *
+*  @ description ALERT ERROR_CODE, ERROR_MSG;   *
+***************************************************************/
+this.callback = function(trid , ErrorCode, ErrorMsg)
+{
+   if(trid.indexOf("get")!=-1){
+      if(ErrorCode <0){
+         alert("조회 실패 : " + ErrorMsg);
+      }
+   }else if(trid.indexOf("Ware")!=-1){
+      if(ErrorCode <0){
+         alert("데이터 저장 실패 : " + ErrorMsg);
+      }else{
+         alert("저장 성공!");
+         this.reload();
+      }
+   }
+}
+
+
+
+
+
+
+
+
+/**************체크박스 각각********/
+
+
+
+this.warehouseList_Grid01_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+
+
+
+	/**체크박스 하나만 선택되도록**/
+	if(e.col == this.Grid00.getBindCellIndex("body", "CHECKED")) { // 체크박스 선택했을 경우
+		for(var i = 0; i<this.ds_warehouseList.rowcount; i++) { // 데이터셋 전체 확인
+			if(e.row == i) {// 현재 행의 체크박스를 눌렀을 경우
+				// 무반응 (체크 해제 안함)
+			} else {
+				this.ds_warehouseList.setColumn(i,"CHECKED","0"); 
+                		// 클릭한 행의 체크박스를 제외한 나머지 체크박스는 체크 해제
+			}
+		}
+	}
+	
+};
+
+
+
+   
+  
+
+/** 공통 그리드 체크박스 시작 **/
+this.warehouseList_Grid01_onheadclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+   trace("obj이름은? : "+obj.name);
+   if(e.col == 0){
+      this.clickHeadCheckBox(obj, "CHECKED");
+   }
+};
+
+
+
+/** 공통 그리드 헤드체크박스 적용 및 해제  **/
+this.clickHeadCheckBox = function (obj, strColName)
+{      
+   var headerCell = obj.getBindCellIndex("body", strColName);
+   trace('이거 헤더셀 작동함? : '+headerCell);
+
+
+   var checkValue = "1";
+   if(obj.getCellProperty("Head", 0, "displaytype") == "checkboxcontrol") {
+      trace('첫이프문통과');
+      if (obj.getCellProperty("Head", 0, "text") == "0") { //현재 체크박스 값과 반대되게
+          obj.setCellProperty("Head", 0, "text", checkValue);
+      } else {
+         checkValue=0;
+         obj.setCellProperty("Head", 0, "text", checkValue);
+      }
+   }
+   
+   obj.setCellProperty("Head", 0, "text", checkValue); //헤더 체크박스 값 변경
+   
+   var objDataset = obj.getBindDataset(); //그리드에 바인드되어있는 dataset 가져옴
+   trace("objDataset : " + objDataset.name);
+   if(objDataset.getRowCount() > 0) {
+      trace('지금이거됨? : '+objDataset.getRowCount());
+      //objDataset.set_enableevent(false); //이벤트 비활성화
+      for (var i=0; i<objDataset.getRowCount(); i++) {         
+          objDataset.setColumn(i, "CHECKED", checkValue); //체크박스를 checkValue로 설정
+      }
+      objDataset.set_enableevent(true); //이벤트 활성화
+   }
+};]]></Script>
+  </Form>
+</FDL>

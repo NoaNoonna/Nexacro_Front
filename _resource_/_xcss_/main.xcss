@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XCSS version="1.1">
+  <Predefines/>
+  <CSSData><![CDATA[.Button.btn_normal
+{
+	background : black;
+	color : white;
+}
+.Button.btn_normal[status=mouseover]
+{
+	background : #1fb159;
+	color : white;
+}
+.GroupBox.grpBox_normal
+{
+	color : darkslategray;
+}
+.Radio.radio_normal
+{
+	color : darkslategray;
+}
+.Edit.edit_normal
+{
+	color : darkslategray;
+}
+.Edit.edit_normal[status=focused]
+{
+	color : darkslategray;
+	background : #eec83e;
+}
+.Edit.edit_normal[status=mouseover]
+{
+	color : darkslategray;
+	background : #eec83e;
+
+}
+]]></CSSData>
+</XCSS>

@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frameTop" width="1540" height="70" titletext="New Form">
+    <Layouts>
+      <Layout height="70" width="1540">
+        <Menu id="Menu00" taborder="0" left="280" top="0" width="1210" height="70" onmenuclick="Menu00_onmenuclick" innerdataset="gds_menuTop" idcolumn="MENU_ID" captioncolumn="MENU_NAME" userdatacolumn="MENU_URL" levelcolumn="MENU_LEVEL" color="white" background="black" border="0px none,0px none,0px solid black" font="bold 16px/normal &quot;Gulim&quot;" borderRadius="0px 0px 0px 0px"/>
+        <ImageViewer id="ImageViewer00" taborder="1" left="0" top="0" width="280" height="70" text="" fittocontents="none" stretch="fixaspectratio" image="url('imagerc::logistics2.png')" onclick="ImageViewer00_onclick" border="0px white"/>
+      </Layout>
+    </Layouts>
+    <Bind>
+      <BindItem id="item0" compid="Menu00" propid="captioncolumn" datasetid="gds_menuTop" columnid=""/>
+    </Bind>
+    <Script type="xscript5.1"><![CDATA[include "Lib::commLib.xjs";
+
+var nexa = nexacro.getApplication();
+
+this.Menu00_onmenuclick = function(obj:nexacro.Menu,e:nexacro.MenuClickEventInfo)
+{	
+  trace("menu클릭메서드에 접근하고 있음");
+	var sID   =e.id; // menu bar 내부의 선택한 속성 id
+	trace("@@@@@@@@@@@@@@@@@sID ::::"+sID);
+	var sURL  =e.userdata;
+	trace("@@@@@@@@@@@@@@@sURL::::::"+sURL);
+	var sTitle=nexa.gds_menuTop.getColumn(e.row, "MENU_NAME");
+	trace("@@@@@@@@@@@@@@@sTitle:::::"+sTitle);
+	
+	trace("	UUUUUUUUU	@frmTop_URL: "+sURL);
+	// url이 없다. 최소 6자리 x.xfdl
+	if(sURL ==undefined||sURL.length < 1) 
+	{
+		alert("no page!!!!!!!!!!!");
+		return;
+	}
+	nexa.gfn_Open(sID, sURL, sTitle); //ADL의 Edit Script에 gfn으로 세팅
+};
+this.ImageViewer00_onclick = function(obj:nexacro.ImageViewer,e:nexacro.ClickEventInfo)
+{
+		
+		nexa.gfn_Open("HomeForm", "FrameBase::Form_Work.xfdl","GOHOME");
+};
+]]></Script>
+  </Form>
+</FDL>

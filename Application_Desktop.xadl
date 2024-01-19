@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ADL version="2.0">
+  <Application id="Application_Desktop" screenid="Desktop_screen" onload="Application_onload">
+    <Layout>
+      <MainFrame id="mainframe" showtitlebar="true" showstatusbar="true" width="1530" height="920" titletext="FullFrame">
+        <VFrameSet id="VFrameSet00" separatesize="100">
+          <Frames>
+            <ChildFrame id="ChildFrame00_0" showtitleicon="false" showtitlebar="false" bottom="55" openstatus="normal" formurl="FrameBase::Form_Top.xfdl" dragmovetype="none"/>
+            <HFrameSet id="HFrameSet00" separatesize="250">
+              <Frames>
+                <ChildFrame id="ChildFrame00_01" formurl="FrameBase::Form_Left.xfdl" topmost="false" showtitlebar="false" showtitleicon="false" dragmovetype="none"/>
+                <FrameSet id="FrameSet00">
+                  <Frames>
+                    <ChildFrame id="ChildFrame00_02" formurl="FrameBase::Form_Work.xfdl" showtitlebar="false" showtitleicon="false"/>
+                  </Frames>
+                </FrameSet>
+              </Frames>
+            </HFrameSet>
+          </Frames>
+        </VFrameSet>
+      </MainFrame>
+    </Layout>
+    <Style url="xcssrc::Chart.xcss"/>
+    <Style url="xcssrc::temp_main.xcss"/>
+    <Style url="xcssrc::main.xcss"/>
+  </Application>
+  <Script type="xscript5.1"><![CDATA[/**************************
+* field variables By 태윤 *
+**************************/
+//VFrameSet00
+this.VFSet00;
+//HFrameSet00
+this.HFSet00;
+//ChildFrame00
+this.TopFrame;
+//ChildFrame01
+this.LeftFrame;
+//FrameSet00 
+this.WorkFrame;
+var nexa = nexacro.getApplication();
+
+/***************************************************************
+ *					사용자 FUNCTION 영역					*
+****************************************************************/
+/*********************************
+ *		application onload		*
+**********************************/
+this.Application_onload = function(obj:nexacro.Application,e:nexacro.LoadEventInfo)
+{
+	this.VFSet00 = this.mainframe.VFrameSet00;
+	this.HFSet00 = this.mainframe.VFrameSet00.HFrameSet00;
+	this.TopFrame = this.mainframe.VFrameSet00.ChildFrame00_0;
+	this.LeftFrame = this.mainframe.VFrameSet00.HFrameSet00.ChildFrame00_01;
+	this.WorkFrame = this.mainframe.VFrameSet00.HFrameSet00.FrameSet00;
+	
+	// LoginForm 부터 실행
+	this.mainframe.set_visible(false);
+	
+	nexacro.open(
+		"LoginForm",
+		"logiinfo::LoginForm.xfdl",
+		this.mainframe,
+		null,
+		"showtitlebar=true",
+		300,
+		100,
+		0,
+		0,
+		this.mainframe
+		);
+		
+};
+
+
+
+
+/******************************************************
+ * @MethodName:  gfn_Open
+ * @description: 메뉴 폼(frameLeft)의 화면 이동 담당
+*******************************************************/
+var child=null;
+this.gfn_Open = function(sID, sURL, sTitle)
+{
+	// FrameSet00.ChildFrame02를 꼭 추가해야 한다; 아니면 undefined 발생;
+	var oFrameSet = nexacro.getApplication().mainframe.VFrameSet00.HFrameSet00.FrameSet00.ChildFrame00_02;
+	var oChildFrame=new ChildFrame();
+	oChildFrame.init(sID, 0, 0, 1280, 720);
+	oChildFrame.set_formurl(sURL); 
+	oChildFrame.set_titletext(sTitle);
+	oChildFrame.set_showtitlebar(false);
+	if(child)child.destroy();
+	child=oChildFrame;
+	oFrameSet.addChild(sID, oChildFrame);
+	oChildFrame.show();
+};
+
+this.changeDate = function (date)
+{ 
+	var year = date.substr(0,4);
+	var month = date.substr(4,2);
+	var day = date.substr(6,2);
+	return year+"-"+month+"-"+day;
+}
+
+this.getToday = function ()
+{
+   var d = new Date();
+   var year = d.getFullYear();
+   var month = d.getMonth() + 1;
+   var date = d.getDate();
+   if(month.toString().length==1){
+	month = "0"+month;
+   }
+   if(date.toString().length==1){
+	date = "0"+date;
+   }
+   return(year+"-"+month+"-"+date);
+}]]></Script>
+</ADL>

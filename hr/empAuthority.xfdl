@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="MenuAuthority" width="1750" height="1010" titletext="사원권한관리" onload="MenuAuthority_onload">
+    <Layouts>
+      <Layout height="1010" width="1750">
+        <GroupBox id="사원권한관리" taborder="0" text="사원권한관리" left="20" top="50" width="910" height="600" titlealign="topcenter" font="normal bold 25pt/normal &quot;Arial&quot;" color="black"/>
+        <Button id="Button00" taborder="1" text="저장" left="728" top="96" width="122" height="34" font="normal 10pt/normal &quot;Arial&quot;" color="white" onclick="Button_onclick" background="black"/>
+        <Grid id="grid_emp" taborder="2" left="60" top="170" width="400" height="400" binddataset="gds_employee" color="orangered" oncellclick="grid_emp_oncellclick">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="133"/>
+                <Column size="133"/>
+                <Column size="132"/>
+              </Columns>
+              <Rows>
+                <Row size="28" band="head"/>
+                <Row size="26"/>
+              </Rows>
+              <Band id="head">
+                <Cell textAlign="center" text="사원명"/>
+                <Cell col="1" text="직책" textAlign="center"/>
+                <Cell col="2" text="부서" textAlign="center"/>
+              </Band>
+              <Band id="body">
+                <Cell textAlign="center" text="bind:EMP_NAME"/>
+                <Cell col="1" text="bind:POSITION_NAME" textAlign="center"/>
+                <Cell col="2" text="bind:DEPT_NAME" textAlign="center"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Grid id="grid_menuAuthority" taborder="3" left="480" top="170" width="400" height="400" binddataset="gds_AuthorityGroup" color="orangered" oncellclick="grid_menuAuthority_oncellclick">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="199"/>
+                <Column size="199"/>
+              </Columns>
+              <Rows>
+                <Row size="28" band="head"/>
+                <Row size="26"/>
+              </Rows>
+              <Band id="head">
+                <Cell textAlign="center" text="권한 그룹"/>
+                <Cell col="1" text="권한부여" textAlign="center"/>
+              </Band>
+              <Band id="body">
+                <Cell textAlign="center" text="bind:AUTHORITY_GROUP_NAME" edittype="text"/>
+                <Cell col="1" text="bind:AUTHORITY" textAlign="center" displaytype="checkboxcontrol" edittype="checkbox"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[var gv_IsGridCheckAll=0;
+var empCode;
+var nexa = nexacro.getApplication();
+
+
+
+this.MenuAuthority_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+   this.fn_emplist();
+};
+
+/* 사원 목록 조회*/
+
+this.fn_emplist =function(){
+
+	nexa.gds_employee.clearData();
+   this.transaction(
+				"findEmployeeList", 
+				"svcHR::employeeList", 
+				"", 
+				"gds_employee=gds_employee", 
+				"",
+				"callback",
+				false);
+};
+
+
+/*사원 클릭시 메뉴 권한 호출*/
+
+
+this.grid_emp_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+      empCode= nexa.gds_employee.getColumn(e.row,"EMP_CODE");
+         this.transaction(
+            "getUserAuthorityGroup",
+            "svcHR::authoritygroup/user",
+            "",
+            "gds_AuthorityGroup=gds_AuthorityGroup",
+            "empCode="+empCode,
+            "callback",
+				false
+            );
+};
+
+
+/*그룹 권한 저장 버튼*/
+
+this.Button_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+   if(confirm("그룹권한을 수정하겠습니까?")){
+   this.transaction(
+			"modifyEmployeeAuthorityGroup",
+             "svcHR::modifyEmployeeAuthorityGroup",
+             "gds_AuthorityGroup=gds_AuthorityGroup:u",
+             "",
+            "empCode="+empCode,
+             "delayFunc");
+             this.reload();
+             }
+	this.alert(" 저장 완료 ! ");
+};
+
+
+/*체크박스 하나만 선택되게*/
+this.grid_menuAuthority_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	if(e.col == this.grid_menuAuthority.getBindCellIndex("body", "AUTHORITY")) { // 체크박스 선택했을 경우
+	var nRowCount = nexa.gds_AuthorityGroup.getRowCount();
+		for(var i = 0; i< nRowCount ; i++) { // 데이터셋 전체 확인
+			if(e.row == i) {// 현재 행의 체크박스를 눌렀을 경우
+				// 무반응 (체크 해제 안함)
+			} else {
+				nexa.gds_AuthorityGroup.setColumn(i,"AUTHORITY","0"); 
+                		// 클릭한 행의 체크박스를 제외한 나머지 체크박스는 체크 해제
+			}
+		}
+	}
+};]]></Script>
+  </Form>
+</FDL>

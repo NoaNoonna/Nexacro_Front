@@ -1,0 +1,95 @@
+﻿{
+    "version" : "17.0.0.1",
+    "runtime" :
+    {
+        "target" :
+        {
+            "os" : "windows"
+        },
+        "framework" :
+        [    
+        "./nexacrolib/framework/Framework.js"
+        ],
+        "component" :
+        [    
+        "./nexacrolib/component/CompBase.js",
+        "./nexacrolib/component/ComComp.js",
+        "./nexacrolib/component/Grid.js",
+        "./nexacrolib/component/ListView.js",
+        "./nexacrolib/component/DeviceAPI.js",
+        "./nexacrolib/component/Chart/GraphicsChart.js",
+        "./nexacrolib/component/Chart/ChartBase.js",
+        "./nexacrolib/component/Chart/BasicChart.js",
+        "./nexacrolib/component/Chart/BubbleChart.js",
+        "./nexacrolib/component/Chart/PieChart.js",
+        "./nexacrolib/component/Chart/GaugeChart.js",
+        "./nexacrolib/component/Chart/RadarChart.js",
+        "./nexacrolib/component/Chart/RoseChart.js",
+        "./nexacrolib/component/Chart/FloatChart.js",
+        "./nexacrolib/component/Chart/PyramidChart.js"
+        ],
+        "environment" :
+        [    
+        {
+        "file":"./environment.xml.js"
+        }
+        ],
+        "screen" :
+        [    
+        {"id":"black","type":"desktop","tracemode":"none","themeid":"theme::chartEditorBlack"},
+        {"id":"white","type":"desktop","tracemode":"none","themeid":"theme::chartEditorWhite"}
+        ],
+        "xadl" :
+        [
+        {
+        	"screenid":"black,white",
+        	"launch":"./ChartCtse_app.xadl.js",
+        	"quickview":"./ChartCtse_app.xadl.quickview.js",
+        	"form":[]
+        }
+        ],  
+        "protocol" :
+        {
+            "adaptors" :
+            []
+        },
+        "resource" :
+        {
+            "windows" : {
+                "updateurl" : "./",
+                "timeout" : "30",
+                "retry" : "3",
+                "autoupdate" : "auto",
+                "updatetype" : "server"
+            },
+            "osx" : {
+                "updateurl" : "",
+            "common" : {
+                "updateurl" : "",
+                    "resources" :
+                    [{"type" : "Theme", "file" : "chartEditorBlack.zip", "targetpath" : "./_theme_", "version" : "0.0.0.0"},
+                    {"type" : "Theme", "file" : "chartEditorWhite.zip", "targetpath" : "./_theme_", "version" : "0.0.0.0"}]
+                }
+            }
+        },
+		"deploy" :
+        {
+            "windows" : {
+                "updateurl" : "./"
+            },
+            "osx" : {
+                "updateurl" : "",
+            "common" : {
+                "updateurl" : "",
+                    "resources" :
+                    [{"type" : "Theme", "file" : "chartEditorBlack.zip", "targetpath" : "./_theme_", "version" : "0.0.0.0"},
+                    {"type" : "Theme", "file" : "chartEditorWhite.zip", "targetpath" : "./_theme_", "version" : "0.0.0.0"}]
+                }
+            }
+        },
+        "userfont" :
+        [
+
+        ]
+    }
+}

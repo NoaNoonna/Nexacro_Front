@@ -1,0 +1,707 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script version="1.0" type="xscript5.1"><![CDATA[/***************************************************************************
+ * Program ID    : commUtility.xjs
+ * Program Name  : Util 관련함수
+ * Author        : shji
+ * Created Date  : 2019.01.14
+ *
+ * =========================================================================
+ * 수정일자     수정자    내    용
+ * =========================================================================
+ * 2019.01.14   shji      최초작성
+ **************************************************************************/
+
+/***************************************************************************
+ * this.gfn_isNull                 : NULL 여부 체크
+ * this.gfn_nvl                    : 입력값이 존재하는지를 판단하여 존재하는 경우 입력값을 그대로 반환, 그렇지 않으면 두 번째 파라미터를 반환하는 함수
+ * this.gfn_alert                  : 메세지 코드에 따른 실제 메세지값을 찾은 후 팝업창으로 해당 값을 보여주는 함수
+ * this.gfn_getMessage             : 메세지 값을 문자열 치환하여 메세지 내용을 조회한다.
+ * this.gfn_confirm                : 공통 확인창
+ * this.gfn_message                : 메시지 창
+ * this.gfn_transNullToEmpty       : undefined을 ""로 리턴한다.
+ * this.gfn_numFormat              : Number Format String에 콤마 추가하고 반올림 처리
+ * this.gfn_getObjFont             : Font Object 생성
+ * this.gfn_getTextSize            : Text Size 추출
+ * this.gfn_getObjkeyLength        : object 변수의 길이를 return 한다.
+ * this.gfn_setPopupParam          : Popup Grid 선택 시 Row Parameter 배열 추출 함수
+ * this.gfn_dataSetToJsonObject    : Dataset을 JSON Object로 변환
+ * this.gfn_dataSetRowToJsonObject : Dataset Row를 JSON Object로 변환
+ * this.gfn_jsonObjectToString     : JSON Object를 JSON String으로 변환하여 리턴한다.
+ * this.gfn_jsonStringToObject     : JSON String을 JSON Object으로 변환하여 리턴한다.
+ * this.gfn_getRandom              : 정수인 nStart ~ nEnd의 범위에 있는 숫자에 대하여 random값을 return한다.
+ * this.gfn_isNum                  : 문자열이 숫자형식에 맞는지 여부 체크
+ * this.gfn_isDigit                : 숫자 정합성 체크
+ * this.gfn_isEmail                : 입력값이 e-mail Type인지 체크
+ * this.gfn_getSession             : 고객정보 대상 컬럼 정보
+ * this.iif                        : 조건식이 true일 경우 trueVal, false일경우 falseVal를 반환한다.
+ * this.decode                     : 비교할값과 비교값들을 비교해서 해당하는 비교값의 반환값을 반환
+ * this.gfn_roundDight		      : 부동소수점 계산 오류수정 ( http://docs.tobesoft.com/TechnicalNote#bba24787602ab19f )
+ **************************************************************************/
+
+/**
+ * 기능 :  NULL 여부 체크
+ * @param : sValue String
+ * @return : boolean
+ */
+this.gfn_isNull = function(sValue)
+{
+    var v_ChkStr = new String(sValue);
+    
+    if (new String(sValue).valueOf() == "undefined") return true;
+    if (new String(sValue).valueOf().indexOf("undefined") != -1) return true;
+
+    if (sValue == null) return true;
+   	if ( ("x"+sValue == "xNaN") && ( new String(sValue.length).valueOf() == "undefined" ) ) return true;
+    if (v_ChkStr == null) return true;
+    if (v_ChkStr.toString().length == 0 ) return true;
+    return false;
+}
+
+
+/**
+ * @class 입력값이 존재하는지를 판단하여
+          존재하는 경우 입력값을 그대로 반환, 그렇지 않으면 두 번째 파라미터를 반환하는 함수
+ * @param Val - 입력값
+ * @param newVal - Null일 경우 대체할 값
+ * @return Null을 대치한 값
+ */  
+this.gfn_nvl = function(Val, newVal)
+{
+	if (this.gfn_isNull(Val)) 
+	{
+		if (!this.gfn_isNull(newVal)) 
+		{
+			return newVal;
+		}
+		else 
+		{
+			return "";
+		}
+	}
+	else 
+	{
+		return Val;
+	}
+	return Val;
+}
+
+
+/**
+ * @class 메세지 코드에 따른 실제 메세지값을 찾은 후 팝업창으로 해당 값을 보여주는 함수
+ * @param strMsgId - 메세지ID
+ * @param sArgs  - Parsing 문자(아이디^패스워드)
+ * @param strType  - Message Type(A - alert, C - confirm, U1 - 버튼3개)
+ * @return 없음
+ */
+this.gfn_alert = function(strMsgId, sArgs, strType)
+{
+    if (this.gfn_isNull(strType)) strType = "A";
+    var strMsg = this.gfn_getMessage(strMsgId, sArgs);
+
+    // Popup창 사용 시
+    this.gfn_message(strType, strMsg);
+}
+
+
+/**
+ * @class 메세지 값을 문자열 치환하여 메세지 내용을 조회한다.
+ * @param strMsgId - 메세지ID
+ * @param sArgs  - Parsing 문자(아이디^패스워드)
+ * @return string 메세지
+ */
+this.gfn_getMessage = function(strMsgId, sArgs)
+{
+    var strTxtPrefix = "$";
+    var sRtnMsg      = "";
+    strMsgId = strMsgId.toString();
+
+    if (this.gfn_isNull(strMsgId))
+    {
+        return sRtnMsg;
+    }
+
+    // 메시지 코드가 gds_message 없을때
+    var nRow = gds_message.findRow("msgCd", strMsgId);
+    if (nRow < 0)
+    {
+		// 줄 바꿈 처리
+		sRtnMsg = strMsgId.replace("@", String.fromCharCode(13) + String.fromCharCode(10));
+        return sRtnMsg;
+    }
+
+    // 메시지 코드로 메시지를 가져와 줄 바꿈 처리
+    var sRtnMsg = gds_message.getColumn(nRow, "msgNm");
+    sRtnMsg = sRtnMsg.replace("@", String.fromCharCode(13) + String.fromCharCode(10));
+
+    // sArgs가 없을때는
+    if (this.gfn_isNull(sArgs))
+    {
+        return sRtnMsg;
+    }
+    // sArgs가 있을때는 변수값 치환
+    else
+    {
+        var aArgs = this.gfn_split(sArgs, "^");
+        for (var i = 0; i < aArgs.length; i++)
+        {
+            var strVal  = aArgs[i];
+            sRtnMsg = this.gfn_replace(sRtnMsg, strTxtPrefix + (i + 1), strVal);
+        }
+    }
+
+    return sRtnMsg;
+}
+
+
+/**
+ * @class 공통 확인창
+ * @param strKey - Message Key
+ * @param strArg - Message Argument("^"로 구분)
+ * @param strType  - Message Type(A - alert, C - confirm, U+유형 - 사용자 정의 유형:U1)
+ * @return true/false
+ */
+this.gfn_confirm = function(strMsgId, sArgs, strType)
+{
+    if (this.gfn_isNull(strType)) strType = "C";
+    var strMsg = this.gfn_getMessage(strMsgId, sArgs);
+
+    // Popup창 사용 시
+    return this.gfn_message(strType, strMsg);
+}
+
+
+/**
+ * @class 메시지 창
+ * @param strType  - Message Type(A - alert, C - confirm, U1 - 버튼3개)
+ * @param msg      - Message
+ * @param title    - 타이틀
+ * @return 결과값
+ */
+this.gfn_message = function(strType, strMsg)
+{
+    if (this.gfn_isNull(strType)) strType = "A";
+
+    var objArgument = {type:strType, msg:strMsg};
+
+    //팝업id 중복 방지
+    var strRequstTime = Math.random() * 100000000000000000;
+
+    var rtn = this.gfn_dialog("MSG"+strRequstTime, "cmn_static::MsgPopUp.xfdl", objArgument, null, null, null, null, null, false, false, "-1");
+
+    return this.gfn_nvl(rtn, "");
+}
+
+
+/**
+ * @class undefined을 ""로 리턴한다.
+ * @param oParam - object나 문자열
+ * @return undefined이면 "" 아니면 입력값
+ */
+this.gfn_transNullToEmpty = function(oParam)
+{
+    var strParam = new String(oParam);
+    if (strParam.valueOf() == "undefined") {
+        return "";
+    }
+    
+    return oParam;
+}
+
+/**
+ * @class Number Format String에 콤마 추가하고 반올림 처리
+ * @param sNum - Number Format String
+ * @param digit - 반올림 자릿 수
+ * @return 콤마추가하고 반올림 된 문자열
+ */
+this.gfn_numFormat = function(sNum, digit) 
+{
+	// 소숫점 반올림 처리
+	if (!this.gfn_isNull(digit))
+	{
+		if ( (typeof sNum) == "string" ) 
+		{
+			sNum = parseFloat(sNum);
+		}
+		sNum = this.gfn_round(sNum, digit);
+	}
+	
+    if ( (typeof sNum) != "string" ) 
+    {
+        sNum = sNum.toString();
+    }
+
+    sNum = this.gfn_trim(sNum);  //string
+	var ppos, sDigit, nEnd, nStart=0, sRet="";
+	
+	if (this.gfn_isNull(sNum))
+	    return "";
+	
+	if ( sNum.charAt(0) == "+" || sNum.charAt(0) == "-" )
+	{
+		sRet += sNum.charAt(0);
+		nStart = 1;
+	}
+		
+	ppos = sNum.indexOf(".",nStart);
+	if ( ppos < 0 )
+		nEnd = sNum.length;
+	else
+		nEnd = ppos;	
+			
+	// 양수 영역 , 처리
+	sDigit = sNum.substr(nStart, nEnd-nStart);
+	for( pos = 0 ; pos < sDigit.length ; pos ++ )
+	{
+		if ( pos != 0 && (sDigit.length-pos)%3 == 0 )
+			sRet += ",";
+		sRet += sDigit.charAt(pos);
+	}
+	// 소숫점 자리수 더하기
+	sRet += sNum.substr(nEnd);
+	
+	return sRet;
+}
+
+
+/**
+ * @class Font Object 생성
+ * @param iFontSize - font 크기
+ * @param sFontName - 폰트
+ * @return Font Object
+ */
+this.gfn_getObjFont = function(iFontSize, sFontName)
+{
+	var objFont = new Font;
+	objFont.size = iFontSize;
+	objFont.name = sFontName;
+	objFont.bold = true;
+	return objFont;
+}
+
+/**
+ * @class Text Size 추출
+ * @param sText - sText (사이즈를 계산할 텍스트 )
+ * @param objFont - (Font정보를 가지고 있는 object)
+ * @return 계산된 사이즈가 저장된 Size object
+ */
+this.gfn_getTextSize = function(sText, objFont)
+{
+	var objPainter = this.canvas.getPainter();
+	if (this.gfn_isNull(objPainter)==false)
+	{
+		var objTextSize = objPainter.getTextSize(sText, objFont);
+		return objTextSize;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+/**
+ * object 변수의 길이를 return 한다.
+ * ex) gfn_getObjkeyLength(rtnVal)
+ *
+ * @param obj 체크할 변수
+ * @return object length or 0
+ */
+this.gfn_getObjkeyLength = function(obj)
+{
+	if (obj == null) return 0;
+
+	if (typeof obj == "object")
+	{
+		var count = 0;
+		for (var key in obj)
+		{
+			if (obj.hasOwnProperty(key)) count++;
+		}
+		return count;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+/**
+ * Popup Grid 선택 시 Row Parameter 배열 추출 함수
+ *
+ * @param objDs 배열로 추출할 DataSet
+ * @return arr 추출된 배열
+ */
+this.gfn_setPopupParam = function(objDs)
+{
+	var arr = new Array();
+	if (typeof objDs != "undefined" && objDs != null && objDs === '[object Dataset]')
+	{
+		var colId = "";
+		if (objDs.rowcount == 0) return arr;
+		for (var i = 0, iColCnt = objDs.getColCount(); i < iColCnt; i++)
+		{
+			colId = objDs.getColID(i);
+			arr[colId] = objDs.getColumn(objDs.rowposition, colId);
+		}
+	}
+	return arr;
+}
+
+/**
+ * Dataset을 JSON Object로 변환
+ *
+ * @param objDs 변환할 DataSet
+ * @return objStr 추출된 Json Object
+ */
+this.gfn_dataSetToJsonObject = function(objDs)
+{
+	var objStr = "";
+	if (typeof objDs != "undefined" && objDs != null && objDs === '[object Dataset]')
+	{
+		var colId = "";
+		if (objDs.rowcount > 0)
+		{
+			for (var i = 0, iColCnt = objDs.getColCount(); i < iColCnt; i++)
+			{
+				colId = objDs.getColID(i);
+				if (i == 0) 
+				{
+					objStr = "'" + colId + "':'" + objDs.getColumn(0, i) + "'";
+				}
+				else 
+				{
+					objStr += ", '" + colId + "':'" + objDs.getColumn(0, i) + "'";
+				}
+			}
+		}
+	}
+	return eval("(" + "{" + objStr + "}" + ")");
+}
+
+/**
+ * Dataset Row를 JSON Object로 변환
+ *
+ * @param objDs 변환할 DataSet
+ * @param nRow 변환할 DataSet Row Index
+ * @return objStr 추출된 Json Object
+ */
+this.gfn_dataSetRowToJsonObject = function(objDs, nRow)
+{
+	var objStr = "";
+	if (typeof objDs != "undefined" && objDs != null && objDs === '[object Dataset]')
+	{
+		var colId = "";
+		if (objDs.rowcount > 0)
+		{
+			for (var i = 0, iColCnt = objDs.getColCount(); i < iColCnt; i++)
+			{
+				colId = objDs.getColID(i);
+				if (i == 0) 
+				{
+					objStr = "'" + colId + "':'" + objDs.getColumn(nRow, i) + "'";
+				}
+				else 
+				{
+					objStr += ", '" + colId + "':'" + objDs.getColumn(nRow, i) + "'";
+				}
+			}
+		}
+	}
+	return eval("(" + "{" + objStr + "}" + ")");
+}
+
+/**
+ * @class JSON Object를 JSON String으로 변환하여 리턴한다.
+ * @param object - JSON Object
+ * @return JSON String
+ */
+this.gfn_jsonObjectToString = function(object) {
+    var results = [];
+    
+    if (typeof object == "object")
+	{
+		var count = 0;
+		for (var key in object)
+		{
+			results.push("'" + key + "' : '" + object[key] + "'");
+		}
+	}
+    return ("{" + results.join(", ") + "}");
+}
+
+/**
+ * @class JSON String을 JSON Object으로 변환하여 리턴한다.
+ * @param strJson - JSON String
+ * @return JSON Object
+ */
+this.gfn_jsonStringToObject = function(strJson)
+{
+    return eval("(" + strJson + ")");
+}
+
+/**
+ * @class 정수인 nStart ~ nEnd의 범위에 있는 숫자에 대하여 random값을 return한다.
+ * @param nStart - 시작숫자 ( 단, 정수, 만일 정수가 아니면 Math.floor(nStart)를 적용함)
+ * @param nEnd - 끝숫자 ( 단, 정수, 만일 정수가 아니면 Math.floor(nStart)를 적용함)
+ * @return Floor nStart ~ nEnd범위 중 random숫자 (단, nStart, nEnd도 포함됨)
+ */ 
+this.gfn_getRandom = function(nStart, nEnd)
+{
+	var range_unit,rand,tmp;
+
+	if (this.gfn_isNull(nStart) || this.gfn_isNull(nEnd)) 
+	{
+		return -1;
+	}
+
+	nStart = Math.floor(nStart);
+	nEnd = Math.floor(nEnd);
+	if (nStart > nEnd) 
+	{
+		tmp = nStart;
+		nStart = nEnd;
+		nEnd = tmp;
+	}
+	range_unit = nEnd - nStart + 1;
+
+	var dt = new Date();
+	rand = (dt.getMilliseconds() + (Math.random() * 2000)) / 3000;
+
+	return Math.floor(rand * range_unit * 2) % range_unit + nStart;
+}
+
+/**
+ * @class 문자열이 숫자형식에 맞는지 여부 체크
+ * @param strValue - 체크할 문자열숫자 ( 예 : "-1234.56" ) (단, ","가 들어있으면 안 됨)
+ * @return boolean
+ */  
+this.gfn_isNum = function(sNum)
+{
+	var c;
+	var point_cnt = 0;
+	var ret = true;
+
+	if (this.gfn_isNull(sNum)) 
+	{
+		return false;
+	}
+
+	for (var i = 0; i < sNum.length; i++) 
+	{
+		c = sNum.charAt(i);
+		if (i == 0 && (c == "+" || c == "-")) 
+		{
+		}
+		else if (c >= "0" && c <= "9") 
+		{
+		}
+		else if (c == ".") 
+		{
+			point_cnt++;
+			if (point_cnt > 1) 
+			{
+				ret = false;
+				break;
+			}
+		}
+		else 
+		{
+			ret = false;
+			break;
+		}
+	}
+
+	return ret;
+}
+
+/**
+ * @class 숫자 정합성 체크
+ * @param val - 입력문자열
+ * @return Boolean
+ */
+this.gfn_isDigit = function(val) 
+{
+    var lvNum;
+    var lvFlag   = "No";
+    var lvRetVal = false;
+    var lvLength;
+    var i;
+    
+    if (this.gfn_isNull(val) == true) 
+    {
+        lvFlag      = "Yes";
+        lvRetVal = false;
+        return lvRetVal;
+    }
+    
+    lvLength = val.length;
+    
+    if ((val.toString().split(".").length > 2) && lvFlag == "No") 
+    {
+        lvFlag   = "Yes";
+        lvRetVal = false;
+    }
+    
+    if (lvFlag == "No") 
+    {
+        for (i = 0; i < lvLength ; i++) 
+        {
+            lvNum = val.substr(i,1);
+            if (i == 0) 
+            {
+                if (this.gfn_isNum(lvNum) || (lvNum == "-" && val.substr(1, 1) != ".")
+                    || (lvNum == "+"  && val.substr(1, 1) != "."))
+                {
+                    lvRetVal = true;
+                } 
+                else 
+                {
+                    lvRetVal = false;
+                    break;
+                }
+            } 
+            else 
+            {
+                if (this.gfn_isNum(lvNum) || (lvNum == "." && val.substr(i+1, 1).length != 0)) 
+                {
+                    lvRetVal = true;
+                } 
+                else 
+                {
+                    lvRetVal = false;
+                    break;
+                }
+            }
+        }
+    }
+
+    return lvRetVal;
+}
+
+/**
+ * @class 입력값이 e-mail Type인지 체크하는 함수
+ * @param strValue - 값
+ * @return boolean
+ */  
+this.gfn_isEmail = function(strValue)
+{
+	if (this.gfn_isNull(strValue)) 
+	{
+		return false;
+	}
+
+	var nIndexOfAt = strValue.indexOf("@");
+	var nIndexOfDot = strValue.indexOf(".");
+	var nLength = strValue.length;
+
+	// "@" 이 하나도 없거나 맨 끝에 위치한  경우
+	if (nIndexOfAt <= 0 || nIndexOfAt == nLength) 
+	{
+		return false;
+	}
+
+	// "." 이 하나도 없거나 맨 끝에 위치한 경우
+	if (nIndexOfDot <= 0 || nIndexOfDot == nLength) 
+	{
+		return false;
+	}
+
+	// "@"이 두개 이상 존재하는 경우
+	if (strValue.indexOf("@", nIndexOfAt + 1) != -1) 
+	{
+		return false;
+	}
+
+	// ".@" 인 경우 또는 "@."인 경우
+	if (strValue.substr(nIndexOfAt - 1, 1) == "." || strValue.substr(nIndexOfAt + 1, 1) == ".") 
+	{
+		return false;
+	}
+
+	// "@" 이후에 "."이 존재하지 않는 경우
+	if (strValue.indexOf(".", (nIndexOfAt + 2)) == -1) 
+	{
+		return false;
+	}
+
+	// 공백문자가 존재하는 경우
+	if (strValue.indexOf(" ") != -1) 
+	{
+		return false;
+	}
+
+	return true;
+}
+
+/**
+ * @class 고객정보 대상 컬럼 정보
+ * @param strCID - 조회 Column
+ * @return Column Value
+ */
+this.gfn_getSession = function(strCID)
+{
+	//var rtnVal;
+	var bColChk = gds_userInfo.getColumnInfo(strCID);
+	if (!this.gfn_isNull(bColChk)) 
+	{
+		return gds_userInfo.getColumn(0, strCID);
+	}
+
+	// 여기까지 리턴되지 않고 왔으면 없는 상황임
+	this.gfn_alert("MA001", "세션정보 '" + strCID + "' 는 존재하지 않습니다. 정확한 정보를 입력하세요!");
+
+	return;
+}
+
+/**
+ * @class 조건식이 true일 경우 trueVal, false일경우 falseVal를 반환한다.
+ * @param expr     - 조건식
+ * @param trueVal  - true value
+ * @param falseVal - false value
+ * @return expr이 true일 경우 trueVal, false일경우 falseVal
+ */
+this.iif = function(cond, rtnTrue, rtnFalse)
+{
+	if (cond) 
+	{
+		return rtnTrue;
+	} 
+	else 
+	{
+		return rtnFalse;
+	}
+} 
+
+/**
+ * @class 비교할값과 비교값들을 비교해서 해당하는 비교값의 반환값을 반환
+ * @param arg1 - 비교할값
+ * @param arg2 - 비교값1
+ * @param arg3 - 반환값1
+ *          (비교값, 반환값 쌍 반복)
+ * @return 비교할값에 해당하는 반환값
+ */
+this.decode = function() {
+    var i, fn;
+    fn = decode;
+    for( i = 1; i < fn.arguments.length; i+=2 ) 
+    {
+        if ( fn.arguments[0] == fn.arguments[i] )
+            return fn.arguments[i+1];
+    }
+    return fn.arguments[i-2];
+}
+
+/**
+ * @class 부동소수점 계산 오류로 인하여 추가
+ * @param arg1 - 입력값
+ * @param arg2 - 자릿수
+ * @return 입력값에 해당하는 반환값
+ */
+this.gfn_roundDight = function(n, digits)
+{
+    if (digits > 0) 
+    {
+        return parseFloat(n.toFixed(digits)); 
+    } else {
+        return parseFloat(n.toFixed(0)); 
+    }
+}]]></Script>

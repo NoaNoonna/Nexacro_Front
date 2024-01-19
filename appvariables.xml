@@ -1,0 +1,1202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AppVariables version="2.0">
+  <Datasets>
+    <Dataset id="gds_bom">
+      <ColumnInfo>
+        <Column id="NO" type="STRING" size="256"/>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="PARENT_ITEM_CODE" type="STRING" size="256"/>
+        <Column id="NET_AMOUNT" type="STRING" size="256"/>
+        <Column id="DESCRIPTION" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_code">
+      <ColumnInfo>
+        <Column id="CHECKED" type="STRING" size="256"/>
+        <Column id="DIVISION_CODE_NO" type="STRING" size="50"/>
+        <Column id="CODE_TYPE" type="STRING" size="20"/>
+        <Column id="DIVISION_CODE_NAME" type="STRING" size="30"/>
+        <Column id="CODE_CHANGE_AVAILABLE" type="STRING" size="20"/>
+        <Column id="DESCRIPTION" type="STRING" size="50"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_codeDetail">
+      <ColumnInfo>
+        <Column id="CHECKED" type="STRING" size="256"/>
+        <Column id="DIVISION_CODE_NO" type="STRING" size="50"/>
+        <Column id="DETAIL_CODE" type="STRING" size="50"/>
+        <Column id="DETAIL_CODE_NAME" type="STRING" size="50"/>
+        <Column id="CODE_USE_CHECK" type="STRING" size="10"/>
+        <Column id="DESCRIPTION" type="STRING" size="20"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_company">
+      <ColumnInfo>
+        <Column id="COMPANY_CODE" type="STRING" size="256"/>
+        <Column id="COMPANY_NAME" type="STRING" size="256"/>
+        <Column id="COMPANY_DIVISION" type="STRING" size="256"/>
+        <Column id="BUSINESS_LICENSE_NUMBER" type="STRING" size="256"/>
+        <Column id="CORPORATION_LICENSE_NUMBER" type="STRING" size="256"/>
+        <Column id="COMPANY_CEO_NAME" type="STRING" size="256"/>
+        <Column id="COMPANY_BUSINESS_CONDITIONS" type="STRING" size="256"/>
+        <Column id="COMPANY_BUSINESS_ITEMS" type="STRING" size="256"/>
+        <Column id="COMPANY_ZIP_CODE" type="STRING" size="256"/>
+        <Column id="COMPANY_BASIC_ADDRESS" type="STRING" size="256"/>
+        <Column id="COMPANY_DETAIL_ADDRESS" type="STRING" size="256"/>
+        <Column id="COMPANY_TEL_NUMBER" type="STRING" size="256"/>
+        <Column id="COMPANY_FAX_NUMBER" type="STRING" size="256"/>
+        <Column id="COMPANY_ESTABLISHMENT_DATE" type="STRING" size="256"/>
+        <Column id="COMPANY_OPEN_DATE" type="STRING" size="256"/>
+        <Column id="HOMEPAGE" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_contract" oncolumnchanged="gfn_onCheckingColumn">
+      <ColumnInfo>
+        <Column id="CHECKED" type="STRING" size="256"/>
+        <Column id="CONTRACT_NO" type="STRING" size="256"/>
+        <Column id="ESTIMATE_NO" type="STRING" size="256"/>
+        <Column id="CONTRACT_TYPE" type="STRING" size="256"/>
+        <Column id="CUSTOMER_CODE" type="STRING" size="256"/>
+        <Column id="CONTRACT_REQUESTER" type="STRING" size="256"/>
+        <Column id="PERSON_CODE_IN_CHARGE" type="STRING" size="256"/>
+        <Column id="DESCRIPTION" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_contractDetail">
+      <ColumnInfo>
+        <Column id="CHECKED" type="STRING" size="256"/>
+        <Column id="CONTRACT_DETAIL_NO" type="STRING" size="256"/>
+        <Column id="CONTRACT_NO" type="STRING" size="256"/>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="UNIT_OF_CONTRACT" type="STRING" size="256"/>
+        <Column id="DUE_DATE_OF_CONTRACT" type="STRING" size="256"/>
+        <Column id="ESTIMATE_AMOUNT" type="STRING" size="256"/>
+        <Column id="STOCK_AMOUNT_USE" type="STRING" size="256"/>
+        <Column id="PRODUCTION_REQUIREMENT" type="STRING" size="256"/>
+        <Column id="UNIT_PRICE_OF_CONTRACT" type="STRING" size="256"/>
+        <Column id="SUM_PRICE_OF_CONTRACT" type="STRING" size="256"/>
+        <Column id="PROCESSING_STATUS" type="STRING" size="256"/>
+        <Column id="OPERATION_COMPLETED_STATUS" type="STRING" size="256"/>
+        <Column id="DELIVERY_COMPLETION_STATUS" type="STRING" size="256"/>
+        <Column id="DESCRIPTION" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_customer">
+      <ColumnInfo>
+        <Column id="CHECKED" type="STRING" size="256"/>
+        <Column id="CUSTOMER_CODE" type="STRING" size="256"/>
+        <Column id="WORKPLACE_CODE" type="STRING" size="256"/>
+        <Column id="CUSTOMER_NAME" type="STRING" size="256"/>
+        <Column id="CUSTOMER_TYPE" type="STRING" size="256"/>
+        <Column id="CUSTOMER_CEO" type="STRING" size="256"/>
+        <Column id="BUSINESS_LICENSE_NUMBER" type="STRING" size="256"/>
+        <Column id="SOCIAL_SECURITY_NUMBER" type="STRING" size="256"/>
+        <Column id="CUSTOMER_BUSINESS_CONDITIONS" type="STRING" size="256"/>
+        <Column id="CUSTOMER_BUSINESS_ITEMS" type="STRING" size="256"/>
+        <Column id="CUSTOMER_ZIP_CODE" type="STRING" size="256"/>
+        <Column id="CUSTOMER_BASIC_ADDRESS" type="STRING" size="256"/>
+        <Column id="CUSTOMER_DETAIL_ADDRESS" type="STRING" size="256"/>
+        <Column id="CUSTOMER_TEL_NUMBER" type="STRING" size="256"/>
+        <Column id="CUSTOMER_FAX_NUMBER" type="STRING" size="256"/>
+        <Column id="CUSTOMER_NOTE" type="STRING" size="256"/>
+        <Column id="PRODUCED_PRODUCT" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_deliveryInfo">
+      <ColumnInfo>
+        <Column id="DELIVERY_NO" type="STRING" size="256"/>
+        <Column id="ESTIMATE_NO" type="STRING" size="256"/>
+        <Column id="CONTRACT_NO" type="STRING" size="256"/>
+        <Column id="CONTRACT_DETAIL_NO" type="STRING" size="256"/>
+        <Column id="CUSTOMER_CODE" type="STRING" size="256"/>
+        <Column id="PERSON_CODE_IN_CHARGE" type="STRING" size="256"/>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="UNIT_OF_DELIVERY" type="STRING" size="256"/>
+        <Column id="DELIVERY_AMOUNT" type="STRING" size="256"/>
+        <Column id="UNIT_PRICE" type="STRING" size="256"/>
+        <Column id="SUM_PRICE" type="STRING" size="256"/>
+        <Column id="DELIVERY_DATE" type="STRING" size="256"/>
+        <Column id="DELIVERY_PLACE_NAME" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_deliveryPlaceByCustomer">
+      <ColumnInfo>
+        <Column id="CUSTOMER_CODE" type="STRING" size="256"/>
+        <Column id="DELIVERY_PLACE_NO" type="STRING" size="256"/>
+        <Column id="DELIVERY_PLACE_NAME" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_department">
+      <ColumnInfo>
+        <Column id="WORKPLACE_CODE" type="STRING" size="256"/>
+        <Column id="DEPT_CODE" type="STRING" size="256"/>
+        <Column id="DEPT_NAME" type="STRING" size="256"/>
+        <Column id="WORKPLACE_NAME" type="STRING" size="256"/>
+        <Column id="COMPANY_CODE" type="STRING" size="256"/>
+        <Column id="DEPT_START_DATE" type="STRING" size="256"/>
+        <Column id="DEPT_END_DATE" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_employeeBasic">
+      <ColumnInfo>
+        <Column id="COMPANY_CODE" type="STRING" size="256"/>
+        <Column id="EMP_CODE" type="STRING" size="256"/>
+        <Column id="EMP_NAME" type="STRING" size="256"/>
+        <Column id="EMP_ENG_NAME" type="STRING" size="256"/>
+        <Column id="SOCIAL_SECURITY_NUMBER" type="STRING" size="256"/>
+        <Column id="HIRE_DATE" type="STRING" size="256"/>
+        <Column id="RETIREMENT_DATE" type="STRING" size="256"/>
+        <Column id="USER_OR_NOT" type="STRING" size="256"/>
+        <Column id="BIRTH_DATE" type="STRING" size="256"/>
+        <Column id="GENDER" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_employeeDetail">
+      <ColumnInfo>
+        <Column id="COMPANY_CODE" type="STRING" size="256"/>
+        <Column id="EMP_CODE" type="STRING" size="256"/>
+        <Column id="SEQ" type="STRING" size="256"/>
+        <Column id="UPDATE_HISTORY" type="STRING" size="256"/>
+        <Column id="UPDATE_DATE" type="STRING" size="256"/>
+        <Column id="WORKPLACE_CODE" type="STRING" size="256"/>
+        <Column id="DEPT_CODE" type="STRING" size="256"/>
+        <Column id="POSITION_CODE" type="STRING" size="256"/>
+        <Column id="USER_ID" type="STRING" size="256"/>
+        <Column id="PHONE_NUMBER" type="STRING" size="256"/>
+        <Column id="EMAIL" type="STRING" size="256"/>
+        <Column id="ZIP_CODE" type="STRING" size="256"/>
+        <Column id="BASIC_ADDRESS" type="STRING" size="256"/>
+        <Column id="DETAIL_ADDRESS" type="STRING" size="256"/>
+        <Column id="LEVEL_OF_EDUCATION" type="STRING" size="256"/>
+        <Column id="IMAGE" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_employeeSecret">
+      <ColumnInfo>
+        <Column id="COMPANY_CODE" type="STRING" size="256"/>
+        <Column id="EMP_CODE" type="STRING" size="256"/>
+        <Column id="SEQ" type="STRING" size="256"/>
+        <Column id="USER_PASSWORD" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_employee">
+      <ColumnInfo>
+        <Column id="EMP_CODE" type="STRING" size="256"/>
+        <Column id="EMP_NAME" type="STRING" size="256"/>
+        <Column id="COMPANY_CODE" type="STRING" size="256"/>
+        <Column id="WORKPLACE_CODE" type="STRING" size="256"/>
+        <Column id="DEPT_CODE" type="STRING" size="256"/>
+        <Column id="POSITION_CODE" type="STRING" size="256"/>
+        <Column id="SOCIAL_SECURITY_NUMBER" type="STRING" size="256"/>
+        <Column id="BIRTH_DATE" type="STRING" size="256"/>
+        <Column id="GENDER" type="STRING" size="256"/>
+        <Column id="EMAIL" type="STRING" size="256"/>
+        <Column id="PHONE_NUMBER" type="STRING" size="256"/>
+        <Column id="IMAGE" type="BLOB" size="256"/>
+        <Column id="USER_PW" type="STRING" size="256"/>
+        <Column id="ZIP_CODE" type="STRING" size="256"/>
+        <Column id="BASIC_ADDRESS" type="STRING" size="256"/>
+        <Column id="DETAIL_ADDRESS" type="STRING" size="256"/>
+        <Column id="LEVEL_OF_EDUCATION" type="STRING" size="256"/>
+        <Column id="USER_OR_NOT" type="STRING" size="256"/>
+        <Column id="DEPT_NAME" type="STRING" size="256"/>
+        <Column id="POSITION_NAME" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_estimate">
+      <ColumnInfo>
+        <Column id="ESTIMATE_NO" type="STRING" size="256"/>
+        <Column id="CUSTOMER_CODE" type="STRING" size="256"/>
+        <Column id="ESTIMATE_DATE" type="STRING" size="256"/>
+        <Column id="CONTRACT_STATUS" type="STRING" size="256"/>
+        <Column id="ESTIMATE_REQUESTER" type="STRING" size="256"/>
+        <Column id="EFFECTIVE_DATE" type="STRING" size="256"/>
+        <Column id="PERSON_CODE_IN_CHARGE" type="STRING" size="256"/>
+        <Column id="DESCRIPTION" type="STRING" size="256"/>
+        <Column id="STATUS" type="STRING" size="256"/>
+        <Column id="PERSON_NAME_CHARGE" type="STRING" size="256"/>
+        <Column id="CHECKED" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_estimateDetail">
+      <ColumnInfo>
+        <Column id="CHECKED" type="STRING" size="256"/>
+        <Column id="ESTIMATE_DETAIL_NO" type="STRING" size="256"/>
+        <Column id="ESTIMATE_NO" type="STRING" size="256"/>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="UNIT_OF_ESTIMATE" type="STRING" size="256"/>
+        <Column id="DUE_DATE_OF_ESTIMATE" type="STRING" size="256"/>
+        <Column id="ESTIMATE_AMOUNT" type="INT" size="256"/>
+        <Column id="UNIT_PRICE_OF_ESTIMATE" type="INT" size="256"/>
+        <Column id="SUM_PRICE_OF_ESTIMATE" type="INT" size="256"/>
+        <Column id="DESCRIPTION" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_item">
+      <ColumnInfo>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="ITEM_GROUP_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_CLASSIFICATION" type="STRING" size="256"/>
+        <Column id="UNIT_OF_STOCK" type="STRING" size="256"/>
+        <Column id="LOSS_RATE" type="STRING" size="256"/>
+        <Column id="LEAD_TIME" type="STRING" size="256"/>
+        <Column id="STANDARD_UNIT_PRICE" type="INT" size="256"/>
+        <Column id="DESCRIPTION" type="STRING" size="256"/>
+        <Column id="CHECKED" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_itemGroup">
+      <ColumnInfo>
+        <Column id="CHECKED" type="STRING" size="256"/>
+        <Column id="ITEM_GROUP_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_GROUP_NAME" type="STRING" size="256"/>
+        <Column id="DESCRIPTION" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_menu">
+      <ColumnInfo>
+        <Column id="MENU_ID" type="STRING" size="256"/>
+        <Column id="MENU_NAME" type="STRING" size="256"/>
+        <Column id="MENU_LEVEL" type="STRING" size="256"/>
+        <Column id="MENU_STATUS" type="STRING" size="256"/>
+        <Column id="MENU_ORDER" type="STRING" size="256"/>
+        <Column id="MENU_URL" type="STRING" size="256"/>
+      </ColumnInfo>
+      <Rows>
+        <Row>
+          <Col id="MENU_ID">ME000</Col>
+          <Col id="MENU_NAME">HOME</Col>
+          <Col id="MENU_LEVEL">0</Col>
+          <Col id="MENU_STATUS">1</Col>
+          <Col id="MENU_URL">FrameBase::Form_Work.xfdl</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_ID">ME001</Col>
+          <Col id="MENU_NAME">거래원장 및 거래 관리</Col>
+          <Col id="MENU_LEVEL">0</Col>
+          <Col id="MENU_STATUS">1</Col>
+          <Col id="MENU_URL">busi::trade.xfdl</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_ID">ME002</Col>
+          <Col id="MENU_NAME">물류정보 관리</Col>
+          <Col id="MENU_LEVEL">0</Col>
+          <Col id="MENU_STATUS">1</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_ID">ME002_1</Col>
+          <Col id="MENU_NAME">코드 관리</Col>
+          <Col id="MENU_LEVEL">1</Col>
+          <Col id="MENU_STATUS">1</Col>
+          <Col id="MENU_URL">Base::codeManagement.xfdl</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_ID">ME002_2</Col>
+          <Col id="MENU_NAME">품목 관리</Col>
+          <Col id="MENU_LEVEL">1</Col>
+          <Col id="MENU_STATUS">1</Col>
+          <Col id="MENU_URL">logiinfo::itemManagement.xfdl</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_ID">ME002_3</Col>
+          <Col id="MENU_NAME">창고 관리</Col>
+          <Col id="MENU_LEVEL">1</Col>
+          <Col id="MENU_STATUS">1</Col>
+          <Col id="MENU_URL">logiinfo::warehouseManage.xfdl</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_ID">ME002_4</Col>
+          <Col id="MENU_NAME">거래처 관리</Col>
+          <Col id="MENU_LEVEL">1</Col>
+          <Col id="MENU_STATUS">1</Col>
+          <Col id="MENU_URL">logiinfo::customerManagement.xfdl</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_ID">ME003</Col>
+          <Col id="MENU_NAME">영업 관리</Col>
+          <Col id="MENU_LEVEL">0</Col>
+          <Col id="MENU_STATUS">1</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_ID">ME003_1</Col>
+          <Col id="MENU_NAME">견적 관리</Col>
+          <Col id="MENU_LEVEL">1</Col>
+          <Col id="MENU_STATUS">1</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_ID">ME003_1_1</Col>
+          <Col id="MENU_NAME">견적 등록/조회</Col>
+          <Col id="MENU_STATUS">0</Col>
+          <Col id="MENU_LEVEL">2</Col>
+          <Col id="MENU_URL">busi::estimate.xfdl</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_ID">ME003_2</Col>
+          <Col id="MENU_NAME">수주 관리</Col>
+          <Col id="MENU_LEVEL">1</Col>
+          <Col id="MENU_STATUS">1</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_ID">ME003_2_1</Col>
+          <Col id="MENU_NAME">수주 등록/조회</Col>
+          <Col id="MENU_LEVEL">2</Col>
+          <Col id="MENU_STATUS">1</Col>
+          <Col id="MENU_URL">busi::contract.xfdl</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_ID">ME004</Col>
+          <Col id="MENU_NAME">납품 관리</Col>
+          <Col id="MENU_LEVEL">0</Col>
+          <Col id="MENU_STATUS">1</Col>
+          <Col id="MENU_URL">busi::deliver.xfdl</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_ID">ME006</Col>
+          <Col id="MENU_NAME">구매 관리</Col>
+          <Col id="MENU_LEVEL">0</Col>
+          <Col id="MENU_STATUS">1</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_ID">ME006_1</Col>
+          <Col id="MENU_NAME">소요량전개 등록/취합(MRP)</Col>
+          <Col id="MENU_LEVEL">1</Col>
+          <Col id="MENU_STATUS">1</Col>
+          <Col id="MENU_URL">prodc::mrpRegisterAndGather.xfdl</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_ID">ME006_2</Col>
+          <Col id="MENU_NAME">발주 및 재고처리</Col>
+          <Col id="MENU_LEVEL">1</Col>
+          <Col id="MENU_STATUS">1</Col>
+          <Col id="MENU_URL">purcsto::orderRegister.xfdl</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_ID">ME006_3</Col>
+          <Col id="MENU_NAME">재고 관리</Col>
+          <Col id="MENU_LEVEL">1</Col>
+          <Col id="MENU_STATUS">1</Col>
+          <Col id="MENU_URL">purcsto::stockInfo.xfdl</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_ID">ME007</Col>
+          <Col id="MENU_NAME">생산 관리</Col>
+          <Col id="MENU_LEVEL">0</Col>
+          <Col id="MENU_STATUS">1</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_ID">ME007_1</Col>
+          <Col id="MENU_NAME">주생산계획(MPS)</Col>
+          <Col id="MENU_LEVEL">1</Col>
+          <Col id="MENU_STATUS">1</Col>
+          <Col id="MENU_URL">prodc::mpsRegister.xfdl</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_ID">ME007_3</Col>
+          <Col id="MENU_NAME">작업지시/생산실적 관리</Col>
+          <Col id="MENU_LEVEL">1</Col>
+          <Col id="MENU_STATUS">1</Col>
+          <Col id="MENU_URL">prodc::workInstruction.xfdl</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_ID">ME007_4</Col>
+          <Col id="MENU_NAME">작업장/작업장로그</Col>
+          <Col id="MENU_LEVEL">1</Col>
+          <Col id="MENU_STATUS">1</Col>
+          <Col id="MENU_URL">prodc::workSite.xfdl</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_ID">ME007_5</Col>
+          <Col id="MENU_NAME">자재명세서(BOM)</Col>
+          <Col id="MENU_LEVEL">1</Col>
+          <Col id="MENU_STATUS">1</Col>
+          <Col id="MENU_URL">purcsto::Bom.xfdl</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_ID">ME007_6</Col>
+          <Col id="MENU_NAME">외주 관리</Col>
+          <Col id="MENU_LEVEL">1</Col>
+          <Col id="MENU_STATUS">1</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_ID">ME007_6_1</Col>
+          <Col id="MENU_NAME">외주 조회/등록</Col>
+          <Col id="MENU_LEVEL">2</Col>
+          <Col id="MENU_STATUS">1</Col>
+          <Col id="MENU_URL">purcsto::outSourc.xfdl</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_ID">ME008</Col>
+          <Col id="MENU_NAME">권한 관리</Col>
+          <Col id="MENU_LEVEL">0</Col>
+          <Col id="MENU_STATUS">1</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_ID">ME008_1</Col>
+          <Col id="MENU_NAME">사원권한관리</Col>
+          <Col id="MENU_LEVEL">1</Col>
+          <Col id="MENU_STATUS">1</Col>
+          <Col id="MENU_URL">hr::empAuthority.xfdl</Col>
+        </Row>
+      </Rows>
+    </Dataset>
+    <Dataset id="gds_menuAvailableByPosition">
+      <ColumnInfo>
+        <Column id="WORKPLACE_CODE" type="STRING" size="256"/>
+        <Column id="DEPT_CODE" type="STRING" size="256"/>
+        <Column id="POSITION_CODE" type="STRING" size="256"/>
+        <Column id="MENU_CODE" type="STRING" size="256"/>
+        <Column id="IS_ACCESS_DENIED" type="STRING" size="256"/>
+        <Column id="IS_ACCESS_DENIED_NOT_PRINTED" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_mps">
+      <ColumnInfo>
+        <Column id="MPS_NO" type="STRING" size="256"/>
+        <Column id="MPS_PLAN_CLASSIFICATION" type="STRING" size="256"/>
+        <Column id="CONTRACT_DETAIL_NO" type="STRING" size="256"/>
+        <Column id="SALES_PLAN_NO" type="STRING" size="256"/>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="UNIT_OF_MPS" type="STRING" size="256"/>
+        <Column id="MPS_PLAN_DATE" type="STRING" size="256"/>
+        <Column id="MPS_PLAN_AMOUNT" type="STRING" size="256"/>
+        <Column id="DUE_DATE_OF_MPS" type="STRING" size="256"/>
+        <Column id="SCHEDULED_END_DATE" type="STRING" size="256"/>
+        <Column id="MRP_APPLY_STATUS" type="STRING" size="256"/>
+        <Column id="DESCRIPTION" type="STRING" size="256"/>
+        <Column id="OPERATION_COMPLETED" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_mrp">
+      <ColumnInfo>
+        <Column id="MRP_NO" type="STRING" size="256"/>
+        <Column id="MPS_NO" type="STRING" size="256"/>
+        <Column id="MRP_GATHERING_NO" type="STRING" size="256"/>
+        <Column id="ITEM_CLASSIFICATION" type="STRING" size="256"/>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="UNIT_OF_MRP" type="STRING" size="256"/>
+        <Column id="REQUIRED_AMOUNT" type="STRING" size="256"/>
+        <Column id="ORDER_DATE" type="STRING" size="256"/>
+        <Column id="REQUIRED_DATE" type="STRING" size="256"/>
+        <Column id="MRP_GATHERING_STATUS" type="STRING" size="256"/>
+        <Column id="REQUEST_STATUS" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_mrpGathering">
+      <ColumnInfo>
+        <Column id="MRP_GATHERING_NO" type="STRING" size="256"/>
+        <Column id="ORDER_OR_PRODUCTION_STATUS" type="STRING" size="256"/>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="UNIT_OF_MRP_GATHERING" type="STRING" size="256"/>
+        <Column id="NECESSARY_AMOUNT" type="STRING" size="256"/>
+        <Column id="DUE_DATE" type="STRING" size="256"/>
+        <Column id="CLAIM_DATE" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_mrpOpenTemp">
+      <ColumnInfo>
+        <Column id="MPS_NO" type="STRING" size="256"/>
+        <Column id="BOM_NO" type="STRING" size="256"/>
+        <Column id="ITEM_CLASSIFICATION" type="STRING" size="256"/>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="UNIT_OF_MRP" type="STRING" size="256"/>
+        <Column id="PLAN_AMOUNT" type="STRING" size="256"/>
+        <Column id="ORDER_DATE" type="STRING" size="256"/>
+        <Column id="REQUIRED_DATE" type="STRING" size="256"/>
+        <Column id="TOTAL_LOSS_RATE" type="STRING" size="256"/>
+        <Column id="CACULATED_AMOUNT" type="STRING" size="256"/>
+        <Column id="REQUIRED_AMOUNT" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_orderDialogTemp">
+      <ColumnInfo>
+        <Column id="MRP_GATHERING_NO" type="STRING" size="256"/>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="UNIT_OF_MRP" type="STRING" size="256"/>
+        <Column id="REQUIRED_AMOUNT" type="STRING" size="256"/>
+        <Column id="STOCK_AMOUNT" type="STRING" size="256"/>
+        <Column id="CALCULATED_REQUIRED_AMOUNT" type="STRING" size="256"/>
+        <Column id="STANDARD_UNIT_PRICE" type="STRING" size="256"/>
+        <Column id="SUM_PRICE" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_orderInfo">
+      <ColumnInfo>
+        <Column id="ORDER_NO" type="STRING" size="256"/>
+        <Column id="ORDER_DATE" type="STRING" size="256"/>
+        <Column id="ORDER_INFO_STATUS" type="STRING" size="256"/>
+        <Column id="ORDER_SORT" type="STRING" size="256"/>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="ORDER_AMOUNT" type="STRING" size="256"/>
+        <Column id="INSPECTION_STATUS" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_orderRequiredTemp">
+      <ColumnInfo>
+        <Column id="MRP_GATHERING_NO" type="STRING" size="256"/>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="UNIT_OF_MRP" type="STRING" size="256"/>
+        <Column id="REQUIRED_AMOUNT" type="STRING" size="256"/>
+        <Column id="STOCK_AMOUNT" type="STRING" size="256"/>
+        <Column id="ORDER_DATE" type="STRING" size="256"/>
+        <Column id="REQUIRED_DATE" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_position">
+      <ColumnInfo>
+        <Column id="WORKPLACE_CODE" type="STRING" size="256"/>
+        <Column id="DEPT_CODE" type="STRING" size="256"/>
+        <Column id="POSITION_CODE" type="STRING" size="256"/>
+        <Column id="POSITION_NAME" type="STRING" size="256"/>
+        <Column id="DESCRIPTION" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_productionPerformance">
+      <ColumnInfo>
+        <Column id="WORK_ORDER_COMPLETION_DATE" type="STRING" size="256"/>
+        <Column id="WORK_ORDER_NO" type="STRING" size="256"/>
+        <Column id="MPS_NO" type="STRING" size="256"/>
+        <Column id="CONTRACT_DETAIL_NO" type="STRING" size="256"/>
+        <Column id="ITEM_CLASSIFICATION" type="STRING" size="256"/>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="UNIT" type="STRING" size="256"/>
+        <Column id="WORK_ORDER_AMOUNT" type="STRING" size="256"/>
+        <Column id="ACTUAL_COMPLETION_AMOUNT" type="STRING" size="256"/>
+        <Column id="WORK_SUCCESS_RATE" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_productionProcess">
+      <ColumnInfo>
+        <Column id="WORKPLACE_CODE" type="STRING" size="256"/>
+        <Column id="PRODUCTION_PROCESS_CODE" type="STRING" size="256"/>
+        <Column id="PRODUCTION_PROCESS_NAME" type="STRING" size="256"/>
+        <Column id="RECEIVING_AND_FORWARDING" type="STRING" size="256"/>
+        <Column id="WORK_SITE_USE_OR_NOT" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_salesPlan">
+      <ColumnInfo>
+        <Column id="SALES_PLAN_NO" type="STRING" size="256"/>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="UNIT_OF_SALES" type="STRING" size="256"/>
+        <Column id="SALES_PLAN_DATE" type="STRING" size="256"/>
+        <Column id="DUE_DATE_OF_SALES" type="STRING" size="256"/>
+        <Column id="SALES_AMOUNT" type="STRING" size="256"/>
+        <Column id="UNIT_PRICE_OF_SALES" type="STRING" size="256"/>
+        <Column id="SUM_PRICE_OF_SALES" type="STRING" size="256"/>
+        <Column id="MPS_APPLY_STATUS" type="STRING" size="256"/>
+        <Column id="DESCRIPTION" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_stock">
+      <ColumnInfo>
+        <Column id="WAREHOUSE_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="UNIT_OF_STOCK" type="STRING" size="256"/>
+        <Column id="SAFETY_ALLOWANCE_AMOUNT" type="STRING" size="256"/>
+        <Column id="STOCK_AMOUNT" type="STRING" size="256"/>
+        <Column id="ORDER_AMOUNT" type="STRING" size="256"/>
+        <Column id="INPUT_AMOUNT" type="STRING" size="256"/>
+        <Column id="DELIVERY_AMOUNT" type="STRING" size="256"/>
+        <Column id="TOTAL_STOCK_AMOUNT" type="STRING" size="256"/>
+        <Column id="CHECKED" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_wareHouse">
+      <ColumnInfo>
+        <Column id="WAREHOUSE_CODE" type="STRING" size="256"/>
+        <Column id="WAREHOUSE_NAME" type="STRING" size="256"/>
+        <Column id="WAREHOUSE_USE_OR_NOT" type="STRING" size="256"/>
+        <Column id="DESCRIPTION" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_workplace">
+      <ColumnInfo>
+        <Column id="WORKPLACE_CODE" type="STRING" size="256"/>
+        <Column id="COMPANY_CODE" type="STRING" size="256"/>
+        <Column id="WORKPLACE_NAME" type="STRING" size="256"/>
+        <Column id="BUSINESS_LICENSE_NUMBER" type="STRING" size="256"/>
+        <Column id="CORPORATION_LICENSE_NUMBER" type="STRING" size="256"/>
+        <Column id="WORKPLACE_CEO_NAME" type="STRING" size="256"/>
+        <Column id="WORKPLACE_BUSINESS_CONDITIONS" type="STRING" size="256"/>
+        <Column id="WORKPLACE_BUSINESS_ITEMS" type="STRING" size="256"/>
+        <Column id="WORKPLACE_ZIP_CODE" type="STRING" size="256"/>
+        <Column id="WORKPLACE_BASIC_ADDRESS" type="STRING" size="256"/>
+        <Column id="WORKPLACE_DETAIL_ADDRESS" type="STRING" size="256"/>
+        <Column id="WORKPLACE_TEL_NUMBER" type="STRING" size="256"/>
+        <Column id="WORKPLACE_FAX_NUMBER" type="STRING" size="256"/>
+        <Column id="WORKPLACE_ESTABLISH_DATE" type="STRING" size="256"/>
+        <Column id="WORKPLACE_OPEN_DATE" type="STRING" size="256"/>
+        <Column id="WORKPLACE_CLOSE_DATE" type="STRING" size="256"/>
+        <Column id="IS_MAIN_OFFICE" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_workOrderableTemp">
+      <ColumnInfo>
+        <Column id="MRP_NO" type="STRING" size="256"/>
+        <Column id="MPS_NO" type="STRING" size="256"/>
+        <Column id="MRP_GATHERING_NO" type="STRING" size="256"/>
+        <Column id="ITEM_CLASSIFICATION" type="STRING" size="256"/>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="UNIT_OF_MRP" type="STRING" size="256"/>
+        <Column id="REQUIRED_AMOUNT" type="STRING" size="256"/>
+        <Column id="ORDER_DATE" type="STRING" size="256"/>
+        <Column id="REQUIRED_DATE" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_workOrderInfo">
+      <ColumnInfo>
+        <Column id="WORK_ORDER_NO" type="STRING" size="256"/>
+        <Column id="MRP_NO" type="STRING" size="256"/>
+        <Column id="MPS_NO" type="STRING" size="256"/>
+        <Column id="MRP_GATHERING_NO" type="STRING" size="256"/>
+        <Column id="ITEM_CLASSIFICATION" type="STRING" size="256"/>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="UNIT_OF_MRP" type="STRING" size="256"/>
+        <Column id="REQUIRED_AMOUNT" type="STRING" size="256"/>
+        <Column id="PRODUCTION_PROCESS_CODE" type="STRING" size="256"/>
+        <Column id="PRODUCTION_PROCESS_NAME" type="STRING" size="256"/>
+        <Column id="WORK_SITE_CODE" type="STRING" size="256"/>
+        <Column id="WORK_STIE_NAME" type="STRING" size="256"/>
+        <Column id="INSPECTION_STATUS" type="STRING" size="256"/>
+        <Column id="PRODUCTION_STATUS" type="STRING" size="256"/>
+        <Column id="COMPLETION_STATUS" type="STRING" size="256"/>
+        <Column id="OPERATION_COMPLETED" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_workOrderSimulTemp">
+      <ColumnInfo>
+        <Column id="MRP_NO" type="STRING" size="256"/>
+        <Column id="MPS_NO" type="STRING" size="256"/>
+        <Column id="MRP_GATHERING_NO" type="STRING" size="256"/>
+        <Column id="ITEM_CLASSIFICATION" type="STRING" size="256"/>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="UNIT_OF_MRP" type="STRING" size="256"/>
+        <Column id="INPUT_AMOUNT" type="STRING" size="256"/>
+        <Column id="REQUIRED_AMOUNT" type="STRING" size="256"/>
+        <Column id="STOCK_AFTER_WORK" type="STRING" size="256"/>
+        <Column id="ORDER_DATE" type="STRING" size="256"/>
+        <Column id="REQUIRED_DATE" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_workSite">
+      <ColumnInfo>
+        <Column id="PRODUCTION_PROCESS_CODE" type="STRING" size="256"/>
+        <Column id="WORK_SITE_CODE" type="STRING" size="256"/>
+        <Column id="WORK_SITE_NAME" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_workSiteTemp">
+      <ColumnInfo>
+        <Column id="WORK_ORDER_NO" type="STRING" size="256"/>
+        <Column id="MRP_NO" type="STRING" size="256"/>
+        <Column id="MPS_NO" type="STRING" size="256"/>
+        <Column id="WORK_SITE_NAME" type="STRING" size="256"/>
+        <Column id="WD_ITEM" type="STRING" size="256"/>
+        <Column id="PARENT_ITEM_CODE" type="STRING" size="256"/>
+        <Column id="PARENT_ITEM_NAME" type="STRING" size="256"/>
+        <Column id="ITEM_CLASSIFICATION" type="STRING" size="256"/>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="REQUIRED_AMOUNT" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_bomDeploy">
+      <ColumnInfo>
+        <Column id="BOM_NO" type="STRING" size="256"/>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="PARENT_ITEM_CODE" type="STRING" size="256"/>
+        <Column id="BOM_LELVEL" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="LEAD_TIME" type="STRING" size="256"/>
+        <Column id="LOSS_RATE" type="STRING" size="256"/>
+        <Column id="NET_AMOUNT" type="STRING" size="256"/>
+        <Column id="UNIT_OF_STOCK" type="STRING" size="256"/>
+        <Column id="NECESSARY_AMOUNT" type="STRING" size="256"/>
+        <Column id="IS_LEAF" type="STRING" size="256"/>
+        <Column id="DESCRIPTION" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_orderDetail">
+      <ColumnInfo>
+        <Column id="ORDER_DETAIL_NO" type="STRING" size="256"/>
+        <Column id="ORDER_NO" type="STRING" size="256"/>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="UNIT_OF_ORDER" type="STRING" size="256"/>
+        <Column id="DUE_DATE_OF_ORDER" type="STRING" size="256"/>
+        <Column id="DELIVERY_SCHEDULE_DATE" type="STRING" size="256"/>
+        <Column id="ORDER_AMOUNT" type="STRING" size="256"/>
+        <Column id="UNIT_PRICE_OF_ORDER" type="STRING" size="256"/>
+        <Column id="SUM_PRICE_OF_ORDER" type="STRING" size="256"/>
+        <Column id="DESCRIPTION" type="STRING" size="256"/>
+        <Column id="MRP_GATHERING_NO" type="STRING" size="256"/>
+        <Column id="ORDER_DETAIL_STATUS" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_orderGathering">
+      <ColumnInfo>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="UNIT_OF_ORDER" type="STRING" size="256"/>
+        <Column id="DELIVERY_SCHEDULE_DATE" type="STRING" size="256"/>
+        <Column id="AMOUNT" type="STRING" size="256"/>
+        <Column id="ORDER_AMOUNT" type="STRING" size="256"/>
+        <Column id="ORDER_GATHERING_STATUS" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_workInstruction">
+      <ColumnInfo>
+        <Column id="WORK_INSTRUCTION_NO" type="STRING" size="256"/>
+        <Column id="MRP_GATHERING_NO" type="STRING" size="256"/>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="INSTRUCTION_DATE" type="STRING" size="256"/>
+        <Column id="UNIT_OF_WORK_INSTRUCTION" type="STRING" size="256"/>
+        <Column id="WORK_INSTRUCTION_AMOUNT" type="STRING" size="256"/>
+        <Column id="PRODUCTION_STATUS" type="STRING" size="256"/>
+        <Column id="DESCRIPTION" type="STRING" size="256"/>
+        <Column id="WORK_INSTRUCTION_STATUS" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_materialPayment">
+      <ColumnInfo>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="PAYMENT_DATE" type="STRING" size="256"/>
+        <Column id="WORK_INSTRUCTION_NO" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="PAYMENT_AMOUNT" type="STRING" size="256"/>
+        <Column id="UNIT_PAYMENT" type="STRING" size="256"/>
+        <Column id="DESCRIPTION" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_prm">
+      <ColumnInfo>
+        <Column id="PRODUCTION_RESULT_NO" type="STRING" size="256"/>
+        <Column id="WORK_INSTRUCTION_NO" type="STRING" size="256"/>
+        <Column id="PRODUCTION_DATE" type="STRING" size="256"/>
+        <Column id="PRODUCTION_AMOUNT" type="STRING" size="256"/>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="UNIT_OF_PRODUCTION_RESULT" type="STRING" size="256"/>
+        <Column id="DESCRIPTION" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_warehousing">
+      <ColumnInfo>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ORDER_NO" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="ORDER_AMOUNT" type="STRING" size="256"/>
+        <Column id="WAREHOUSING_AMOUNT" type="STRING" size="256"/>
+        <Column id="UNIT_WAREHOUSING" type="STRING" size="256"/>
+        <Column id="CUSTOMER" type="STRING" size="256"/>
+        <Column id="DESCRIPTION" type="STRING" size="256"/>
+        <Column id="WAREHOUSING_DATE" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_mrpOpenTemp0">
+      <ColumnInfo>
+        <Column id="MPS_NO" type="STRING" size="256"/>
+        <Column id="BOM_NO" type="STRING" size="256"/>
+        <Column id="ITEM_CLASSIFICATION" type="STRING" size="256"/>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="UNIT_OF_MRP" type="STRING" size="256"/>
+        <Column id="PLAN_AMOUNT" type="STRING" size="256"/>
+        <Column id="ORDER_DATE" type="STRING" size="256"/>
+        <Column id="REQUIRED_DATE" type="STRING" size="256"/>
+        <Column id="TOTAL_LOSS_RATE" type="STRING" size="256"/>
+        <Column id="CACULATED_AMOUNT" type="STRING" size="256"/>
+        <Column id="REQUIRED_AMOUNT" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_mrpGathering2">
+      <ColumnInfo>
+        <Column id="MRP_GATHERING_NO" type="STRING" size="256"/>
+        <Column id="ORDER_OR_PRODUCTION_STATUS" type="STRING" size="256"/>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="UNIT_OF_MRP_GATHERING" type="STRING" size="256"/>
+        <Column id="NECESSARY_AMOUNT" type="STRING" size="256"/>
+        <Column id="DUE_DATE" type="STRING" size="256"/>
+        <Column id="CLAIM_DATE" type="STRING" size="256"/>
+        <Column id="MRP_NO" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_post">
+      <ColumnInfo>
+        <Column id="ZIP_NO" type="STRING" size="256"/>
+        <Column id="LNM_ADRES" type="STRING" size="256"/>
+        <Column id="RN_ADRES" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_checkMaterialPayment">
+      <ColumnInfo>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="STOCKTAKING" type="STRING" size="256"/>
+        <Column id="SAFETY_STOCKTAKING" type="STRING" size="256"/>
+        <Column id="STOCK_STATUS" type="STRING" size="256"/>
+        <Column id="SAFETY_STOCK_STATUS" type="STRING" size="256"/>
+        <Column id="NECESSARY_AMOUNT" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_dustStatus">
+      <ColumnInfo>
+        <Column id="STATION_NAME" type="STRING" size="256"/>
+        <Column id="PM25VALUE" type="STRING" size="256"/>
+        <Column id="DATA_TIME" type="STRING" size="256"/>
+        <Column id="PM10VALUE" type="STRING" size="256"/>
+        <Column id="O3VALUE" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_contractInfo">
+      <ColumnInfo>
+        <Column id="CONTRACT_NO" type="STRING" size="256"/>
+        <Column id="ESTIMATE_NO" type="STRING" size="256"/>
+        <Column id="CUSTOMER_NAME" type="STRING" size="256"/>
+        <Column id="ESTIMATE_DATE" type="STRING" size="256"/>
+        <Column id="CONTRACT_DATE" type="STRING" size="256"/>
+        <Column id="CONTRACT_REQUESTER" type="STRING" size="256"/>
+        <Column id="EMP_NAME_IN_CHARGE" type="STRING" size="256"/>
+        <Column id="DESCRIPTION" type="STRING" size="256"/>
+        <Column id="CONTRACT_TYPE" type="STRING" size="256"/>
+        <Column id="CUSTOMER_CODE" type="STRING" size="256"/>
+        <Column id="PERSON_CODE_IN_CHARGE" type="STRING" size="256"/>
+        <Column id="CONTRACT_TYPE_NAME" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_workOrderableMrpList">
+      <ColumnInfo>
+        <Column id="CHECKED" type="STRING" size="256"/>
+        <Column id="MRP_NO" type="STRING" size="256"/>
+        <Column id="MPS_NO" type="STRING" size="256"/>
+        <Column id="MRP_GATHERING_NO" type="STRING" size="256"/>
+        <Column id="ITEM_CLASSIFICATION" type="STRING" size="256"/>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="UNIT_OF_MRP" type="STRING" size="256"/>
+        <Column id="REQUIRED_AMOUNT" type="INT" size="256"/>
+        <Column id="ORDER_DATE" type="STRING" size="256"/>
+        <Column id="REQUIRED_DATE" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_myMenu">
+      <ColumnInfo>
+        <Column id="MENU_CODE" type="STRING" size="256"/>
+        <Column id="MENU_NAME" type="STRING" size="256"/>
+        <Column id="AUTORITY_GROUP_CODE" type="STRING" size="256"/>
+        <Column id="MENU_LEVEL" type="STRING" size="256"/>
+        <Column id="AUTHORITY" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_contractDetailInMpsAvailable">
+      <ColumnInfo>
+        <Column id="CHECKED" type="STRING" size="256"/>
+        <Column id="CONTRACT_NO" type="STRING" size="256"/>
+        <Column id="CONTRACT_TYPE" type="STRING" size="256"/>
+        <Column id="CONTRACT_DATE" type="STRING" size="256"/>
+        <Column id="CUSTOMER_CODE" type="STRING" size="256"/>
+        <Column id="CONTRACT_DETAIL_NO" type="STRING" size="256"/>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="UNIT_OF_CONTRACT" type="STRING" size="256"/>
+        <Column id="ESTIMATE_AMOUNT" type="STRING" size="256"/>
+        <Column id="STOCK_AMOUNT_USE" type="STRING" size="256"/>
+        <Column id="PRODUCTION_REQUIREMENT" type="STRING" size="256"/>
+        <Column id="DUE_DATE_OF_CONTRACT" type="STRING" size="256"/>
+        <Column id="DESCRIPTION" type="STRING" size="256"/>
+        <Column id="PLAN_CLASSIFICATION" type="STRING" size="256"/>
+        <Column id="MPS_PLAN_DATE" type="STRING" size="256"/>
+        <Column id="SCHEDULED_END_DATE" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_info">
+      <ColumnInfo>
+        <Column id="deptName" type="STRING" size="256"/>
+        <Column id="positionName" type="STRING" size="256"/>
+        <Column id="empName" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_orderTemp">
+      <ColumnInfo>
+        <Column id="CHECKED" type="STRING" size="256"/>
+        <Column id="MRP_GATHERING_NO" type="STRING" size="256"/>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="UNIT_OF_MRP" type="STRING" size="256"/>
+        <Column id="REQUIRED_AMOUNT" type="STRING" size="256"/>
+        <Column id="STOCK_AMOUNT" type="STRING" size="256"/>
+        <Column id="ORDER_DATE" type="STRING" size="256"/>
+        <Column id="REQUIRED_DATE" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_stockLog">
+      <ColumnInfo>
+        <Column id="LOG_DATE" type="STRING" size="256"/>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="AMOUNT" type="STRING" size="256"/>
+        <Column id="REASON" type="STRING" size="256"/>
+        <Column id="CAUSE" type="STRING" size="256"/>
+        <Column id="EFFECT" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_workOrderSimulation">
+      <ColumnInfo>
+        <Column id="MRP_NO" type="STRING" size="256"/>
+        <Column id="MPS_NO" type="STRING" size="256"/>
+        <Column id="MRP_GATHERING_NO" type="STRING" size="256"/>
+        <Column id="ITEM_CLASSIFICATION" type="STRING" size="256"/>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="UNIT_OF_MRP" type="STRING" size="256"/>
+        <Column id="INPUT_AMOUNT" type="STRING" size="256"/>
+        <Column id="REQUIRED_AMOUNT" type="STRING" size="256"/>
+        <Column id="STOCK_AFTER_WORK" type="STRING" size="256"/>
+        <Column id="ORDER_DATE" type="STRING" size="256"/>
+        <Column id="REQUIRED_DATE" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_workSiteSimulation">
+      <ColumnInfo>
+        <Column id="WORK_ORDER_NO" type="STRING" size="256"/>
+        <Column id="MRP_NO" type="STRING" size="256"/>
+        <Column id="MPS_NO" type="STRING" size="256"/>
+        <Column id="WORK_SIETE_NAME" type="STRING" size="256"/>
+        <Column id="WD_ITEM" type="STRING" size="256"/>
+        <Column id="PARENT_ITEM_CODE" type="STRING" size="256"/>
+        <Column id="PARENT_ITEM_NAME" type="STRING" size="256"/>
+        <Column id="ITEM_CLASS_IFICATION" type="STRING" size="256"/>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="REQUIRED_AMOUNT" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_workSiteLog">
+      <ColumnInfo>
+        <Column id="WORK_ORDER_NO" type="STRING" size="256"/>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="REAESON" type="STRING" size="256"/>
+        <Column id="WORK_SITE_NAME" type="STRING" size="256"/>
+        <Column id="WORK_DATE" type="STRING" size="256"/>
+        <Column id="PRODUCTION_PROCESS_CODE" type="STRING" size="256"/>
+        <Column id="PRODUCTION_PROCESS_NAME" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_api">
+      <ColumnInfo>
+        <Column id="AIR_PORT" type="STRING" size="256"/>
+        <Column id="FIRST_DATE" type="STRING" size="256"/>
+        <Column id="FLIGHT_ID" type="STRING" size="256"/>
+        <Column id="START_TIME" type="STRING" size="256"/>
+        <Column id="LAST_DATE" type="STRING" size="256"/>
+        <Column id="SUNDAY" type="STRING" size="256"/>
+        <Column id="MONDAY" type="STRING" size="256"/>
+        <Column id="TUESDAY" type="STRING" size="256"/>
+        <Column id="WEDNESDAY" type="STRING" size="256"/>
+        <Column id="THURSDAY" type="STRING" size="256"/>
+        <Column id="FRIDAY" type="STRING" size="256"/>
+        <Column id="SATURDAY" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_emp">
+      <ColumnInfo>
+        <Column id="EMP_NAME" type="STRING" size="256"/>
+        <Column id="DEPT_NAME" type="STRING" size="256"/>
+        <Column id="EMP_CODE" type="STRING" size="256"/>
+        <Column id="POSITION_NAME" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_employee_all">
+      <ColumnInfo>
+        <Column id="EMP_CODE" type="STRING" size="256"/>
+        <Column id="EMP_NAME" type="STRING" size="256"/>
+        <Column id="COMPANY_CODE" type="STRING" size="256"/>
+        <Column id="WORKPLACE_CODE" type="STRING" size="256"/>
+        <Column id="DEPT_CODE" type="STRING" size="256"/>
+        <Column id="POSITION_CODE" type="STRING" size="256"/>
+        <Column id="SOCIAL_SECURITY_NUMBER" type="STRING" size="256"/>
+        <Column id="USER_OR_NOT" type="STRING" size="256"/>
+        <Column id="BIRTH_DATE" type="STRING" size="256"/>
+        <Column id="EMAIL" type="STRING" size="256"/>
+        <Column id="PHONE_NUMBER" type="STRING" size="256"/>
+        <Column id="IMAGE" type="STRING" size="256"/>
+        <Column id="USER_PW" type="STRING" size="256"/>
+        <Column id="ZIP_CODE" type="STRING" size="256"/>
+        <Column id="BASIC_ADDRESS" type="STRING" size="256"/>
+        <Column id="DETAIL_ADDRESS" type="STRING" size="256"/>
+        <Column id="LEVER_OF_EDUCATION" type="STRING" size="256"/>
+        <Column id="DEPT_NAME" type="STRING" size="256"/>
+        <Column id="USER_OR_NET" type="STRING" size="256"/>
+        <Column id="POSITION_NAME" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_AuthorityGroup">
+      <ColumnInfo>
+        <Column id="AUTHORITY_GROUP_CODE" type="STRING" size="256"/>
+        <Column id="AUTHORITY_GROUP_NAME" type="STRING" size="256"/>
+        <Column id="AUTHORITY" type="STRING" size="256"/>
+        <Column id="STATUS" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_AuthorityMenu">
+      <ColumnInfo>
+        <Column id="MENU_CODE" type="STRING" size="256"/>
+        <Column id="MENU_NAME" type="STRING" size="256"/>
+        <Column id="AUTHORITY" type="STRING" size="256"/>
+        <Column id="EMP_CODE" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_loginMenuAuthority">
+      <ColumnInfo>
+        <Column id="MENU_CODE" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_menuTop">
+      <ColumnInfo>
+        <Column id="MENU_ID" type="STRING" size="256"/>
+        <Column id="MENU_NAME" type="STRING" size="256"/>
+        <Column id="MENU_LEVEL" type="STRING" size="256"/>
+        <Column id="MENU_STATUS" type="STRING" size="256"/>
+        <Column id="MENU_URL" type="STRING" size="256"/>
+      </ColumnInfo>
+      <Rows>
+        <Row>
+          <Col id="MENU_LEVEL">0</Col>
+          <Col id="MENU_ID">ME003_1</Col>
+          <Col id="MENU_NAME">견적 관리</Col>
+          <Col id="MENU_URL">busi::estimate.xfdl</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_LEVEL">0</Col>
+          <Col id="MENU_ID">ME003_2_1</Col>
+          <Col id="MENU_NAME">수주 관리</Col>
+          <Col id="MENU_URL">busi::contract.xfdl</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_LEVEL">0</Col>
+          <Col id="MENU_ID">ME003_3</Col>
+          <Col id="MENU_NAME">납품 관리</Col>
+          <Col id="MENU_URL">busi::deliver.xfdl</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_LEVEL">0</Col>
+          <Col id="MENU_ID">ME005_1</Col>
+          <Col id="MENU_NAME">주생산계획 (MPS)</Col>
+          <Col id="MENU_URL">prodc::mpsRegister.xfdl</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_LEVEL">0</Col>
+          <Col id="MENU_ID">ME005_2_1</Col>
+          <Col id="MENU_NAME">소요량전개 등록/취합</Col>
+          <Col id="MENU_URL">prodc::mrpRegisterAndGather.xfdl</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_ID">ME004_2</Col>
+          <Col id="MENU_NAME">발주 관리</Col>
+          <Col id="MENU_LEVEL">0</Col>
+          <Col id="MENU_URL">purcsto::orderRegister.xfdl</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_ID">ME004_3</Col>
+          <Col id="MENU_NAME">재고 관리</Col>
+          <Col id="MENU_URL">purcsto::stockInfo.xfdl</Col>
+          <Col id="MENU_LEVEL">0</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_LEVEL">0</Col>
+          <Col id="MENU_ID">ME005_3</Col>
+          <Col id="MENU_URL">[Undefined]</Col>
+          <Col id="MENU_NAME">작업 관리</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_ID">ME005_4</Col>
+          <Col id="MENU_NAME">작업지시</Col>
+          <Col id="MENU_LEVEL">1</Col>
+          <Col id="MENU_URL">prodc::workInstruction.xfdl</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_LEVEL">1</Col>
+          <Col id="MENU_ID">ME005_5</Col>
+          <Col id="MENU_NAME">작업장 관리</Col>
+          <Col id="MENU_URL">prodc::workSite.xfdl</Col>
+        </Row>
+      </Rows>
+    </Dataset>
+    <Dataset id="gds_comm">
+      <ColumnInfo>
+        <Column id="headChk" type="STRING" size="256"/>
+      </ColumnInfo>
+      <Rows>
+        <Row>
+          <Col id="headChk">0</Col>
+        </Row>
+      </Rows>
+    </Dataset>
+    <Dataset id="gds_img">
+      <ColumnInfo>
+        <Column id="EMP_FILE_NAME" type="STRING" size="256"/>
+        <Column id="IMG_FILE_DATA" type="BLOB" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_reverse">
+      <ColumnInfo>
+        <Column id="CHECKED" type="STRING" size="256"/>
+        <Column id="DELIVERY_NO" type="STRING" size="256"/>
+        <Column id="DELIVERY_DATE" type="STRING" size="256"/>
+        <Column id="RETURN_DATE" type="STRING" size="256"/>
+        <Column id="CUSTOMER_NAME" type="STRING" size="256"/>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="RETURN_UNIT" type="STRING" size="256"/>
+        <Column id="RETURN_UNIT_PRICE" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_quarter">
+      <ColumnInfo>
+        <Column id="QUA" type="STRING" size="256"/>
+        <Column id="PRICE" type="STRING" size="256"/>
+        <Column id="REVERSE" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_outSourc">
+      <ColumnInfo>
+        <Column id="OUTSOURCING_NO" type="STRING" size="256"/>
+        <Column id="MATERIAL_STATUS" type="STRING" size="256"/>
+        <Column id="CUSTOMER_CODE" type="STRING" size="256"/>
+        <Column id="CUSTOMER_NAME" type="STRING" size="256"/>
+        <Column id="INSTRUCT_DATE" type="DATETIME" size="256"/>
+        <Column id="COMPLETE_DATE" type="DATETIME" size="256"/>
+        <Column id="ITEM_CODE" type="STRING" size="256"/>
+        <Column id="ITEM_NAME" type="STRING" size="256"/>
+        <Column id="INSTRUCTION_AMOUNT" type="STRING" size="256"/>
+        <Column id="COMPLETE_STATUS" type="STRING" size="256"/>
+        <Column id="CHECK_STATUS" type="STRING" size="256"/>
+        <Column id="UNIT_PRICE" type="INT" size="256"/>
+        <Column id="TOTAL_PRICE" type="STRING" size="256"/>
+        <Column id="OUTSOURCING_DATE" type="DATETIME" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+  </Datasets>
+  <Variables/>
+  <DataObjects/>
+</AppVariables>

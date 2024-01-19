@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="outSourc" width="1280" height="720" titletext="외주관리" onload="outSourcForm_onload">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <GroupBox id="outSourcManage" taborder="1" text="외주관리" left="20" top="15" width="1200" height="650" titlealign="topcenter" font="normal bold 25pt/normal &quot;Arial&quot;" cssclass="grpBox_normal"/>
+        <Tab id="outSourc" taborder="0" tabindex="0" left="36" top="66" width="1109" height="587" onchanged="outSourc_onchanged" selectedtabbuttonheight="30" selectedtabbuttonwidth="100" font="normal 9pt/normal &quot;Arial&quot;" color="orangered">
+          <Tabpages>
+            <Tabpage id="searchOutSourc" text="외주 조회/수정">
+              <Layouts>
+                <Layout>
+                  <Grid id="Grid00" taborder="0" left="4" top="79" width="1105" height="434" binddataset="gds_outSourc">
+                    <Formats>
+                      <Format id="default">
+                        <Columns>
+                          <Column size="151"/>
+                          <Column size="92"/>
+                          <Column size="77"/>
+                          <Column size="127"/>
+                          <Column size="94"/>
+                          <Column size="93"/>
+                          <Column size="101"/>
+                          <Column size="73"/>
+                          <Column size="67"/>
+                          <Column size="60"/>
+                          <Column size="62"/>
+                          <Column size="80"/>
+                          <Column size="80"/>
+                          <Column size="80"/>
+                        </Columns>
+                        <Rows>
+                          <Row size="24" band="head"/>
+                          <Row size="24"/>
+                        </Rows>
+                        <Band id="head">
+                          <Cell text="외주번호"/>
+                          <Cell col="1" text="자재출고상태"/>
+                          <Cell col="2" text="거래처코드"/>
+                          <Cell col="3" text="거래처명"/>
+                          <Cell col="4" text="지시일"/>
+                          <Cell col="5" text="완료일"/>
+                          <Cell col="6" text="품목코드"/>
+                          <Cell col="7" text="품목명"/>
+                          <Cell col="8" text="지시수량"/>
+                          <Cell col="9" text="완료상태"/>
+                          <Cell col="10" text="검사"/>
+                          <Cell col="11" text="품목가격"/>
+                          <Cell col="12" text="총가격"/>
+                          <Cell col="13" text="외주날짜"/>
+                        </Band>
+                        <Band id="body">
+                          <Cell text="bind:OUTSOURCING_NO"/>
+                          <Cell col="1" text="bind:MATERIAL_STATUS"/>
+                          <Cell col="2" text="bind:CUSTOMER_CODE"/>
+                          <Cell col="3" text="bind:CUSTOMER_NAME"/>
+                          <Cell col="4" text="bind:INSTRUCT_DATE"/>
+                          <Cell col="5" text="bind:COMPLETE_DATE"/>
+                          <Cell col="6" text="bind:ITEM_CODE"/>
+                          <Cell col="7" text="bind:ITEM_NAME"/>
+                          <Cell col="8" text="bind:INSTRUCTION_AMOUNT"/>
+                          <Cell col="9" text="bind:COMPLETE_STATUS"/>
+                          <Cell col="10" text="bind:CHECK_STATUS"/>
+                          <Cell col="11" text="bind:UNIT_PRICE"/>
+                          <Cell col="12" text="bind:TOTAL_PRICE"/>
+                          <Cell col="13" text="bind:OUTSOURCING_DATE"/>
+                        </Band>
+                      </Format>
+                    </Formats>
+                  </Grid>
+                  <Button id="Button00" taborder="3" text="외주 조회" left="304" top="27" width="120" height="33" cssclass="btn_normal" font="normal 12pt/normal &quot;Arial&quot;" onclick="outSourc_searchOutSourc_Button00_onclick"/>
+                  <Calendar id="Calendar00" taborder="1" left="4" top="26" width="120" height="36" displaynulltext="시작일" onchanged="outSourc_searchOutSourc_Calendar00_onchanged"/>
+                  <Calendar id="Calendar01" taborder="2" left="144" top="26" width="120" height="36" displaynulltext="종료일"/>
+                </Layout>
+              </Layouts>
+            </Tabpage>
+            <Tabpage id="regOutSourc" text="외주 등록">
+              <Layouts>
+                <Layout>
+                  <Grid id="Grid00" taborder="3" left="4" top="79" width="1105" height="184"/>
+                  <Grid id="Grid01" taborder="0" left="4" top="359" width="1105" height="184"/>
+                  <Button id="Button00" taborder="2" text="외주 추가" left="144" top="27" width="120" height="33" cssclass="btn_normal" font="normal 12pt/normal &quot;Arial&quot;" onclick="outSourc_regOutSourc_Button00_onclick"/>
+                  <Calendar id="Calendar00" taborder="1" left="4" top="26" width="120" height="36" displaynulltext="외주일자"/>
+                </Layout>
+              </Layouts>
+            </Tabpage>
+          </Tabpages>
+        </Tab>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/*********************
+* @ import js File *
+*********************/
+
+include "Lib::commLib.xjs";
+
+/*********************
+* @ declared field *
+*********************/
+var nexa = nexacro.getApplication();
+
+/***********************
+* @ this page onload *
+************************/
+
+this.outSourcForm_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	obj.set_titletext("외주");
+	nexa.gds_outSourc.clearData();
+};
+
+/////////////////////////////////////////////////////////  조회/수정탭  /////////////////////////////////////////////////////////
+
+
+/*****************************************
+*    @ 외주 조회  *
+******************************************/
+
+this.outSourc_searchOutSourc_Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	nexa.gds_outSourc.clearData();
+	
+	// tabPage0(==searchOutSourc)의 form 주소
+	var tab1 = this.outSourc.searchOutSourc.form;
+	trace("tab1::::"+tab1);
+	
+	if(tab1.Calendar00.value !=null && tab1.Calendar01.value){
+	this.transaction(
+	"searchOutSourcingDate",
+	"svcPurchase::outSourcing/List",
+	"",
+	"gds_outSourc=gds_outSourc",
+	"startDate='"+tab1.Calendar00.text+"' endDate='"+tab1.Calendar01.text+"' dataSearchCondition='outsourcingDate'",
+	"callback",
+	false
+	);
+	
+	}
+	else {
+	alert("날짜를 모두 선택해주세요");
+	}
+	
+};
+
+/**************************************************************
+*  @ 외주 조회 수정 탭 <-> 외주 등록 탭;         *
+*  @ description 외주 Dataset 초기화;   *
+***************************************************************/
+
+this.outSourc_onchanged = function(obj:nexacro.Tab,e:nexacro.TabIndexChangeEventInfo)
+{
+	nexa.gds_outSourc.clearData();
+};
+
+ /**************************************************************
+*  @ 트랜잭션 콜백;                     *
+*  @ description ALERT ERROR_CODE, ERROR_MSG;   *
+***************************************************************/
+
+this.callback = function(trid, ErrorCode, ErrorMsg)
+{
+	if(trid.indexOf("search")!=-1){
+		if(ErrorCode <0){
+			alert("조회 실패 : " + ErrorMsg);
+		}
+	}else if(trid.indexOf("batch")!=-1){
+		if(ErrorCode <0){
+			alert("데이터 저장 실패 : " + ErrorMsg);
+		}else{
+			alert("저장 성공!");
+			this.reload();
+		}
+	}else if(trid.indexOf("send")!=-1){
+		alert("전송 성공!");
+		
+	}
+}
+]]></Script>
+  </Form>
+</FDL>

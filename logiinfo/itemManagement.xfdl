@@ -1,0 +1,392 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="itemManagement" width="1280" height="720" titletext="품목관리" onload="form_onload">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="1280">
+        <Div id="Div00" taborder="0" text="Div00" left="8" top="13" width="1272" height="687">
+          <Layouts>
+            <Layout>
+              <GroupBox id="itemManage" taborder="0" text="품목관리" left="19" top="18" width="1223" height="669" font="bold 26px/normal &quot;Gulim&quot;" titlealign="topcenter" cssclass="grpBox_normal" color="black"/>
+              <Div id="Div01" taborder="1" text="" left="27" top="51" width="1045" height="606" background="white">
+                <Layouts>
+                  <Layout>
+                    <Static id="Static00" taborder="0" text="품목 목록 조회" left="29" top="15" width="142" height="40" font="bold 20px/normal &quot;Gulim&quot;" color="black"/>
+                    <Static id="Static00_00" taborder="1" text="품목 상세 목록 조회" left="29" top="305" width="209" height="40" color="black" font="bold 20px/normal &quot;Gulim&quot;"/>
+                    <Grid id="ItemGrid00" taborder="2" left="26.00" top="102" width="949" height="165" binddataset="ds_itemGroup" oncellclick="ItemGrid00_oncellclick" onheadclick="grd_headCheck_onheadclick" autofittype="none">
+                      <Formats>
+                        <Format id="default">
+                          <Columns>
+                            <Column size="31"/>
+                            <Column size="400"/>
+                            <Column size="400"/>
+                            <Column size="125"/>
+                          </Columns>
+                          <Rows>
+                            <Row size="24" band="head"/>
+                            <Row size="24"/>
+                          </Rows>
+                          <Band id="head">
+                            <Cell displaytype="checkboxcontrol" edittype="checkbox" text="0"/>
+                            <Cell col="1" text="품목그룹코드"/>
+                            <Cell col="2" text="품목그룹명"/>
+                            <Cell col="3" text="비고"/>
+                          </Band>
+                          <Band id="body">
+                            <Cell text="bind:CHECKED" displaytype="checkboxcontrol" edittype="checkbox"/>
+                            <Cell col="1" text="bind:ITEM_GROUP_CODE" edittype="text" textAlign="center"/>
+                            <Cell col="2" text="bind:ITEM_GROUP_NAME" textAlign="center"/>
+                            <Cell col="3" text="bind:DESCRIPTION" edittype="text" textAlign="center"/>
+                          </Band>
+                        </Format>
+                      </Formats>
+                    </Grid>
+                    <Grid id="grd_DetailItem" taborder="3" left="26.00" top="405" width="955" height="181" binddataset="ds_item" oncellclick="grd_DetailItem_oncellclick" onheadclick="grd_headCheck_onheadclick">
+                      <Formats>
+                        <Format id="default">
+                          <Columns>
+                            <Column size="48" band="left"/>
+                            <Column size="130"/>
+                            <Column size="100"/>
+                            <Column size="100"/>
+                            <Column size="100"/>
+                            <Column size="100"/>
+                            <Column size="90"/>
+                            <Column size="100"/>
+                            <Column size="100"/>
+                            <Column size="90"/>
+                          </Columns>
+                          <Rows>
+                            <Row size="24" band="head"/>
+                            <Row size="24"/>
+                          </Rows>
+                          <Band id="head">
+                            <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                            <Cell col="1" text="품목코드품목그룹코드" textAlign="center"/>
+                            <Cell col="2" text="품목명" textAlign="center"/>
+                            <Cell col="3" text="품목코드" textAlign="center"/>
+                            <Cell col="4" text="품목분류" textAlign="center"/>
+                            <Cell col="5" text="단위" textAlign="center"/>
+                            <Cell col="6" text="손실율" textAlign="center"/>
+                            <Cell col="7" text="소요일" textAlign="center"/>
+                            <Cell col="8" text="단가" textAlign="center"/>
+                            <Cell col="9" text="설명" textAlign="center"/>
+                          </Band>
+                          <Band id="body">
+                            <Cell displaytype="checkboxcontrol" edittype="checkbox" text="bind:CHECKED"/>
+                            <Cell col="1" text="bind:ITEM_GROUP_CODE" textAlign="center" edittype="text"/>
+                            <Cell col="2" text="bind:ITEM_NAME" textAlign="center" edittype="text"/>
+                            <Cell col="3" text="bind:ITEM_CODE" textAlign="center" edittype="text"/>
+                            <Cell col="4" text="bind:ITEM_CLASSIFICATION" textAlign="center" edittype="text"/>
+                            <Cell col="5" text="bind:UNIT_OF_STOCK" textAlign="center" edittype="text"/>
+                            <Cell col="6" text="bind:LOSS_RATE" textAlign="center" edittype="text"/>
+                            <Cell col="7" text="bind:LEAD_TIME" textAlign="center" edittype="text"/>
+                            <Cell col="8" text="bind:STANDARD_UNIT_PRICE" textAlign="center" edittype="text"/>
+                            <Cell col="9" text="bind:DESCRIPTION" textAlign="center" edittype="text"/>
+                          </Band>
+                        </Format>
+                      </Formats>
+                    </Grid>
+                    <Button id="saveButton" taborder="4" text="일괄저장" left="878.00" top="365" width="103" height="29" background="black" font="bold 12px/normal &quot;Gulim&quot;" onclick="saveButton_onclick" cssclass="btn_normal"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Button id="searchItem_Button" taborder="2" text="품목 조회" left="50.00" top="110" width="70" height="30" onclick="Div00_searchItem_Button00_onclick" background="black" font="bold 12px/normal &quot;Gulim&quot;" cssclass="btn_normal"/>
+              <Button id="searchItemDetail_Button" taborder="3" text="품목 상세조회" left="130.00" top="110" width="90" height="30" onclick="Div00_searchItemDetail_Button_onclick" background="black" font="bold 12px/normal &quot;Gulim&quot;" cssclass="btn_normal"/>
+              <Button id="addDetailItemButton" taborder="4" text="품목상세추가" left="50" top="410" width="102" height="30" background="black" font="bold 12px/normal &quot;Gulim&quot;" onclick="addDetailItemButton_onclick" cssclass="btn_normal"/>
+              <Button id="Button01_00" taborder="5" text="품목상세삭제" left="160" top="410" width="102" height="30" background="black" font="bold 12px/normal &quot;Gulim&quot;" onclick="deleteButton_onclick" cssclass="btn_normal"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[include "Lib::commLib.xjs";
+/*********************
+* 전역변수 선언
+*********************/
+var nexa = nexacro.getApplication();
+var itemGroupCode;
+
+
+/***********************
+* 화면이 시작할 때 실행
+************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	obj.set_titletext("품목");
+//	nexa.gds_itemGroup.clearData();
+//	nexa.gds_item.clearData();
+	this.ds_item.clearData();
+	this.ds_itemGroup.clearData();
+	trace('RowCount값 : '+this.ds_itemGroup.rowcount);
+};
+
+
+this.Div00_searchItem_Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	trace("품목조회 실행");
+			
+	this.transaction(
+				"searchItemList",
+				"svcLogiinfo::searchItemList",
+				"",
+				"ds_itemGroup=ds_itemGroup",
+				"",
+				"fn_callback",
+				false
+				);
+	trace("품목조회 종료");
+};
+
+
+
+this.Div00_searchItemDetail_Button_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	trace("품목상세조회 실행"); 
+	   trace(itemGroupCode);
+	   if(itemGroupCode== null){
+		  alert("코드를 선택해주세요");
+		  return;
+	   }
+	
+	
+	// 필터로 체크한 값만 가져오기
+// 	 var row = this.ds_itemGroup.findRow("CHECKED","1");
+// 	 trace("CHECKED는? : " +row); //-1
+// 	 var eNumber = this.ds_itemGroup.getColumn(row,"ITEM_GROUP_CODE"); 
+// 	 trace("품목코드는? : "+eNumber); //undefined 
+// 	 this.ds_item.filter("ITEM_GROUP_CODE =='"+eNumber+"'");
+				/*"eNumber='"+eNumber+"'",*/
+	
+	this.transaction(
+				"searchItemDetailList",
+				"svcLogiinfo::searchItemDetailList",
+				"",
+				"ds_item=ds_item",
+				"itemGroupCode='"+itemGroupCode+"'",
+				"fn_callback",
+				false
+				);
+				
+	
+	trace("품목상세조회 종료");
+	
+};
+
+	
+
+/** 품목상세추가 **/
+
+this.addDetailItemButton_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+   var row = this.ds_item.addRow();
+};
+
+
+/** 품목상세삭제 **/
+
+this.deleteButton_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var size = this.ds_item.getRowCount();
+   var row = null;
+   for(var i=0; i<size; i++){
+      row = this.ds_item.findRow("CHECKED","1");
+      if(row!=-1){
+         this.ds_item.deleteRow(row); //해당번호삭제
+      }
+   }
+};
+
+
+/** 일괄저장 **/
+
+this.saveButton_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	 
+   this.transaction(
+      "batchItemDetail", 
+       "svcLogiinfo::item/batchsave", 
+       "ds_item=ds_item:u", 
+       "", 
+       "", 
+       "fn_callback"
+   );
+   this.ds_item.clearData();
+   this.ds_item.clearData();
+};
+
+
+
+/** 콜백함수 실행 **/
+
+this.fn_callback = function (trid , ErrorCode, ErrorMsg){
+
+	//품목 목록 조회
+   if(trid == "searchItemList"){
+	trace("데이터로우카운트 조사 : "+this.ds_itemGroup.rowcount);
+	trace("데이터로우카운트 조사2 : "+this.ds_itemGroup.getColumn(0,'ITEM_GROUP_CODE'));
+      if(ErrorCode <0){
+         alert("조회 실패 : " + ErrorMsg);
+      }
+	 }
+	 
+	 //품목 상세 목록 조회
+	 if(trid == "searchItemDetailList"){
+      if(ErrorCode <0){
+         alert("조회 실패 : " + ErrorMsg);
+      }
+	 }
+	 
+	 //일괄저장 
+	  if(trid == "batchItemDetail"){
+      if(ErrorCode <0){
+         alert("저장 실패 : " + ErrorMsg);
+      } else{
+	  alert("저장 되었습니다. : " + ErrorMsg);
+	}
+	 }
+};
+
+
+
+
+
+
+/** 공통 그리드 체크박스 시작 **/
+
+/** 1. 품목조회 단일 체크박스 **/
+
+this.ItemGrid00_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+
+	itemGroupCode = this.ds_itemGroup.getColumn(e.row,'ITEM_GROUP_CODE')
+	trace(itemGroupCode);
+	trace('클릭값체크'+this.ds_itemGroup.getColumn(e.row,'CHECKED'));
+	
+	var check = this.ds_itemGroup.getColumn(e.row, 'CHECKED');
+	trace('check는? : '+check);
+	
+	 	if(e.col==1){
+		if(check==null || check=='0'){
+ 			this.ds_itemGroup.setColumn(e.row,"CHECKED",'1');
+ 		}else{
+ 			this.ds_itemGroup.setColumn(e.row,"CHECKED",'1 ');
+ 		}
+ 	}
+};
+	/*기존 체크박스 로직*/
+
+//  	trace('클릭값체크'+this.ds_itemGroup.getColumn(e.row,"CHECKED"));
+//  	var check = this.ds_itemGroup.getColumn(e.row,"CHECKED");
+//  	
+//  	if(e.col==1){
+// 		if(check==null || check=='0'){
+//  			this.ds_itemGroup.setColumn(e.row,"CHECKED",'1');
+//  		}else{
+//  			this.ds_itemGroup.setColumn(e.row,"CHECKED",'1 ');
+//  		}
+//  	}
+
+// 	  if(e.col == this.ItemGrid00.getBindCellIndex("body", "CHECKED")) { // 체크박스 선택했을 경우
+// 		for(var i = 0; i<this.ds_itemGroup.rowcount; i++) { // 데이터셋 전체 확인
+// 			if(e.row == i) {// 현재 행의 체크박스를 눌렀을 경우
+//             // 무반응 (체크 해제 안함)
+// 			} else {
+// 				this.ds_itemGroup.setColumn(i,"CHECKED","0"); 
+//                       // 클릭한 행의 체크박스를 제외한 나머지 체크박스는 체크 해제
+// 			}
+// 		}
+// 	}
+// 	
+//  };
+ 
+ 
+/** 2. 품목상세조회 체크박스 **/
+
+this.grd_DetailItem_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	trace('클릭값체크'+this.ds_item.getColumn(e.row,"CHECKED"));
+	var check = this.ds_item.getColumn(e.row,"CHECKED");
+	
+	if(e.col==1){
+		if(check==null || check=='0'){
+			this.ds_item.setColumn(e.row,"CHECKED",'1');
+		}else{
+			this.ds_item.setColumn(e.row,"CHECKED",'1 ');
+		}
+	}
+};
+
+/** 공통  
+	그리드 헤드체크박스 전체적용 및 해제 (헤드클릭 이벤트명을 동일하게 해주면 잘된다.)  **/
+this.grd_headCheck_onheadclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	trace("obj이름은? : "+obj.name);
+	if(e.col == 0){
+		nexa.clickHeadCheckBox(obj, "CHECKED");
+	}
+};
+
+
+this.clickHeadCheckBox = function (obj, strColName)
+{		
+	var headerCell = obj.getBindCellIndex("body", strColName);
+	trace('이거 헤더셀 작동함? : '+headerCell);
+
+	var checkValue = "1";
+	if(obj.getCellProperty("Head", 0, "displaytype") == "checkboxcontrol") {
+		trace('첫이프문통과');
+		if (obj.getCellProperty("Head", 0, "text") == "0") { //현재 체크박스 값과 반대되게
+		    obj.setCellProperty("Head", 0, "text", checkValue);
+		} else {
+			checkValue=0;
+			obj.setCellProperty("Head", 0, "text", checkValue);
+		}
+	}
+	
+	obj.setCellProperty("Head", 0, "text", checkValue); //헤더 체크박스 값 변경
+	
+	var objDataset = obj.getBindDataset(); //그리드에 바인드되어있는 dataset 가져옴
+	trace("objDataset : " + objDataset.name);
+	if(objDataset.getRowCount() > 0) {
+		trace('지금이거됨? : '+objDataset.getRowCount());
+		//objDataset.set_enableevent(false); //이벤트 비활성화
+		for (var i=0; i<objDataset.getRowCount(); i++) {			
+		    objDataset.setColumn(i, "CHECKED", checkValue); //체크박스를 checkValue로 설정
+		}
+		objDataset.set_enableevent(true); //이벤트 활성화
+	}
+};]]></Script>
+    <Objects>
+      <Dataset id="ds_itemGroup00" oncolumnchanged="ds_itemGroup00_oncolumnchanged">
+        <ColumnInfo>
+          <Column id="CHECKED" type="STRING" size="256"/>
+          <Column id="ITEM_GROUP_CODE" type="STRING" size="256"/>
+          <Column id="ITEM_GROUP_NAME" type="STRING" size="256"/>
+          <Column id="DESCRIPTION" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_itemGroup">
+        <ColumnInfo>
+          <Column id="CHECKED" type="STRING" size="256"/>
+          <Column id="ITEM_GROUP_CODE" type="STRING" size="256"/>
+          <Column id="ITEM_GROUP_NAME" type="STRING" size="256"/>
+          <Column id="DESCRIPTION" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_item">
+        <ColumnInfo>
+          <Column id="CHECKED" type="STRING" size="256"/>
+          <Column id="ITEM_CODE" type="STRING" size="256"/>
+          <Column id="ITEM_NAME" type="STRING" size="256"/>
+          <Column id="ITEM_GROUP_CODE" type="STRING" size="256"/>
+          <Column id="ITEM_CLASSIFICATION" type="STRING" size="256"/>
+          <Column id="UNIT_OF_STOCK" type="STRING" size="256"/>
+          <Column id="LOSS_RATE" type="STRING" size="256"/>
+          <Column id="LEAD_TIME" type="STRING" size="256"/>
+          <Column id="STANDARD_UNIT_PRICE" type="INT" size="256"/>
+          <Column id="DESCRIPTION" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

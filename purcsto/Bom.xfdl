@@ -1,0 +1,422 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Bom" width="1280" height="720" titletext="BOM" onload="Bom_onload">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <GroupBox id="BOM" taborder="0" text="BOM" left="18" top="20" width="1252" height="650" titlealign="topcenter" font="normal bold 25pt/normal &quot;Arial&quot;" color="black"/>
+        <Tab id="bomInfo" taborder="1" tabindex="0" left="30" top="66" width="1230" height="587" font="normal 9pt/normal &quot;Arial&quot;" selectedtabbuttonheight="30" selectedtabbuttonwidth="130" tabposition="top" tabjustify="false" onchanged="bomInfo_onchanged" color="orangered">
+          <Tabpages>
+            <Tabpage id="deploy" text="BOM정전개/역전개">
+              <Layouts>
+                <Layout>
+                  <Button id="Button00" taborder="0" text="BOM 조회" left="742" top="29" width="122" height="34" font="normal 10pt/normal &quot;Arial&quot;" onclick="bomInfo_deploy_Button00_onclick" color="white" background="black"/>
+                  <Grid id="Grid00" taborder="1" left="4" top="89" width="1098" height="294" binddataset="gds_bomDeploy" oncellclick="deliver_deliver_Grid00_oncellclick" color="orangered">
+                    <Formats>
+                      <Format id="default">
+                        <Columns>
+                          <Column size="25"/>
+                          <Column size="103"/>
+                          <Column size="74"/>
+                          <Column size="98"/>
+                          <Column size="234"/>
+                          <Column size="164"/>
+                          <Column size="48"/>
+                          <Column size="72"/>
+                          <Column size="62"/>
+                          <Column size="67"/>
+                          <Column size="74"/>
+                          <Column size="74"/>
+                        </Columns>
+                        <Rows>
+                          <Row size="24" band="head"/>
+                          <Row size="30" band="head"/>
+                          <Row size="26"/>
+                        </Rows>
+                        <Band id="head">
+                          <Cell colspan="12" text="   BOM 정전개 / 역전개" textAlign="left"/>
+                          <Cell row="1"/>
+                          <Cell row="1" col="1" text="BOM번호"/>
+                          <Cell row="1" col="2" text="BOM레벨"/>
+                          <Cell row="1" col="3" text="상위품목코드"/>
+                          <Cell row="1" col="4" text="품목코드"/>
+                          <Cell row="1" col="5" text="품목명"/>
+                          <Cell row="1" col="6" text="단위"/>
+                          <Cell row="1" col="7" text="정미수량"/>
+                          <Cell row="1" col="8" text="손실율"/>
+                          <Cell row="1" col="9" text="필요수량"/>
+                          <Cell row="1" col="10" text="리드타임"/>
+                          <Cell row="1" col="11" text="비고"/>
+                        </Band>
+                        <Band id="body">
+                          <Cell expr="currow+1" textAlign="center"/>
+                          <Cell col="1" text="bind:BOM_NO" textAlign="center"/>
+                          <Cell col="2" text="bind:BOM_LEVEL" textAlign="center"/>
+                          <Cell col="3" text="bind:PARENT_ITEM_CODE" textAlign="center"/>
+                          <Cell col="4" text="bind:ITEM_CODE" textAlign="left"/>
+                          <Cell col="5" text="bind:ITEM_NAME" textAlign="center"/>
+                          <Cell col="6" text="bind:UNIT_OF_STOCK" textAlign="center"/>
+                          <Cell col="7" text="bind:NET_AMOUNT" textAlign="center"/>
+                          <Cell col="8" text="bind:LOSS_RATE"/>
+                          <Cell col="9" text="bind:NECESSARY_AMOUNT"/>
+                          <Cell col="10" text="bind:LEAD_TIME"/>
+                          <Cell col="11" text="bind:DESCRIPTION" textAlign="center"/>
+                        </Band>
+                      </Format>
+                    </Formats>
+                  </Grid>
+                  <GroupBox id="GroupBox00" taborder="2" text="품목분류" left="18" top="13" width="238" height="55" font="normal bold 11pt/normal &quot;Arial&quot;" titlealign="topcenter" color="black"/>
+                  <Radio id="item_cls" taborder="3" left="23" top="33" width="242" height="24" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" direction="vertical" font="normal bold 11pt/normal &quot;Arial&quot;" onitemchanged="bomInfo_deploy_onitemchanged" color="darkslategray">
+                    <Dataset id="innerdataset">
+                      <ColumnInfo>
+                        <Column id="codecolumn" size="256"/>
+                        <Column id="datacolumn" size="256"/>
+                      </ColumnInfo>
+                      <Rows>
+                        <Row>
+                          <Col id="codecolumn">IT-CI</Col>
+                          <Col id="datacolumn">완제품</Col>
+                        </Row>
+                        <Row>
+                          <Col id="codecolumn">IT-SI</Col>
+                          <Col id="datacolumn">반제품</Col>
+                        </Row>
+                        <Row>
+                          <Col id="datacolumn">원재료</Col>
+                          <Col id="codecolumn">IT-MA</Col>
+                        </Row>
+                      </Rows>
+                    </Dataset>
+                  </Radio>
+                  <Edit id="Edit00" taborder="4" left="500" top="29" width="207" height="34" displaynulltext="품목코드검색" font="normal normal 11pt/normal &quot;Arial&quot;" visible="true" oneditclick="bomInfo_deploy_Edit00_oneditclick" color="darkslategray" onchanged="bomInfo_deploy_Edit00_onchanged"/>
+                  <GroupBox id="GroupBox01" taborder="5" text="BOM 검색조건" left="286" top="13" width="180" height="55" font="normal bold 11pt/normal &quot;Arial&quot;" titlealign="topcenter" color="black"/>
+                  <Radio id="search_cdt" taborder="6" left="297" top="29" width="179" height="33" direction="vertical" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" font="normal bold 11pt/normal &quot;Arial&quot;" onitemchanged="bomInfo_deploy_onitemchanged" color="darkslategray">
+                    <Dataset id="innerdataset">
+                      <ColumnInfo>
+                        <Column id="codecolumn" size="256"/>
+                        <Column id="datacolumn" size="256"/>
+                      </ColumnInfo>
+                      <Rows>
+                        <Row>
+                          <Col id="datacolumn">정전개</Col>
+                          <Col id="codecolumn">forward</Col>
+                        </Row>
+                        <Row>
+                          <Col id="datacolumn">역전개</Col>
+                          <Col id="codecolumn">reverse</Col>
+                        </Row>
+                      </Rows>
+                    </Dataset>
+                  </Radio>
+                </Layout>
+              </Layouts>
+            </Tabpage>
+            <Tabpage id="regist" text="BOM 등록">
+              <Layouts>
+                <Layout>
+                  <GroupBox id="GroupBox00" taborder="0" text="품목분류" left="66" top="13" width="182" height="66" font="normal bold 11pt/normal &quot;Arial&quot;" titlealign="topcenter" color="black"/>
+                  <Radio id="item_cls" taborder="1" left="71" top="40" width="187" height="24" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" direction="vertical" font="normal 700 12pt/normal &quot;Arial&quot;" onitemchanged="bomInfo_deploy_onitemchanged" color="darkslategray">
+                    <Dataset id="innerdataset">
+                      <ColumnInfo>
+                        <Column id="codecolumn" size="256"/>
+                        <Column id="datacolumn" size="256"/>
+                      </ColumnInfo>
+                      <Rows>
+                        <Row>
+                          <Col id="codecolumn">IT-CI</Col>
+                          <Col id="datacolumn">완제품</Col>
+                        </Row>
+                        <Row>
+                          <Col id="codecolumn">IT-SI</Col>
+                          <Col id="datacolumn">반제품</Col>
+                        </Row>
+                      </Rows>
+                    </Dataset>
+                  </Radio>
+                  <Edit id="Edit00" taborder="2" left="264" top="35" width="207" height="34" displaynulltext="품목코드검색" font="normal normal 11pt/normal &quot;Arial&quot;" visible="true" oneditclick="deploy_Edit00_oneditclick" color="darkslategray" onchanged="bomInfo_regist_Edit00_onchanged"/>
+                  <Button id="Button00" taborder="3" text="BOM 조회" left="492" top="35" width="122" height="34" font="normal 10pt/normal &quot;Arial&quot;" onclick="bomInfo_regist_Button00_onclick" color="white" background="black"/>
+                  <Grid id="Grid00" taborder="4" left="52" top="89" width="886" height="294" binddataset="gds_bom" oncellclick="bomInfo_regist_Grid00_oncellclick" color="orangered">
+                    <Formats>
+                      <Format id="default">
+                        <Columns>
+                          <Column size="24"/>
+                          <Column size="48"/>
+                          <Column size="102"/>
+                          <Column size="127"/>
+                          <Column size="144"/>
+                          <Column size="202"/>
+                          <Column size="141"/>
+                          <Column size="96"/>
+                        </Columns>
+                        <Rows>
+                          <Row size="24" band="head"/>
+                          <Row size="24" band="head"/>
+                          <Row size="24"/>
+                        </Rows>
+                        <Band id="head">
+                          <Cell colspan="8" text="BOM 등록 /수정"/>
+                          <Cell row="1"/>
+                          <Cell row="1" col="1" text="삭제" displaytype="normal"/>
+                          <Cell row="1" col="2" text="출력순서지정"/>
+                          <Cell row="1" col="3" text="품목구분"/>
+                          <Cell row="1" col="4" text="품목코드"/>
+                          <Cell row="1" col="5" text="품목명"/>
+                          <Cell row="1" col="6" text="정미수량"/>
+                          <Cell row="1" col="7" text="설명"/>
+                        </Band>
+                        <Band id="body">
+                          <Cell/>
+                          <Cell col="1" displaytype="checkboxcontrol" edittype="checkbox" text="CHECKED"/>
+                          <Cell col="2" text="bind:NO"/>
+                          <Cell col="3" text="bind:ITEM_CLASSIFICATION_NAME"/>
+                          <Cell col="4" text="bind:ITEM_CODE"/>
+                          <Cell col="5" text="bind:ITEM_NAME"/>
+                          <Cell col="6" text="bind:NET_AMOUNT"/>
+                          <Cell col="7" text="bind:DESCRIPTION"/>
+                        </Band>
+                      </Format>
+                    </Formats>
+                  </Grid>
+                  <GroupBox id="GroupBox01" taborder="5" text="BOM 등록" left="638" top="13" width="250" height="66" font="normal bold 11pt/normal &quot;Arial&quot;" titlealign="topcenter" color="black"/>
+                  <Button id="Button01" taborder="6" text="새로운 항목 추가" left="649" top="35" width="122" height="34" font="normal 10pt/normal &quot;Arial&quot;" onclick="bomInfo_regist_Button01_onclick" background="black" color="white"/>
+                  <Button id="Button02" taborder="7" text="일괄저장" left="786" top="35" width="91" height="34" font="normal 10pt/normal &quot;Arial&quot;" onclick="bomInfo_regist_Button02_onclick" color="white" background="black"/>
+                </Layout>
+              </Layouts>
+            </Tabpage>
+          </Tabpages>
+        </Tab>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[///////////////////////////////////////     전역변수      ///////////////////////////////////////
+
+include "Lib::commLib.xjs";
+var itemCFCode;    //품목분류코드
+var itemCd;        //품목코드
+var searchCdt;     //BOM검색조건
+var tabIndex;      //탭 페이지(전개탭:0 등록탭:1)
+var editPack = this.bomInfo.deploy.form.Edit00;      //edit 품목코드검색
+var cls = this.bomInfo.deploy.form.item_cls;      //radio 품목분류
+var cdt = this.bomInfo.deploy.form.search_cdt;      //radio 검색조건
+var cls2 = this.bomInfo.regist.form.item_cls; 
+var editPack2 = this.bomInfo.regist.form.Edit00;
+var nexa = nexacro.getApplication();
+var code; //완,반,원재료 코드
+
+///////////////////////////////////////     온로드      ///////////////////////////////////////
+
+
+this.bom_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo) //온로드
+{
+   obj.set_titletext("BOM");
+   nexa.gds_bomDeploy.clearData();
+};
+
+
+///////////////////////////////////////  공통함수  ///////////////////////////////////////
+
+
+this.bomInfo_onchanged = function(obj:nexacro.Tab,e:nexacro.TabIndexChangeEventInfo) //탭변경시
+{
+   tabIndex = e.postindex;
+   if(tabIndex==1){
+      itemCFCode = null;     //품목분류코드
+      itemCd = null;         //품목코드
+      nexa.gds_bomInfo.clearData();
+      editPack = this.bomInfo.regist.form.Edit00;
+      cls = this.bomInfo.regist.form.item_cls;
+   }else{
+      //itemCFCode = null;     //품목분류코드
+      //itemCd = null;         //품목코드
+      //searchCdt = null;      //BOM검색조건
+      reload();
+      editPack = this.bomInfo.deploy.form.Edit00;
+      cls = this.bomInfo.deploy.form.search_cdt;
+   }
+};
+
+
+this.bomInfo_deploy_onitemchanged = function(obj:nexacro.Radio,e:nexacro.ItemChangeEventInfo) //라디오버튼 선택시
+{
+   if(obj.name=="item_cls"){
+      itemCFCode = obj.value;
+      cdt.set_index(-1);
+      editPack.set_value(null);
+      itemCd = null;
+   }else if(obj.name=="search_cdt"){
+      searchCdt = obj.value;
+   }
+};
+
+this.bomInfo_deploy_Edit00_oneditclick = function(obj:nexacro.Edit,e:nexacro.EditClickEventInfo) //품목코드검색
+{
+   if(cls.value==null){
+      alert("폼목 분류를 먼저 선택하세요");
+      return;
+   }
+   if(tabIndex==0){
+      if(cdt.value==null){
+         alert("BOM 검색 조건을 먼저 선택하세요");
+         return;
+      }
+   }
+   this.gfn_showModal("itemCFCode",
+					{pFrame:"bom1",itemCf:itemCFCode},
+					"Base::CommonDialog.xfdl",
+					"popupCallBack",
+					this, 
+					500, 
+					300, 
+					true, 
+					true, 
+					null);
+};
+
+this.popupCallBack = function(strPopupID, strReturn)  //팝업콜백(showModal의 리턴값 받음)
+{
+   if(strReturn==null) return; //아마도 strReturn 은 cls(radio button) 의 선택지 인듣 함
+   var eRow = nexa.gds_bomInfo.rowposition;
+   var params = strReturn.split(",");
+   if(strPopupID=="itemCFCode"){
+      if(params[0]=="bom0"){
+         editPack.set_value(params[2]);
+         itemCd = params[1];
+      }else if(params[0]=="bom1"){
+         nexa.gds_bomInfo.setColumn(eRow,"ITEM_CODE",params[1]);
+         nexa.gds_bomInfo.setColumn(eRow,"ITEM_NAME",params[2]);
+      }
+   }else if(strPopupID=="itemCode"){
+      code = params[0];
+      nexa.gds_bomInfo.setColumn(eRow,"ITEM_CLASSIFICATION_NAME",params[1]);
+   }
+}
+
+
+///////////////////////////////////////  정전개 / 역전개(탭0)  ///////////////////////////////////////
+
+
+this.bomInfo_deploy_Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) //BOM 조회
+{
+   var deployCondition = searchCdt;
+   var itemCode = editPack.value;
+   var itemClassificationCondition = itemCFCode;
+   if(cls.value==null){
+      alert("폼목 분류를 먼저 선택하세요");
+      return;
+   }else if(cdt.value==null){
+      alert("BOM 검색 조건을 먼저 선택하세요");
+      return;
+   }else if(editPack.value==null){
+      alert("품목코드를 먼저 선택하세요");
+      return;
+   }
+   trace("@@@아아배고파"+deployCondition+itemCode+itemClassificationCondition);
+   this.transaction("searchBOM", 
+            "svcStock::bom/deploy", 
+            "", 
+            "gds_bomDeploy=gds_bomDeploy", 
+            "deployCondition='"+deployCondition+"' itemCode='"+itemCode+"' itemClassificationCondition='"+itemClassificationCondition+"'", 
+            "callback",   
+            false);
+   var rowCount = nexa.gds_bomDeploy.rowcount;
+   for(var i=0; i<rowCount; i++){
+      var lev = nexa.gds_bomDeploy.getColumn(i,"BOM_LEVEL");
+      var itemCode = nexa.gds_bomDeploy.getColumn(i,"ITEM_CODE");
+      var space = "               ";
+      for(var n=0; n<lev; n++){
+         itemCode = space + itemCode;
+      }
+      nexa.gds_bomDeploy.setColumn(i,"ITEM_CODE",itemCode);
+   }
+};
+
+
+///////////////////////////////////////  등록 / 수정(탭1)  ///////////////////////////////////////
+
+
+this.bomInfo_regist_Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) //BOM조회
+{
+   var itemCode = itemCd;
+   if(cls2.value==null){
+      alert("폼목 분류를 먼저 선택하세요");
+      return;
+   }else if(editPack2.value==null){
+      alert("품목코드를 먼저 선택하세요");
+      return;
+   }
+   
+   this.transaction("searchBOMInfo", 
+            "svcStock::searchBomInfo", 
+            "", 
+            "gds_bom=gds_bomInfo", 
+            "parentItemCode='"+editPack2.value+"'", 
+            "callback",
+            false);
+};
+
+this.bomInfo_regist_Button01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) //새로운 항목 추가
+{
+   var No = nexa.gds_bom.addRow();
+   var preNo = nexa.gds_bom.getColumn(No-1,"NO");
+   nexa.gds_bom.setColumn(No,"NO",preNo+1);
+};
+
+this.bomInfo_regist_Button02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) //일괄저장
+{
+   var rowc = nexa.gds_bom.copyData(gds_bomInfo);
+   this.transaction("batchBomList", 
+            "svcPurchase::batchBomListProcess.", 
+            "gds_bom=gds_bom", 
+            "", 
+            "", 
+            "callback",
+            false);
+};
+
+
+this.deploy_Edit00_oneditclick = function(obj:nexacro.Edit,e:nexacro.EditClickEventInfo)
+{
+  if(cls2.value==null){
+      alert("폼목 분류를 먼저 선택하세요");
+      return;
+   }
+	 this.gfn_showModal("itemCFCode",{pFrame:"bom2",itemCf:itemCFCode},"Base::CommonDialog.xfdl","popupCallBack",this, 500, 300, true, true, null);
+};
+
+this.bomInfo_regist_Grid00_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	   obj.setEditSelect(0,-1);
+   var eRow = nexa.gds_bom.rowposition;
+   var yn = nexa.gds_bom.getColumn(eRow,"CHECKED");
+   var no = nexa.gds_bom.getColumn(eRow,"NO");
+   
+   if(e.col==1){
+      if(yn==null || yn=="0"){
+         if(no!=1){
+            nexa.gds_bom.setColumn(eRow,"CHECKED","1");
+         }else{ return; }
+      }else{
+         nexa.gds_bom.setColumn(eRow,"CHECKED","0");
+      }
+   }else if(e.col==2){
+      if(no==1){
+         alert("모품목은 출력순서 1이 고정값입니다");
+      }
+   }else if(e.col==3){
+      if(nexa.gds_bom.getColumn(eRow,"ITEM_CLASSIFICATION_NAME")==null){
+	   this.gfn_showModal("itemCode",{pFrame:"bom1",itemCf:itemCFCode},"Base::CommonDialog.xfdl","popupCallBack",this, 500, 300, true, true, null);
+        nexa.gds_codeDetail.filter("DIVISION_CODE_NO=='IT'");
+        
+      }
+   }else if(e.col==4 || e.col==5){
+      if(nexa.gds_bom.getColumn(eRow,"ITEM_CLASSIFICATION_NAME")==null){
+         alert("품목구분을 먼저 선택해주세요");
+      }else{
+         if(nexa.gds_bom.getColumn(eRow,"ITEM_CODE")==null){
+         this.gfn_showModal("itemCFCode",{pFrame:"bom",itemCf:code},"Base::CommonDialog.xfdl","popupCallBack",this, 500, 300, true, true, null);
+         }
+      }
+   }
+};
+]]></Script>
+    <Objects/>
+  </Form>
+</FDL>

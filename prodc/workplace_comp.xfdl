@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="workplace_comp" width="1280" height="720" titletext="제품제작 모달" onload="workplace_comp_onload">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <GroupBox id="GroupBox00" taborder="0" text="완료버튼" left="35" top="30" width="155" height="65" color="black"/>
+        <Grid id="Grid00" taborder="1" left="17" top="115" width="1083" height="385" binddataset="gds_workSiteSimulation" color="orangered">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="24"/>
+                <Column size="102"/>
+                <Column size="80"/>
+                <Column size="85"/>
+                <Column size="88"/>
+                <Column size="120"/>
+                <Column size="92"/>
+                <Column size="86"/>
+                <Column size="114"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell textAlign="center"/>
+                <Cell col="1" text="작업지시번호" textAlign="center"/>
+                <Cell col="2" text="작업장명" textAlign="center"/>
+                <Cell col="3" text="제작품목분류" textAlign="center"/>
+                <Cell col="4" text="제작품목코드" textAlign="center"/>
+                <Cell col="5" text="제작품목명" textAlign="center"/>
+                <Cell col="6" text="작업품목분류" textAlign="center"/>
+                <Cell col="7" text="작업품목코드" textAlign="center"/>
+                <Cell col="8" text="작업품목명" textAlign="center"/>
+                <Cell col="9" text="작업량" textAlign="center"/>
+              </Band>
+              <Band id="body">
+                <Cell expr="currow+1" textAlign="center"/>
+                <Cell col="1" text="bind:WORK_ORDER_NO" textAlign="center"/>
+                <Cell col="2" text="bind:WORK_SITE_NAME" textAlign="center"/>
+                <Cell col="3" text="bind:WD_ITEM" textAlign="center"/>
+                <Cell col="4" text="bind:PARENT_ITEM_CODE" textAlign="center"/>
+                <Cell col="5" text="bind:PARENT_ITEM_NAME" textAlign="center"/>
+                <Cell col="6" text="bind:ITEM_CLASS_IFICATION" textAlign="center"/>
+                <Cell col="7" text="bind:ITEM_CODE" textAlign="center"/>
+                <Cell col="8" text="bind:ITEM_NAME" textAlign="center"/>
+                <Cell col="9" text="bind:REQUIRED_AMOUNT" textAlign="center"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="Button00" taborder="2" text="검사 및 제작완료" left="47" top="50" width="133" height="35" onclick="Button00_onclick" color="white" background="black"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+///////////////////////////////////////  	전역변수		///////////////////////////////////////
+
+include "Lib::commLib.xjs";
+var nexa = nexacro.getApplication();
+var buttonName;
+
+///////////////////////////////////////  	온로드		///////////////////////////////////////
+
+this.workplace_comp_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.transaction(
+				"searchWorkSiteSituation", 
+				"svcQuality::worksite/situation", 
+				"", 
+				"gds_workSiteSimulation=gds_workSiteSimulation", 
+				"workSiteCourse='"+obj.parent.workSiteCourse+"' workOrderNo='"+obj.parent.workOrderNo+"' itemClassIfication='"+obj.parent.itemClassIfication+"'", 
+				"callback" );
+	buttonName = obj.parent.buttonName;
+};
+
+
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) //검사 및 제작완료
+{
+	var today = nexa.getToday();
+	var itemCodeList=[];
+	var workOrderNo=nexa.gds_workSiteSimulation.getColumn(0,"WORK_ORDER_NO");
+	var itemCode=nexa.gds_workSiteSimulation.getColumn(0,"PARENT_ITEM_CODE");
+	
+	for(var n=0; n<nexa.gds_workSiteSimulation.rowcount; n++){
+		itemCodeList.push(nexa.gds_workSiteSimulation.getColumn(n,"ITEM_CODE"));
+	}
+	
+	var itemCodeListstr="["+itemCodeList.toString()+"]";
+	var confirmMsg = "완료날짜 : "+today+"\n"+buttonName+" : "+nexa.gds_workSiteSimulation.rowcount+"가지"+
+					 "\n"+nexa.gds_workSiteSimulation.getColumn(0,"WD_ITEM")+" : "+
+					 nexa.gds_workSiteSimulation.getColumn(0,"PARENT_ITEM_NAME")+
+					 "를 제작하기 위해 \n 작업을 하시겠습니까?"
+	if ( confirm(confirmMsg) ){
+		this.transaction(
+					"batchWorkCompletion",
+					"svcQuality::workorder/workcompletion",
+					"",
+					"",
+					"itemCodeList="+itemCodeListstr+" workOrderNo="+workOrderNo+" itemCode="+itemCode,
+					"callback",
+					false);
+	}
+};
+
+
+this.callback = function (trid , ErrorCode, ErrorMsg){ //콜백
+	if(trid.indexOf("search")!=-1){
+		if(ErrorCode <0){
+			alert("작업 실패 : " + ErrorMsg);
+		}
+	}else if(trid.indexOf("batch")!=-1){
+		if(ErrorCode <0){
+			alert("데이터 저장 실패 : " + ErrorMsg);
+		}else{
+			alert("작업 완료!");
+			this.close("true");
+		}
+	}
+}]]></Script>
+  </Form>
+</FDL>

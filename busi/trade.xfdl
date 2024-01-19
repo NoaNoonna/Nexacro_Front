@@ -1,0 +1,370 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="price" width="1280" height="720" titletext="거래관리" onload="price_onload">
+    <Layouts>
+      <Layout height="650" mobileorientation="landscape" width="1120" stepcount="0">
+        <Static id="stTitle" taborder="6" text="거래원장 및 거래 관리" left="10" top="10" height="34" cssclass="sta_WF_title01" right="10" fittocontents="width"/>
+        <Button id="btnCustomer" taborder="0" text="거래처" left="10" top="50" height="50" right="10" cssclass="btn_WF_listview_active" onclick="butOpenControl_onclick"/>
+        <Div id="divCustomer" taborder="1" left="10" top="btnCustomer:-1" height="260" right="10" formscrolltype="none" formscrollbartype="none none" cssclass="div_WF_listview">
+          <Layouts>
+            <Layout>
+              <Static id="Static01" taborder="3" text="매입합계" top="11" width="110" height="40" cssclass="sta_cm_box01L" right="448"/>
+              <Static id="Static08" taborder="4" top="11" height="40" cssclass="sta_cm_box02L" right="10" width="439" text=""/>
+              <Static id="Static01_00_00" taborder="5" text="매출합계" top="61" width="549" height="40" cssclass="sta_cm_box01L" right="10"/>
+              <Grid id="grdList" taborder="0" left="10" top="11" binddataset="gds_customer" right="568" height="236" autofittype="col" oncellclick="divCustomer_grdList_oncellclick">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="150"/>
+                      <Column size="120"/>
+                      <Column size="150"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="38" band="head"/>
+                      <Row size="38"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="거래처명"/>
+                      <Cell col="1" text="대표자"/>
+                      <Cell col="2" text="연락처"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:CUSTOMER_NAME"/>
+                      <Cell col="1" text="bind:CUSTOMER_CEO" textAlign="center"/>
+                      <Cell col="2" text="bind:CUSTOMER_TEL_NUMBER" textAlign="center" displaytype="mask" maskeditformat="expr:comp.parent.parent.parent.gfn_setCellTelMaskFormat(STAFF_TELNUM)" maskedittype="string"/>
+                    </Band>
+                  </Format>
+                  <Format id="middle">
+                    <Columns>
+                      <Column size="120"/>
+                      <Column size="100"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="120"/>
+                      <Column size="80"/>
+                      <Column size="80"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="38" band="head"/>
+                      <Row size="38"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="거래처명"/>
+                      <Cell col="1" text="대표자"/>
+                      <Cell col="2" text="사업자 번호"/>
+                      <Cell col="3" text="연락처"/>
+                      <Cell col="4" text="담당자"/>
+                      <Cell col="5" text="업체구분"/>
+                      <Cell col="6" text="업태"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:CUSTOMER_NAME" textAlign="center"/>
+                      <Cell col="1" text="bind:REPRESENT_NAME" textAlign="center"/>
+                      <Cell col="2" text="bind:BUSINESS_CODE" textAlign="center" maskeditformat="@@@-@@-{@@@@@}" maskedittype="string" displaytype="mask"/>
+                      <Cell col="3" text="bind:STAFF_TELNUM" displaytype="mask" maskeditformat="expr:comp.parent.parent.parent.gfn_setCellTelMaskFormat(STAFF_TELNUM)" maskedittype="string" textAlign="center"/>
+                      <Cell col="4" text="bind:STAFF_NAME" textAlign="center"/>
+                      <Cell col="5" text="bind:CORPORATE_TYPE" displaytype="combotext" combodataset="dsCoporType" combocodecol="code" combodatacol="value" textAlign="center"/>
+                      <Cell col="6" text="bind:CUSTOMER_CONDITION" textAlign="center" displaytype="combotext" combodataset="dsBussCondition" combocodecol="code" combodatacol="value"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <MaskEdit id="edtTotalPurchase" taborder="1" top="17" height="28" width="145" right="296" format="###,###,###" autoselect="true"/>
+              <MaskEdit id="edtTotalSales" taborder="2" top="67" width="145" height="28" right="296" format="###,###,###" autoselect="true"/>
+              <ImageViewer id="ImageViewer00" taborder="6" left="689" top="106" width="251" height="137" background="url('imagerc::th.jpg') no-repeat center center /contain"/>
+              <Static id="Static00" taborder="7" text="미납금" left="969" top="11" width="110" height="40" cssclass="sta_cm_box01L"/>
+              <Static id="Static02" taborder="8" text="미수금" left="969" top="61" width="110" height="40" cssclass="sta_cm_box01L"/>
+              <MaskEdit id="MaskEdit00" taborder="9" left="1086" top="17" width="145" height="28" autoselect="true" format="###,###,###"/>
+              <MaskEdit id="MaskEdit01" taborder="10" left="1086" top="67" width="145" height="28" autoselect="true" format="###,###,###"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnList" taborder="2" text="거래 내역" left="10" top="divCustomer:7" height="50" right="10" cssclass="btn_WF_listview" onclick="butOpenControl_onclick"/>
+        <Div id="divList" taborder="3" text="Div02" left="10" top="btnList:-1" height="300" right="10" formscrolltype="none" cssclass="div_WF_listview">
+          <Layouts>
+            <Layout>
+              <Grid id="grdDeal" taborder="4" left="11" binddataset="ds_deal" top="14" right="9" autofittype="col" height="266" oncellclick="divList_grdDeal_oncellclick">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="100"/>
+                      <Column size="80"/>
+                      <Column size="85"/>
+                      <Column size="85"/>
+                      <Column size="70"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="38" band="head"/>
+                      <Row size="38"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="거래일"/>
+                      <Cell col="1" text="구분"/>
+                      <Cell col="2" text="수금금액"/>
+                      <Cell col="3" text="지불금액"/>
+                      <Cell col="4" text="거래상태"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:DEAL_DAY" displaytype="text" edittype="none" calendardateformat="yyyy-MM-dd"/>
+                      <Cell col="1" displaytype="normal" edittype="none" text="bind:SEPARATION"/>
+                      <Cell col="2" displaytype="currency" edittype="none" text="bind:COLLECT_MONEY"/>
+                      <Cell col="3" displaytype="currency" edittype="none" text="bind:PAYMENT_MONEY"/>
+                      <Cell col="4" text="bind:PRICE_STATUS" displaytype="normal"/>
+                    </Band>
+                  </Format>
+                  <Format id="middle">
+                    <Columns>
+                      <Column size="100"/>
+                      <Column size="80"/>
+                      <Column size="85"/>
+                      <Column size="85"/>
+                      <Column size="85"/>
+                      <Column size="85"/>
+                      <Column size="85"/>
+                      <Column size="85"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="38" band="head"/>
+                      <Row size="38"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="거래일"/>
+                      <Cell col="1" text="구분"/>
+                      <Cell col="2" text="공급가"/>
+                      <Cell col="3" text="세액"/>
+                      <Cell col="4" text="합계금액"/>
+                      <Cell col="5" text="수금금액"/>
+                      <Cell col="6" text="지불금액"/>
+                      <Cell col="7" text="누계잔액"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:DEAL_DATE" displaytype="date" edittype="none"/>
+                      <Cell col="1" displaytype="combotext" text="bind:DEAL_TYPE" combodataset="dsType" combocodecol="code" combodatacol="value" cssclass="expr:DEAL_TYPE == &quot;pS&quot; ? &quot;grd_WF_red&quot; : &quot;grd_WF_blue&quot;"/>
+                      <Cell col="2" displaytype="currency" edittype="none" text="bind:LAST_PRICE"/>
+                      <Cell col="3" progressbarblocksize="50" displaytype="currency" edittype="none" text="expr:LAST_PRICE * 0.1"/>
+                      <Cell col="4" displaytype="currency" edittype="none" text="bind:TOTAL_PRICE"/>
+                      <Cell col="5" displaytype="currency" edittype="none" text="expr:DEAL_TYPE == 'pS' ? PAYMENT_PRICE : 0"/>
+                      <Cell col="6" displaytype="currency" edittype="none" text="expr:DEAL_TYPE == 'lS' ? PAYMENT_PRICE : 0"/>
+                      <Cell col="7" displaytype="currency" edittype="none"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Button id="btnDealConfirm" taborder="0" text="전표마감" top="10" width="80" height="36" cssclass="btn_cm_basic01" right="268" onclick="dealConfirm_onclick" enable="false" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnDetail" taborder="4" text="상세 내역" left="10" top="divList:6" height="50" right="10" cssclass="btn_WF_listview" onclick="butOpenControl_onclick"/>
+        <Div id="divDetail" taborder="5" text="div" left="10" top="btnDetail:-1" height="270" formscrolltype="none" cssclass="div_WF_listview" right="10">
+          <Layouts>
+            <Layout>
+              <Grid id="grdDetail" taborder="0" left="10" right="10" top="10" bottom="39" autofittype="col" binddataset="ds_deal_detail">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="38" band="head"/>
+                      <Row size="38"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="품목명"/>
+                      <Cell col="1" text="단위"/>
+                      <Cell col="2" text="수량"/>
+                      <Cell col="3" text="단가"/>
+                      <Cell col="4" text="합계"/>
+                      <Cell col="5" text="비고"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:ITEM_NAME" textAlign="center"/>
+                      <Cell col="1" text="bind:UNIT" textAlign="center"/>
+                      <Cell col="2" text="bind:AMOUNT" combodatacol="bind:AMOUNT" displaytype="number"/>
+                      <Cell col="3" text="bind:UNIT_PRICE" displaytype="currency"/>
+                      <Cell col="4" text="bind:SUM_PRICE" displaytype="currency"/>
+                      <Cell col="5" text="bind:BLANK"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static20_00" taborder="7" text="· Home &gt; &gt;&lt;b v='true'&gt;거래원장 및 거래 관리&lt;/b&gt;&lt;/fs&gt;" top="10" width="263" height="34" right="10" cssclass="sta_WF_navi" usedecorate="true" onclick="Static20_00_onclick"/>
+        <Button id="Button00" taborder="8" text="거래완료" left="950" top="730" width="133" height="32" onclick="Button00_onclick"/>
+        <Button id="Button01" taborder="9" text="저장" left="1094" top="730" width="133" height="32" onclick="Button01_onclick"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_customerSum">
+        <ColumnInfo>
+          <Column id="PURCHASE_SUM" type="STRING" size="256"/>
+          <Column id="SALE_SUM" type="STRING" size="256"/>
+          <Column id="STATUS" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_deal">
+        <ColumnInfo>
+          <Column id="DEAL_CODE" type="STRING" size="256"/>
+          <Column id="DEAL_DAY" type="STRING" size="256"/>
+          <Column id="SEPARATION" type="STRING" size="256"/>
+          <Column id="COLLECT_MONEY" type="STRING" size="256"/>
+          <Column id="PAYMENT_MONEY" type="STRING" size="256"/>
+          <Column id="PRICE_STATUS" type="STRING" size="256"/>
+          <Column id="STATUS" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_deal_detail">
+        <ColumnInfo>
+          <Column id="DEAL_DETAIL_CODE" type="STRING" size="256"/>
+          <Column id="ITEM_NAME" type="STRING" size="256"/>
+          <Column id="UNIT" type="STRING" size="256"/>
+          <Column id="AMOUNT" type="STRING" size="256"/>
+          <Column id="UNIT_PRICE" type="STRING" size="256"/>
+          <Column id="SUM_PRICE" type="STRING" size="256"/>
+          <Column id="BLANK" type="STRING" size="256"/>
+          <Column id="STATUS" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_nonPaymentStatus">
+        <ColumnInfo>
+          <Column id="PURCHASE_SUM" type="STRING" size="256"/>
+          <Column id="SALE_SUM" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divCustomer.form.edtTotalPurchase" propid="value" datasetid="ds_customerSum" columnid="PURCHASE_SUM"/>
+      <BindItem id="item1" compid="divCustomer.form.edtTotalSales" propid="value" datasetid="ds_customerSum" columnid="SALE_SUM"/>
+      <BindItem id="item2" compid="divCustomer.form.MaskEdit00" propid="value" datasetid="ds_nonPaymentStatus" columnid="PURCHASE_SUM"/>
+      <BindItem id="item3" compid="divCustomer.form.MaskEdit01" propid="value" datasetid="ds_nonPaymentStatus" columnid="SALE_SUM"/>
+    </Bind>
+    <Script type="xscript5.1"><![CDATA[
+var nexa = nexacro.getApplication();
+this.price_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	nexa.gds_customer.clearData();
+	
+	this.transaction(
+		"searchEstimateDate",
+		"svcCompinfo::customer/list",
+		"",
+		"gds_customer=gds_customer",
+		"",
+		"callback",
+		false);	
+};
+
+/*  @description  butOpenControl onclick event : 거래내역 아코디언 버튼 컨트롤
+*/
+this.butOpenControl_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var divName = "div" + obj.name.substr(3);
+	var objDiv = this.components[divName];
+	
+	if(obj.status == "open")
+	{
+		obj.status = "close";
+		obj.set_cssclass("btn_WF_listview");
+		objDiv.setOffsetHeight(0);
+	}
+	else
+	{
+		obj.status = "open";
+		obj.set_cssclass("btn_WF_listview_active");
+		if(divName == "divCustomer")
+		{
+			objDiv.setOffsetHeight(260);
+		}
+		else
+		{
+			objDiv.setOffsetHeight(300);
+		}
+	}
+	this.resetScroll();
+};
+
+this.divCustomer_grdList_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	this.ds_deal.clearData();
+	this.ds_deal_detail.clearData();
+	
+	var customer_code = nexa.gds_customer.getColumn(e.row,"CUSTOMER_CODE");
+	
+	this.transaction(
+		"searchcompanyinfo",
+		"svcCompinfo::companyinfo/sum",
+		"",
+		"ds_customerSum=ds_customerSum ds_deal=ds_deal ds_nonPaymentStatus=paymentStatus",
+		"customer_code="+customer_code,
+		"callback",
+		false);	
+		this.ds_deal.set_keystring("S:-DEAL_CODE")
+};
+
+this.divList_grdDeal_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	this.ds_deal_detail.clearData();
+	
+	var deal_code = this.ds_deal.getColumn(e.row,"DEAL_CODE");
+	
+	this.transaction(
+		"searchdealinfo",
+		"svcCompinfo::dealinfo",
+		"",
+		"ds_deal_detail=ds_deal_detail", 
+		"deal_code="+deal_code,
+		"callback",
+		false);	
+};
+
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var detailrow = this.ds_deal_detail.rowposition;
+	this.ds_deal_detail.setColumn(detailrow,'BLANK','거래완료');
+};
+
+this.Button01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.transaction(
+		"batchDealDetail",
+		"svcCompinfo::updateDealDetail",
+		"ds_deal_detail=ds_deal_detail:U",
+		"",
+		"",
+		"callback"
+	);
+};
+this.callback = function(trid , ErrorCode, ErrorMsg)
+{
+	if(trid.indexOf("search")!=-1){
+		if(ErrorCode <0){
+			alert("조회 실패 : " + ErrorMsg);
+		}
+	}else if(trid.indexOf("batch")!=-1){
+		if(ErrorCode <0){
+			alert("데이터 저장 실패 : " + ErrorMsg);
+		}else{
+			alert("저장 성공!");
+			this.reload();
+		}
+	}else if(trid.indexOf("send")!=-1){
+		if(ErrorCode <0){
+			alert("전송 실패 : " + ErrorMsg);
+		}else{
+			alert("전송 성공!");
+		}
+	}
+}
+this.stTitle_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	
+};
+]]></Script>
+  </Form>
+</FDL>

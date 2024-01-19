@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="newMpsByContract" width="1280" height="520" titletext="MPS 등록" onload="newMpsByContract_onload">
+    <Layouts>
+      <Layout height="520" width="1280">
+        <GroupBox id="GroupBox00" taborder="0" text="MPS 등록(by 수주상세)" left="25" top="25" width="1225" height="486" font="normal 700 18pt/normal &quot;맑은 고딕&quot;" color="black" titlealign="topcenter"/>
+        <GroupBox id="GroupBox01" taborder="1" text="수주상세 검색조건" left="50" top="70" width="300" height="60" font="normal 700 13pt/normal &quot;맑은 고딕&quot;" color="black"/>
+        <GroupBox id="GroupBox01_00" taborder="2" text="수주상세 검색조건" left="369" top="70" width="500" height="60" font="normal bold 13pt/normal &quot;맑은 고딕&quot;" titlealign="topcenter" color="black"/>
+        <Button id="btn_registerNewMps" taborder="3" text="MPS 등록" left="901" top="80" width="179" height="50" onclick="btn_addNewMps_onclick" color="white" background="black"/>
+        <Calendar id="c_sDate" taborder="4" left="380" top="95" width="150" height="30" color="darkslategray"/>
+        <Calendar id="c_eDate" taborder="5" left="544" top="95" width="150" height="30" color="darkslategray"/>
+        <Button id="btn_searchCtDetail" taborder="6" text="검색" left="708" top="95" width="150" height="30" onclick="btn_searchCtDetail_onclick" color="white" background="black"/>
+        <Radio id="r_ctDetailDivision" taborder="7" left="60" top="97" width="280" height="27" innerdataset="ds_ctDetailDivision" codecolumn="data" datacolumn="id" direction="vertical" color="darkslategray"/>
+        <Grid id="grd_ctDetail" taborder="8" left="40" top="146" width="1200" height="334" binddataset="gds_contractDetailInMpsAvailable" oncellclick="fn_grd_ctDetail_oncellclick" autofittype="col" autoenter="none" onheadclick="grd_ctDetail_onheadclick" color="orangered">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="25"/>
+                <Column size="60"/>
+                <Column size="119"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="67"/>
+                <Column size="101"/>
+                <Column size="40"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell/>
+                <Cell col="1" displaytype="checkboxcontrol"/>
+                <Cell col="2" text="수주상세일련번호"/>
+                <Cell col="3" text="수주유형"/>
+                <Cell col="4" text="수주일자"/>
+                <Cell col="5" text="견적수량"/>
+                <Cell col="6" text="초기납품내역"/>
+                <Cell col="7" text="제작수량"/>
+                <Cell col="8" text="계획일자"/>
+                <Cell col="9" text="출하예정일"/>
+                <Cell col="10" text="납기일"/>
+                <Cell col="11" text="거래처코드"/>
+                <Cell col="12" text="품목코드"/>
+                <Cell col="13" text="품목명"/>
+                <Cell col="14" text="단위"/>
+                <Cell col="15" text="비고"/>
+              </Band>
+              <Band id="body">
+                <Cell expr="currow+1"/>
+                <Cell col="1" displaytype="checkboxcontrol" edittype="none" text="bind:CHECKED"/>
+                <Cell col="2" text="bind:CONTRACT_DETAIL_NO"/>
+                <Cell col="3" text="bind:CONTRACT_TYPE"/>
+                <Cell col="4" text="bind:CONTRACT_DATE"/>
+                <Cell col="5" text="bind:ESTIMATE_AMOUNT"/>
+                <Cell col="6" text="bind:STOCK_AMOUNT_USE"/>
+                <Cell col="7" text="bind:PRODUCTION_REQUIREMENT"/>
+                <Cell col="8" displaytype="normal" edittype="date" calendardateformat="yyyy-MM-dd" calendardisplayinvalidtype="none" text="bind:MPS_PLAN_DATE"/>
+                <Cell col="9" displaytype="normal" edittype="date" calendardisplaynulltext="0000-00-00" calendardateformat="yyyy-MM-dd" text="bind:SCHEDULED_END_DATE"/>
+                <Cell col="10" text="bind:DUE_DATE_OF_CONTRACT"/>
+                <Cell col="11" text="bind:CUSTOMER_CODE"/>
+                <Cell col="12" text="bind:ITEM_CODE"/>
+                <Cell col="13" text="bind:ITEM_NAME"/>
+                <Cell col="14" text="bind:UNIT_OF_CONTRACT"/>
+                <Cell col="15" text="bind:DESCRIPTION"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_ctDetailDivision">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="data" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">수주일자</Col>
+            <Col id="data">contractDate</Col>
+          </Row>
+          <Row>
+            <Col id="id">납기일</Col>
+            <Col id="data">dueDateOfContract</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[include "Lib::commLib.xjs";
+var nexa = nexacro.getApplication();
+var startDate;
+var endDate;
+var yn;
+var rowNO;
+
+this.newMpsByContract_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	nexa.gds_contractDetailInMpsAvailable.clearData();
+};
+
+this.btn_searchCtDetail_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(this.r_ctDetailDivision.value==null){
+		alert("수주 상세 조건 선택 바랍니다");
+		return;
+	}else if(this.c_sDate.value==null || this.c_eDate.value==null){
+		alert("날짜 선택 바랍니다");
+	}
+	 startDate=nexa.changeDate(this.c_sDate.value);
+	 endDate=nexa.changeDate(this.c_eDate.value);	
+		this.transaction(
+		"searchMps",
+		"svcProduction::mps/contractdetail-available",
+		"",
+		"gds_contractDetailInMpsAvailable=gds_contractDetailInMpsAvailable",
+		"startDate="+startDate+" endDate="+endDate+" searchCondition="+this.r_ctDetailDivision.value,
+		"callBack",
+		false
+	);
+}
+this.fn_grd_ctDetail_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	 rowNO = nexa.gds_contractDetailInMpsAvailable.rowposition;
+	var rowCount = nexa.gds_contractDetailInMpsAvailable.rowcount;
+	 yn = nexa.gds_contractDetailInMpsAvailable.getColumn(rowNO,"CHECKED");
+	
+	if(e.col==1){
+		if(yn==null || yn=="0"){
+			nexa.gds_contractDetailInMpsAvailable.setColumn(rowNO,"CHECKED","1");
+		}else{
+			nexa.gds_contractDetailInMpsAvailable.setColumn(rowNO,"CHECKED","0");
+		}
+	}
+	
+	//body쪽 체크박스가 모두 채워지면 head쪽 체크박스 체크
+	if(nexa.gds_contractDetailInMpsAvailable.getCaseCount("CHECKED == '1'") == rowCount){
+		obj.setCellProperty('Head',1,'text','1');
+	}else{
+		obj.setCellProperty('Head',1,'text','0');
+	}
+};
+this.grd_ctDetail_onheadclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	var size = nexa.gds_contractDetailInMpsAvailable.getRowCount();
+	var num = null;
+	var headCheck = obj.getCellProperty('Head',1,'text');
+	if(e.col==1){
+		if(headCheck=='0'||headCheck==null){
+			num = '1';
+		}else{
+			num = '0';
+		}
+		for(var i=0; i<size; i++){
+			nexa.gds_contractDetailInMpsAvailable.setColumn(i,"CHECKED",num);
+		}
+		obj.setCellProperty('Head',1,'text',num);
+	}
+
+};
+
+var gv_IsGridCheckAll=0;
+this.btn_addNewMps_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{				
+	var dsRow        = nexa.gds_contractDetailInMpsAvailable.getRowCount();
+	var checkedRowId = nexa.gds_contractDetailInMpsAvailable.findRow( "CHECKED", "1" );
+	var confirmMsg   = "수주상세를 주생산계획에 등록합니다 \r\n 진행하시겠습니까?";
+	trace("// " + dsRow + " 건의 수주상세가 검색되었습니다.");
+	if(checkedRowId == -1){
+		alert("MPS등록할 수주상세를 체크해주세요");
+		return;
+	} 
+	
+	// checked 된것만 계획일자, 출하예정일 유효성 검사
+	// PLAN_CLASSIFICATION에 수주상세 set
+	// 계획일자, 출하예정일 날짜를 19890525 -> 1989-05-25 문자열로 바꿔줌;
+	// MPS_PLAN_DATE, SCHEDULED_END_DATE에 날짜 set
+	for(var i=0; i<dsRow; i++){
+	
+		g_isAllGrChecked = nexa.gds_contractDetailInMpsAvailable.getColumn(i, "CHECKED");
+		
+		if(g_isAllGrChecked == 1){
+			trace("건수: "+i+" 개");
+			nexa.gds_contractDetailInMpsAvailable.setColumn(i,"PLAN_CLASSIFICATION","수주상세");
+			var mpsPlanDate      = nexa.gds_contractDetailInMpsAvailable.getColumn(i, "MPS_PLAN_DATE");
+			var scheduledEndDate = nexa.gds_contractDetailInMpsAvailable.getColumn(i, "SCHEDULED_END_DATE");
+			
+			if(mpsPlanDate == undefined || mpsPlanDate == null){
+				alert("계획일자를 입력하지 않았습니다");
+				return;
+			}else if(scheduledEndDate == undefined || scheduledEndDate == null){
+				alert("출하예정일을 입력하지 않았습니다");
+				return;
+			}
+			
+			var strMpsPlanDate = '';
+			var strScheduledEndDate = '';
+			
+			if(mpsPlanDate.indexOf("-")<0){
+				trace(mpsPlanDate+"L:::mpsPlanDate");
+				strMpsPlanDate = strMpsPlanDate + mpsPlanDate.slice(0,4)+"-";
+				trace(strMpsPlanDate+"::11");
+				strMpsPlanDate = strMpsPlanDate + mpsPlanDate.slice(4,6)+"-";
+				trace(strMpsPlanDate+"::22");
+				strMpsPlanDate = strMpsPlanDate + mpsPlanDate.slice(6,8);
+				trace(strMpsPlanDate+"::33");
+				nexa.gds_contractDetailInMpsAvailable.setColumn(i,"MPS_PLAN_DATE",strMpsPlanDate);
+				
+			}
+			if(strScheduledEndDate.indexOf("-")<0){
+				strScheduledEndDate = strScheduledEndDate + scheduledEndDate.slice(0,4)+"-";
+				strScheduledEndDate = strScheduledEndDate + scheduledEndDate.slice(4,6)+"-";
+				strScheduledEndDate = strScheduledEndDate + scheduledEndDate.slice(6,8);
+				nexa.gds_contractDetailInMpsAvailable.setColumn(i,"SCHEDULED_END_DATE",strScheduledEndDate);
+				
+			}
+			
+		}
+		strMpsPlanDate = '';
+		strScheduledEndDate = '';
+	}
+	
+	
+	this.transaction(
+			"addNewMps",
+			"svcProduction::mps/contractdetail",
+			"gds_contractDetailInMpsAvailable=gds_contractDetailInMpsAvailable:u",
+			"",
+			"",
+			"callback",
+			false)
+	
+
+};
+
+
+this.callback =function callback(trId , ErrorCode, ErrorMsg)
+{
+	trace("		@@@@@ trId: "+trId);
+	if(ErrorCode < 0){
+		alert(trId+"  Error: "+ErrorMsg);
+		return;
+	}else if(trId=="addNewMps"){
+		alert("등록 되었습니다.");
+		this.reload();
+		return;
+	}
+	
+};]]></Script>
+  </Form>
+</FDL>

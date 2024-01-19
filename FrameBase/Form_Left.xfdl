@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frameLeft" width="240" height="850" titletext="New Form">
+    <Layouts>
+      <Layout height="850" mobileorientation="landscape" width="240">
+        <Grid id="grd_mymenu" taborder="0" left="7" top="329" width="216" height="431" binddataset="gds_menu" autofittype="col" scrolltype="vertical" oncelldblclick="menu_oncelldbl" scrollbartype="auto auto" scrolldisplaymode="normal" treeusecheckbox="false" treeinitstatus="collapse,all" treeuseexpandkey="false" treeuseimage="false" treeusebutton="use" treeuseline="false" oncellclick="grd_mymenu_oncellclick">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="189"/>
+              </Columns>
+              <Rows>
+                <Row size="24"/>
+              </Rows>
+              <Band id="body">
+                <Cell displaytype="treeitemcontrol" edittype="tree" autosizecol="default" treelevel="bind:MENU_LEVEL" treestate="bind:MENU_STATUS" text="bind:MENU_NAME" autosizerow="default" color="black" font="13px/normal &quot;나눔고딕 ExtraBold&quot;" border="1px solid #dbdee2" expandshow="hide" expandsize="20" borderRadius="10px"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <GroupBox id="GroupBox00" taborder="1" text="직원 정보" left="3" top="8" width="220" height="317" color="black" font="normal 18px/normal &quot;Gulim&quot;,&quot;궁서&quot;"/>
+        <Static id="Static01" taborder="2" text="부서명" left="7" top="226" width="76" height="30" background="black" border="0px none" textAlign="center" color="white"/>
+        <Static id="Static01_01" taborder="3" text="직급" left="7" top="258" width="76" height="30" background="black" border="0px none" textAlign="center" color="white"/>
+        <Static id="Static01_02" taborder="4" text="사원명" left="7" top="290" width="76" height="30" background="black" border="0px none" textAlign="center" color="white"/>
+        <Edit id="edt_deptName" taborder="5" left="86" top="226" width="133" height="30" readonly="true" background="white"/>
+        <Edit id="edt_rank" taborder="6" left="86" top="258" width="133" height="30" readonly="true" background="white"/>
+        <Edit id="edt_empName" taborder="7" left="86" top="290" width="133" height="30" readonly="true" background="white"/>
+        <Button id="btn_logout" taborder="8" text="logout" left="169" top="21" width="50" height="20" background="black" border="3px none antiquewhite,3px none,3px none" onclick="btn_logout_onclick" color="white"/>
+        <ImageViewer id="ImageViewer00" taborder="9" left="11" top="44" width="204" height="176" image="url('imagerc::Konchi_King.jpg')" stretch="none" onclick="ImageViewer00_onclick"/>
+      </Layout>
+    </Layouts>
+    <Bind>
+      <BindItem id="item0" compid="edt_deptName" propid="value" datasetid="gds_info" columnid="deptName"/>
+      <BindItem id="item1" compid="edt_rank" propid="value" datasetid="gds_info" columnid="positionName"/>
+      <BindItem id="item2" compid="edt_empName" propid="value" datasetid="gds_info" columnid="empName"/>
+    </Bind>
+    <Script type="xscript5.1"><![CDATA[/******************
+* import js File *
+******************/
+include "Lib::commLib.xjs";
+
+/******************
+* field variables *
+******************/
+var nexa = nexacro.getApplication();
+
+
+/***************************************************************
+ *					사용자 FUNCTION 영역					*
+****************************************************************/
+/******************************
+ * 메뉴 클릭할 때 form 이동 *
+*******************************/
+this.menu_oncelldbl = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	//e.row; 
+	//그리드에는 id값이 없기 때문에 e.row 사용
+	// 선택한 위치(e.row)에서 "menu_id"값을 꺼낸다.
+	var sID   =nexa.gds_menu.getColumn(e.row, "MENU_ID"); //gds_men로 수정함. -> 순서가 이상하긴 하다,,
+	var sURL  =nexa.gds_menu.getColumn(e.row, "MENU_URL");
+	var sTitle=nexa.gds_menu.getColumn(e.row, "MENU_NAME");
+	trace("		@ sID:"+sID);
+	trace("		@ sURL:"+sURL);
+	trace("		@ sTitle:"+sTitle);
+	trace("		@ sURL.length:"+sURL.length);
+	// url이 없다. 최소 6자리 x.xfdl
+	
+	var empCode = nexa.gds_employee.getColumn(0, "EMP_CODE");
+	
+	trace("		@ empCode:"+empCode);
+	
+	this.transaction(	
+		"getMyMenuAuthority", 
+		"svcAuthority::getMyMenuAuthority", 
+		"", 
+		"gds_myMenu=gds_myMenu",  
+		"empCode="+empCode,
+		"fn_callback",
+		false
+		);
+		
+	var nRow;
+	nRow = nexa.gds_myMenu.findRowExpr("MENU_CODE=='"+sID+"'");
+	trace("		@ nRow:"+nRow);
+	
+	if(sURL ==undefined||sURL.length < 1)
+	{
+		this.alert("no page!!!!!!!!!!!");
+		return;
+	}else if(nexa.gds_myMenu.getColumn(nRow,"AUTHORITY") == 0){
+	
+		this.alert("권한이 없습니다");
+		return;
+	}
+	//var menuTreePath = nexacro.getApplication().mainframe.VFrameSet00.HFrameSet00.ChildFrame00.FrmCenter;
+	nexa.gfn_Open(sID, sURL, sTitle); 
+	//ADL의 Edit Script에 gfn으로 세팅
+
+};
+
+this.btn_logout_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.transaction(	
+		"Logout", 
+		"svcHR::logout", 
+		"", 
+		"",  
+		"",
+		"",
+		false
+		);
+		
+	nexa.mainframe.set_visible(false);
+		
+	nexacro.open(
+		"LoginForm",
+		"logiinfo::LoginForm.xfdl",
+		this.mainframe,
+		null,
+		"showtitlebar=true",
+		300,
+		100,
+		0,
+		0,
+		this.mainframe
+		);
+};
+
+this.grd_mymenu_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	trace("메뉴선택");
+	var nGridRow = obj.getTreeRow(e.row);
+	var nStatus = obj.getTreeStatus(nGridRow);
+	trace("e.row: "+e.row + " TreeRow: "+nGridRow + " Status: "+nStatus);
+	
+	if(nStatus == 3) return;
+	
+	nStatus = (nStatus == 0? 1 : 0);
+	obj.setTreeStatus(nGridRow,nStatus);
+};
+
+this.ImageViewer00_onclick = function(obj:nexacro.ImageViewer,e:nexacro.ClickEventInfo)
+{
+	
+};
+]]></Script>
+  </Form>
+</FDL>

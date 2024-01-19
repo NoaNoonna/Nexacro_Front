@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="LoginForm" width="510" height="680" titletext="로그인폼" onload="fn_loginForm_onload">
+    <Layouts>
+      <Layout height="680" mobileorientation="landscape" width="510">
+        <Static id="Static01" taborder="0" text="L O G I S T I C S" left="50" top="100" width="400" height="68" textAlign="center" font="bold 40px/normal &quot;솔잎 B&quot;" onclick="Static01_onclick" color="black"/>
+        <Div id="Div00" taborder="1" left="70" top="185" width="360" height="470" background="white" text="" borderRadius="5px">
+          <Layouts>
+            <Layout>
+              <Edit id="edt_workplace" taborder="0" left="24" top="45" width="187" height="55" value="사업자명" text="사업자명" onchanged="Div00_edt_workplace_onchanged" boxShadow="2px 2px 2px #c7b1d1"/>
+              <Button id="btn_workplace" taborder="1" left="225" top="45" width="110" height="55" background="black" text="사업자코드" color="white" font="bold 18px/normal &quot;Gulim&quot;,&quot;맑은 고딕&quot;" onclick="btn_findMyJob" boxShadow="2px 2px 2px #c7b1d1"/>
+              <Static id="Static00_00" taborder="2" text="PW" left="30" top="218" width="59" height="52" textAlign="center" font="bold 18px/normal &quot;Gulim&quot;"/>
+              <Edit id="edt_id" taborder="3" left="84" top="149" width="246" height="51" value="이소명" text="이소명" onchanged="edt_id_onchanged" boxShadow="2px 2px 2px #c7b1d1"/>
+              <Static id="Static00" taborder="4" text="ID" left="24" top="143" width="59" height="52" textAlign="center" font="bold 18px/normal &quot;Gulim&quot;"/>
+              <Button id="btn_goLogin" taborder="5" text="Login" left="98" top="294" width="160" height="66" font="normal 700 20px/normal &quot;fontc::Gugi-Regular.ttf&quot;" border="0px none" background="black" onclick="btn_login_onclick" boxShadow="2px 2px 2px 0px #c7b1d1" color="white"/>
+              <Edit id="edt_pw" taborder="6" left="87" top="219" width="248" height="51" password="true" value="1111" text="1111" onchanged="edt_pw_onchanged" boxShadow="2px 2px 2px #c7b1d1"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[include "Lib::commLib.xjs";
+
+var nexa = nexacro.getApplication();
+
+this.fn_loginForm_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	trace("form onload 됨")
+	nexa.gds_company.clearData();
+	nexa.gds_workplace.clearData();
+	
+	this.Div00.form.edt_id.set_enable(true);
+	this.Div00.form.edt_pw.set_enable(true);	
+	this.Div00.form.btn_goLogin.set_enable(true);
+	
+	// 회사코드 transaction
+	this.transaction(
+		"findCompanyList",
+		"svcCompinfo::company/list",
+		"",
+		"gds_company=gds_company",
+		"",
+		"fn_callback",
+		false
+	);
+	// 사업장코드 transaction
+	this.transaction(
+		"findWorkplaceList", 
+		"svcCompinfo::workplace/list", 
+		"gds_company=gds_company", 
+		"gds_workplace=gds_workplace", 
+		"",
+		"fn_callback",
+		false
+	);
+};
+/***********************************
+* 회사코드검색, 사업장코드검색 *
+************************************/
+this.btn_findMyJob = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	trace("사업자코드 검색")
+	trace(obj.id);
+	switch(obj.id){
+	case "btn_company" :
+		this.gfn_showModal(
+			"CompanyCode",
+			"",
+			"Base::CommonDialog.xfdl",
+			"fn_popupCallBack",
+			this,
+			550,
+			400,
+			true,
+			true,
+			null
+		);
+		break;
+		
+	case "btn_workplace" :
+		this.gfn_showModal(
+			"WorkplaceCode",
+			"",
+			"Base::CommonDialog.xfdl",
+			"fn_popupCallBack",
+			this,
+			550,
+			400,
+			true,
+			true,
+			null
+		);
+		break;
+	}
+	
+};
+
+
+
+this.btn_login_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(this.Div00.form.edt_id.text==""){
+		alert("사원ID를 입력해주세요");
+		return;
+	}else if(this.Div00.form.edt_pw.text==""){
+		alert("비밀번호를 입력해주세요");
+		return;
+	}
+	
+	this.transaction(	
+		"goLogin", 
+		"svcHR::login", 
+		"gds_company=gds_company gds_workplace=gds_workplace", 
+		"gds_employee=gds_employee gds_myMenu=gds_myMenu",  
+		"userId='"+this.Div00.form.edt_id.value+
+		"' userPassWord='"+this.Div00.form.edt_pw.value+"'",
+		"fn_callback",
+		false
+	);
+};
+
+/*************************
+* transaction callBack *
+*************************/
+this.fn_callback = function(trId, ErrorCode, ErrorMsg)
+{
+	trace("		@ LoginForm.trId: "+trId);
+	if(ErrorCode < 0){
+		alert("LoginForm "+trId+" Error: "+ErrorMsg);
+		return;
+	}
+	
+	// **************************필요없는 것 같다.
+	switch(trId){
+	case "findCompanyList" :
+		nexa.gds_company.getColumn(nexa.gds_company.rowposition,"COMPANY_CODE");	
+		break;
+		
+	case "findWorkplaceList" :
+		break;
+		
+	case "goLogin" :
+		g_userId        = nexa.gds_employee.getColumn(0,"EMP_CODE");		
+		g_empCode       = nexa.gds_employee.getColumn(0,"EMP_CODE");
+		g_empName       = nexa.gds_employee.getColumn(0,"EMP_NAME");
+		g_deptCode      = nexa.gds_employee.getColumn(0,"DEPT_CODE");
+		g_deptName      = nexa.gds_employee.getColumn(0,"DEPT_NAME");
+		g_positionCode  = nexa.gds_employee.getColumn(0,"POSITION_CODE");
+		g_positionName  = nexa.gds_employee.getColumn(0,"POSITION_NAME");
+		g_companyCode   = nexa.gds_company.getColumn(nexa.gds_company.rowposition,"COMPANY_CODE");
+		g_companyName   = nexa.gds_company.getColumn(nexa.gds_company.rowposition,"COMPANY_NAME");
+		g_workplaceCode = nexa.gds_workplace.getColumn(nexa.gds_workplace.rowposition,"WORKPLACE_CODE");
+		g_workplaceName = nexa.gds_workplace.getColumn(nexa.gds_workplace.rowposition,"WORKPLACE_NAME");
+		
+		
+		nexa.gds_info.addRow();
+		nexa.gds_info.setColumn(0,"deptName",g_deptName);
+		nexa.gds_info.setColumn(0,"positionName",g_positionName);
+		nexa.gds_info.setColumn(0,"empName",g_empName);
+		
+		//			alert(g_empName+"님 즐거운 시간 되세요");
+		
+		nexa.mainframe.set_visible(true);
+		this.close();
+		break;
+	}
+	
+};
+
+]]></Script>
+  </Form>
+</FDL>

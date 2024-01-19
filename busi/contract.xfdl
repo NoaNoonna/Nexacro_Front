@@ -1,0 +1,607 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="contract" width="1230" height="840" titletext="수주관리" onload="contract_onload">
+    <Layouts>
+      <Layout height="840" width="1230">
+        <GroupBox id="GroupBox00" taborder="0" text="수주관리" left="20" top="30" width="1180" height="800" titlealign="topcenter" font="normal bold 25pt/normal &quot;Arial&quot;" cssclass="grpBox_normal" accessibilityenable="true" visible="true"/>
+        <Tab id="contract" taborder="1" tabindex="0" left="40" top="68" width="1110" height="742" selectedtabbuttonheight="30" selectedtabbuttonwidth="100" font="normal 9pt/normal &quot;Arial&quot;" onchanged="contract_onchanged" color="orangered" cursor="auto" showextrabutton="false" accessibilityrole="tab" usecontrolkey="true" tabjustify="false" showtabbuttonicon="false" visible="true" tabstop="true">
+          <Tabpages>
+            <Tabpage id="searchContract" text="수주 조회">
+              <Layouts>
+                <Layout>
+                  <GroupBox id="GroupBox00" taborder="0" text="수주 검색" left="0" top="0" width="200" height="78" titlealign="topcenter" font="normal 12pt/normal &quot;Arial&quot;" cssclass="grpBox_normal"/>
+                  <Combo id="Combo00" taborder="1" left="9" top="20" width="183" height="50" codecolumn="codecolumn" datacolumn="datacolumn" innerdataset="innerdataset" onitemchanged="contract_Combo00_onitemchanged" color="orangered" text="">
+                    <Dataset id="innerdataset">
+                      <ColumnInfo>
+                        <Column id="codecolumn" size="256"/>
+                        <Column id="datacolumn" size="256"/>
+                      </ColumnInfo>
+                      <Rows>
+                        <Row>
+                          <Col id="codecolumn">SEARCH_BY_PERIOD</Col>
+                          <Col id="datacolumn">기간검색</Col>
+                        </Row>
+                        <Row>
+                          <Col id="codecolumn">SEARCH_BY_COMPANY</Col>
+                          <Col id="datacolumn">거래처검색</Col>
+                        </Row>
+                      </Rows>
+                    </Dataset>
+                  </Combo>
+                  <Calendar id="Calendar00" taborder="2" left="213" top="23" width="155" height="45" dateformat="yyyy-MM-dd" displaynulltext="시작일" font="normal 700 10pt/normal &quot;Arial&quot;" visible="false" color="orangered"/>
+                  <Button id="Button00" taborder="3" text="수주 조회" left="547" top="20" width="103" height="45" font="normal normal 13pt/normal &quot;Arial&quot;" onclick="contract_searchContract_Button00_onclick" onchanged="contract_searchContract_Button00_onchanged" cssclass="btn_normal"/>
+                  <Calendar id="Calendar01" taborder="4" left="378" top="23" width="155" height="45" dateformat="yyyy-MM-dd" displaynulltext="종료일" font="normal 700 10pt/normal &quot;Arial&quot;" visible="false" color="orangered"/>
+                  <Edit id="Edit00" taborder="5" left="213" top="23" width="280" height="45" visible="false" displaynulltext="거래처 검색" font="normal 14pt/normal &quot;Arial&quot;" textAlign="center" oneditclick="contract_searchContract_Edit00_oneditclick" onchanged="contract_searchContract_Edit00_onchanged" cssclass="edit_normal"/>
+                  <Grid id="Grid00" taborder="6" left="0" top="88" width="1095" height="267" binddataset="gds_contractInfo" oncellclick="contract_searchContract_Grid00_oncellclick" color="orangered">
+                    <Formats>
+                      <Format id="default">
+                        <Columns>
+                          <Column size="24"/>
+                          <Column size="122"/>
+                          <Column size="129"/>
+                          <Column size="98"/>
+                          <Column size="122"/>
+                          <Column size="95"/>
+                          <Column size="98"/>
+                          <Column size="78"/>
+                          <Column size="83"/>
+                          <Column size="80"/>
+                          <Column size="92"/>
+                        </Columns>
+                        <Rows>
+                          <Row size="28" band="head"/>
+                          <Row size="26"/>
+                        </Rows>
+                        <Band id="head">
+                          <Cell textAlign="center"/>
+                          <Cell col="1" text="수주일련번호" textAlign="center"/>
+                          <Cell col="2" text="견적일련번호" textAlign="center"/>
+                          <Cell col="3" text="수주유형분류" textAlign="center"/>
+                          <Cell col="4" text="거래처명" textAlign="center"/>
+                          <Cell col="5" text="견적일자" textAlign="center"/>
+                          <Cell col="6" text="수주일자" textAlign="center"/>
+                          <Cell col="7" text="수주요청자" textAlign="center"/>
+                          <Cell col="8" text="수주담당자명" textAlign="center"/>
+                          <Cell col="9" text="납품완료여부" textAlign="center"/>
+                          <Cell col="10" text="비고" textAlign="center"/>
+                        </Band>
+                        <Band id="body">
+                          <Cell expr="currow+1" textAlign="center"/>
+                          <Cell col="1" text="bind:CONTRACT_NO" textAlign="center"/>
+                          <Cell col="2" text="bind:ESTIMATE_NO" textAlign="center"/>
+                          <Cell col="3" text="bind:CONTRACT_TYPE" textAlign="center"/>
+                          <Cell col="4" text="bind:CUSTOMER_NAME" textAlign="center"/>
+                          <Cell col="5" text="bind:ESTIMATE_DATE" textAlign="center"/>
+                          <Cell col="6" text="bind:CONTRACT_DATE" textAlign="center"/>
+                          <Cell col="7" text="bind:CONTRACT_REQUESTER" textAlign="center"/>
+                          <Cell col="8" text="bind:EMP_NAME_IN_CHARGE" textAlign="center"/>
+                          <Cell col="9" text="bind:DELIVERY_COMPLETION_STATUS" textAlign="center"/>
+                          <Cell col="10" text="bind:DESCRIPTION" textAlign="center"/>
+                        </Band>
+                      </Format>
+                    </Formats>
+                  </Grid>
+                  <Grid id="Grid01" taborder="7" left="0" top="367" width="1095" height="344" binddataset="gds_contractDetail" color="orangered">
+                    <Formats>
+                      <Format id="default">
+                        <Columns>
+                          <Column size="23"/>
+                          <Column size="109"/>
+                          <Column size="85"/>
+                          <Column size="64"/>
+                          <Column size="111"/>
+                          <Column size="31"/>
+                          <Column size="81"/>
+                          <Column size="59"/>
+                          <Column size="75"/>
+                          <Column size="86"/>
+                          <Column size="62"/>
+                          <Column size="80"/>
+                          <Column size="62"/>
+                          <Column size="58"/>
+                          <Column size="55"/>
+                          <Column size="33"/>
+                          <Column size="55"/>
+                        </Columns>
+                        <Rows>
+                          <Row size="28" band="head"/>
+                          <Row size="26"/>
+                        </Rows>
+                        <Band id="head">
+                          <Cell textAlign="center"/>
+                          <Cell col="1" text="수주상세일련번호" textAlign="center"/>
+                          <Cell col="2" text="수주일련번호" textAlign="center"/>
+                          <Cell col="3" text="품목코드" textAlign="center"/>
+                          <Cell col="4" text="품목명" textAlign="center"/>
+                          <Cell col="5" text="단위" textAlign="center"/>
+                          <Cell col="6" text="납기일" textAlign="center"/>
+                          <Cell col="7" text="수주수량" textAlign="center"/>
+                          <Cell col="8" text="재고사용량" textAlign="center"/>
+                          <Cell col="9" text="필요제작수량" textAlign="center"/>
+                          <Cell col="10" text="단가" textAlign="center"/>
+                          <Cell col="11" text="합계액" textAlign="center"/>
+                          <Cell col="12" text="처리상태" textAlign="center"/>
+                          <Cell col="13" text="작업완료" textAlign="center"/>
+                          <Cell col="14" text="납품완료" textAlign="center"/>
+                          <Cell col="15" text="비고" textAlign="center"/>
+                        </Band>
+                        <Band id="body">
+                          <Cell expr="currow+1" textAlign="center"/>
+                          <Cell col="1" text="bind:CONTRACT_DETAIL_NO" textAlign="center"/>
+                          <Cell col="2" text="bind:CONTRACT_NO" textAlign="center"/>
+                          <Cell col="3" text="bind:ITEM_CODE" textAlign="center"/>
+                          <Cell col="4" text="bind:ITEM_NAME" textAlign="center"/>
+                          <Cell col="5" text="bind:UNIT_OF_CONTRACT" textAlign="center"/>
+                          <Cell col="6" text="bind:DUE_DATE_OF_CONTRACT" textAlign="center"/>
+                          <Cell col="7" text="bind:ESTIMATE_AMOUNT" textAlign="center"/>
+                          <Cell col="8" text="bind:STOCK_AMOUNT_USE" textAlign="center"/>
+                          <Cell col="9" text="bind:PRODUCTION_REQUIREMENT" textAlign="center"/>
+                          <Cell col="10" text="bind:UNIT_PRICE_OF_CONTRACT" textAlign="center"/>
+                          <Cell col="11" text="bind:SUM_PRICE_OF_CONTRACT" textAlign="center"/>
+                          <Cell col="12" text="bind:PROCESSING_STATUS" textAlign="center"/>
+                          <Cell col="13" text="bind:OPERATION_COMPLETED_STATUS" textAlign="center"/>
+                          <Cell col="14" text="bind:DELIVERY_COMPLETION_STATUS" textAlign="center"/>
+                          <Cell col="15" text="bind:DESCRIPTION" textAlign="center"/>
+                        </Band>
+                      </Format>
+                    </Formats>
+                  </Grid>
+                  <Edit id="Edit01" taborder="8" left="213" top="78" width="280" height="45" visible="false" displaynulltext="거래처코드" font="normal 14pt/normal &quot;Arial&quot;" textAlign="center" oneditclick="contract_searchContract_Edit00_oneditclick" onchanged="contract_searchContract_Edit00_onchanged" cssclass="edit_normal"/>
+                  <Button id="Button01" taborder="9" text="PDF 출력" left="667" top="20" width="103" height="45" font="normal normal 13pt/normal &quot;Arial&quot;" onclick="contract_searchContract_Button01_onclick" cssclass="btn_normal"/>
+                  <Button id="Button02" taborder="10" text="메일전송" left="787" top="20" width="103" height="45" font="normal normal 13pt/normal &quot;Arial&quot;" onclick="contract_searchContract_Button02_onclick" cssclass="btn_normal" tabstop="false"/>
+                  <Edit id="Edit02" taborder="11" left="907" top="20" width="186" height="45"/>
+                </Layout>
+              </Layouts>
+            </Tabpage>
+            <Tabpage id="regContract" text="수주 등록">
+              <Layouts>
+                <Layout>
+                  <GroupBox id="GroupBox00" taborder="0" text="견적검색조건" left="10" top="10" width="170" height="60" titlealign="topcenter" cssclass="grpBox_normal"/>
+                  <Combo id="Combo00" taborder="1" left="25" top="30" width="140" height="30" codecolumn="data" datacolumn="id" innerdataset="ds_searchType" text="" onitemchanged="contract_regContract_Combo00_onitemchanged" color="orangered"/>
+                  <Calendar id="Calendar00" taborder="2" left="190" top="30" width="140" height="30" displaynulltext="시작일" color="orangered"/>
+                  <Calendar id="Calendar01" taborder="3" left="340" top="30" width="140" height="30" displaynulltext="종료일" color="orangered"/>
+                  <Calendar id="Calendar02" taborder="4" left="190" top="30" width="290" height="30" displaynulltext="견적일자" color="orangered" onchanged="contract_regContract_Calendar02_onchanged"/>
+                  <Button id="Button00" taborder="5" text="수주가능한 견적조회" left="190" top="30" width="140" height="30" onclick="regContract_Button00_onclick" cssclass="btn_normal" background="black"/>
+                  <Button id="Button01" taborder="6" text="수주등록" left="700" top="30" width="140" height="30" onclick="contract_regContract_Button01_onclick" cssclass="btn_normal" background="black"/>
+                  <Button id="Button02" taborder="7" text="견적취소" left="860" top="30" width="140" height="30" onclick="contract_regContract_Button02_onclick" cssclass="btn_normal" background="black"/>
+                  <Grid id="Grid00" taborder="8" left="10" top="80" width="1100" height="291" binddataset="gds_contract" selecttype="row" cellclickbound="control" autofittype="col" oncellclick="regContract_Grid00_oncellclick" color="orangered" accessibilityrole="gridcell">
+                    <Formats>
+                      <Format id="default">
+                        <Columns>
+                          <Column size="24"/>
+                          <Column size="30"/>
+                          <Column size="129"/>
+                          <Column size="98"/>
+                          <Column size="122"/>
+                          <Column size="95"/>
+                          <Column size="78"/>
+                          <Column size="83"/>
+                          <Column size="92"/>
+                          <Column size="80"/>
+                        </Columns>
+                        <Rows>
+                          <Row size="28" band="head"/>
+                          <Row size="26"/>
+                        </Rows>
+                        <Band id="head">
+                          <Cell textAlign="center"/>
+                          <Cell col="1"/>
+                          <Cell col="2" text="견적일련번호" textAlign="center"/>
+                          <Cell col="3" text="수주유형분류" textAlign="center"/>
+                          <Cell col="4" text="거래처코드" textAlign="center"/>
+                          <Cell col="5" text="견적일자" textAlign="center"/>
+                          <Cell col="6" text="수주요청자" textAlign="center"/>
+                          <Cell col="7" text="유효일자" textAlign="center"/>
+                          <Cell col="8" text="견적담당자코드" textAlign="center"/>
+                          <Cell col="9" text="비고" textAlign="center"/>
+                        </Band>
+                        <Band id="body">
+                          <Cell expr="currow+1" textAlign="center"/>
+                          <Cell col="1" displaytype="checkboxcontrol" edittype="none" text="bind:CHECKED"/>
+                          <Cell col="2" text="bind:ESTIMATE_NO" textAlign="center"/>
+                          <Cell col="3" text="bind:CONTRACT_TYPE" textAlign="center"/>
+                          <Cell col="4" text="bind:CUSTOMER_CODE" textAlign="center"/>
+                          <Cell col="5" textAlign="center" displaytype="date" edittype="date" calendardateformat="yyyy-MM-dd" expr="nexacro.getApplication().gds_estimate.getColumn(nexacro.getApplication().gds_estimate.findRow(&quot;ESTIMATE_NO&quot;,ESTIMATE_NO),&quot;ESTIMATE_DATE&quot;)"/>
+                          <Cell col="6" text="bind:CONTRACT_REQUESTER" textAlign="center" edittype="normal"/>
+                          <Cell col="7" textAlign="center" displaytype="date" edittype="date" calendardateformat="yyyy-MM-dd" expr="nexacro.getApplication().gds_estimate.getColumn(nexacro.getApplication().gds_estimate.findRow(&quot;ESTIMATE_NO&quot;,ESTIMATE_NO),&quot;EFFECTIVE_DATE&quot;)"/>
+                          <Cell col="8" text="bind:PERSON_CODE_IN_CHARGE" textAlign="center"/>
+                          <Cell col="9" text="bind:DESCRIPTION" textAlign="center"/>
+                        </Band>
+                      </Format>
+                    </Formats>
+                  </Grid>
+                  <Grid id="Grid01" taborder="9" left="9" top="391" width="1100" height="313" binddataset="gds_estimateDetail" autofittype="col" color="orangered">
+                    <Formats>
+                      <Format id="default">
+                        <Columns>
+                          <Column size="32"/>
+                          <Column size="109"/>
+                          <Column size="79"/>
+                          <Column size="118"/>
+                          <Column size="44"/>
+                          <Column size="107"/>
+                          <Column size="73"/>
+                          <Column size="75"/>
+                          <Column size="122"/>
+                          <Column size="89"/>
+                        </Columns>
+                        <Rows>
+                          <Row size="28" band="head"/>
+                          <Row size="26"/>
+                        </Rows>
+                        <Band id="head">
+                          <Cell textAlign="center"/>
+                          <Cell col="1" text="견적상세일련번호" textAlign="center"/>
+                          <Cell col="2" text="품목코드" textAlign="center"/>
+                          <Cell col="3" text="품목명" textAlign="center"/>
+                          <Cell col="4" text="단위" textAlign="center"/>
+                          <Cell col="5" text="납기일" textAlign="center"/>
+                          <Cell col="6" text="견적수량" textAlign="center"/>
+                          <Cell col="7" text="견적단가" textAlign="center"/>
+                          <Cell col="8" text="합계액" textAlign="center"/>
+                          <Cell col="9" text="비고" textAlign="center"/>
+                        </Band>
+                        <Band id="body">
+                          <Cell expr="currow+1" textAlign="center"/>
+                          <Cell col="1" text="bind:ESTIMATE_DETAIL_NO" textAlign="center"/>
+                          <Cell col="2" text="bind:ITEM_CODE" textAlign="center"/>
+                          <Cell col="3" text="bind:ITEM_NAME" textAlign="center"/>
+                          <Cell col="4" text="bind:UNIT_OF_ESTIMATE" textAlign="center"/>
+                          <Cell col="5" text="bind:DUE_DATE_OF_ESTIMATE" textAlign="center" displaytype="date" edittype="date"/>
+                          <Cell col="6" text="bind:ESTIMATE_AMOUNT" textAlign="center"/>
+                          <Cell col="7" text="bind:UNIT_PRICE_OF_ESTIMATE" textAlign="center"/>
+                          <Cell col="8" text="bind:SUM_PRICE_OF_ESTIMATE" textAlign="center"/>
+                          <Cell col="9" text="bind:DESCRIPTION" textAlign="center"/>
+                        </Band>
+                      </Format>
+                    </Formats>
+                  </Grid>
+                </Layout>
+              </Layouts>
+            </Tabpage>
+          </Tabpages>
+        </Tab>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_searchType">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="data" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">일자검색</Col>
+            <Col id="data">searchByDate</Col>
+          </Row>
+          <Row>
+            <Col id="id">기간검색</Col>
+            <Col id="data">searchByPeriod</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_contract">
+        <ColumnInfo>
+          <Column id="CHECKED" type="STRING" size="256"/>
+          <Column id="CONTRACT_NO" type="STRING" size="256"/>
+          <Column id="ESTIMATE_NO" type="STRING" size="256"/>
+          <Column id="CONTRACT_TYPE" type="STRING" size="256"/>
+          <Column id="CUSTOMER_CODE" type="STRING" size="256"/>
+          <Column id="CONTRACT_DATE" type="STRING" size="256"/>
+          <Column id="CONTRACT_REQUESTER" type="STRING" size="256"/>
+          <Column id="PERSON_CODE_IN_CHARGE" type="STRING" size="256"/>
+          <Column id="DESCRIPTION" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[
+include "Lib::commLib.xjs";
+var nexa = nexacro.getApplication();
+var startDate;
+var endDate;
+var searchType;
+var customerCode;
+var rowNO ;
+
+
+this.contract_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+   obj.set_titletext("contract");
+   nexa.gds_contractInfo.clearData();
+   nexa.gds_contractDetail.clearData();
+   nexa.gds_contract.clearData();
+   nexa.gds_estimateDetail.clearData();  
+   nexa.gds_estimate.clearData();
+   this.ds_contract.clearData();
+};
+
+this.contract_Combo00_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+   startDate=this.contract.searchContract.form.Calendar00;
+   endDate=this.contract.searchContract.form.Calendar01;
+   searchType=this.contract.searchContract.form.Combo00.value;
+   
+   if(searchType=="SEARCH_BY_PERIOD"){
+      startDate.set_visible("true");
+      endDate.set_visible("true");
+      this.contract.searchContract.form.Edit00.set_visible("false");
+      this.contract.searchContract.form.Button00.move(543,24);
+   }else if(searchType="SEARCH_BY_CUSTOMER"){
+      this.contract.searchContract.form.Edit00.set_visible("true");
+      this.contract.searchContract.form.Button00.move(543,24);
+   }
+   
+};
+
+this.contract_searchContract_Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+   
+   trace("this.contract.searchContract.form.Calendar00: "+ this.contract.searchContract.form.Calendar00.value);
+   trace("this.contract.searchContract.form.Calendar01: "+ this.contract.searchContract.form.Calendar01.value);
+   
+   var CstartDate=this.contract.searchContract.form.Calendar00.value;
+   var CendDate=this.contract.searchContract.form.Calendar01.value;
+   customerCode=nexa.g_customerCode;
+   
+   trace("CstartDate: "+ CstartDate);
+   trace("CendDate: "+ CendDate);
+   trace("searchType: "+ searchType);
+   trace("customerCode: "+customerCode);
+   
+   
+   this.transaction(
+      "searchContract",
+      "svcLogisales::contract/list",
+      "",
+      "gds_contractInfo=gds_contractInfo gds_contractDetail=gds_contractDetail",
+      "firstDate='"+CstartDate+"' endDate='"+CendDate+"' searchCondition='"+searchType+"' customerCode='"+customerCode+"'",
+      "callback",
+      false
+   );
+   
+   nexa.gds_contractDetail.filter("CONTRACT_NO==''");
+   
+};
+
+this.contract_searchContract_Edit00_oneditclick = function(obj:nexacro.Edit,e:nexacro.EditClickEventInfo)
+{
+   
+   this.gfn_showModal(
+      "DetailCodeAndUseCheck",
+      {pFrame:"contract",divisionCode:"CL-01",eForm:obj},
+      "Base::CommonDialog.xfdl",
+      "popupCallBack",
+      this,
+      500,
+      300,
+      true,
+      true,
+      null
+   );
+   
+};
+this.contract_searchContract_Grid00_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+   
+   var cNo = nexa.gds_contractInfo.getColumn(e.row,"CONTRACT_NO");
+   nexa.gds_contractDetail.filter("CONTRACT_NO=='"+cNo+"'");
+   
+};
+/*================================================견적등록================================================================*/
+
+this.contract_regContract_Combo00_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+   searchType=this.contract.regContract.form.Combo00.value;
+   trace("searchType:::"+searchType);
+   if(searchType=="searchByDate"){
+      this.contract.regContract.form.Calendar00.set_visible("false");
+      this.contract.regContract.form.Calendar02.set_visible("false");
+      this.contract.regContract.form.Calendar02.set_visible("true");
+      this.contract.regContract.form.Button00.move(483,31);
+   }else if(searchType=="searchByPeriod"){
+      
+      this.contract.regContract.form.Calendar00.set_visible("true");
+      this.contract.regContract.form.Calendar02.set_visible("true");
+      this.contract.regContract.form.Calendar02.set_visible("false");
+      this.contract.regContract.form.Button00.move(483,31);
+   }
+};
+
+this.regContract_Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+   if(this.contract.regContract.form.Combo00.value==null){
+      alert("수주 가능 검색 조건을 선택해주세요");
+      return;
+   }
+   if(searchType=="searchByPeriod"){
+      startDate=this.contract.regContract.form.Calendar00.value;
+      endDate=this.contract.regContract.form.Calendar01.value;
+      
+   }else if(searchType=="searchByDate"){
+      startDate=this.contract.regContract.form.Calendar02.value;
+      endDate=this.contract.regContract.form.Calendar02.value;
+      
+   }
+   if(startDate==null || endDate==null){
+      alert("검색기간을 입력해주세요");
+      return;
+   }
+   trace("ssssssssss"+searchType);
+   var RstartDate=nexa.changeDate(startDate);
+   var RendDate=nexa.changeDate(endDate);
+   this.transaction(
+      "searchAvailableContract",
+      "svcLogisales::estimate/list/contractavailable",
+      "",
+      "gds_estimate=gds_estimate gds_estimateDetail=gds_estimateDetail",
+      " startDate="+startDate+
+      " endDate="+endDate+" searchType="+searchType,
+      "callback"
+   );
+   
+   nexa.gds_estimateDetail.filter("xxx");
+};
+
+this.regContract_Grid00_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{    rowNO = nexa.gds_contract.rowposition;
+   var cNo = nexa.gds_contract.getColumn(e.row,"ESTIMATE_NO");
+   nexa.gds_estimateDetail.filter("ESTIMATE_NO=='"+cNo+"'");
+   
+   if(e.col==3){
+      this.gfn_showModal(
+         "DetailCodeAndUseCheck",
+         {pFrame:"contract",divisionCode:"CT", eForm:obj},
+         "Base::CommonDialog.xfdl",
+         "popupCallBack",
+         this,
+         500,
+         300,
+         true,
+         true,
+         null
+      );
+   }
+   if(e.col==1){
+      
+      var checking=nexa.gds_contract.getColumn(rowNO,"CHECKED");
+      trace("::::"+checking);
+      
+      var size = nexa.gds_contract.rowcount;
+      for(var i = 0; i<size; i++) { // 데이터셋 전체 확인
+         if(e.row == i) {   
+            nexa.gds_contract.setColumn(i,"CHECKED","1");
+            
+         } else {
+            nexa.gds_contract.setColumn(i,"CHECKED","0"); 
+            // 클릭한 행의 체크박스를 제외한 나머지 체크박스는 체크 해제
+         }
+      }
+   }
+   
+};
+
+this.contract_regContract_Button01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{      
+   
+   trace(nexa.gds_contract.getColumn(rowNO,"PERSON_CODE_IN_CHARGE"));
+   if(nexa.gds_contract.getColumn(rowNO,"CHECKED")==null){
+      alert("체크박스를 선택 해주십시오");
+      return;
+   }else if(nexa.gds_contract.getColumn(rowNO,"CONTRACT_TYPE")!="CT-01"){
+      alert("일반 수주만 선택 가능합니다.");
+   }
+   this.transaction
+   (
+      "addNewContract",
+      "svcLogisales::contract/new",
+      "gds_contract=gds_contract:u gds_contractDetail=gds_contractDetail:u", // u: 수정한 데이터만 가져옴
+      "",
+      "contractDate="+nexa.changeDate(this.gfn_today())+
+      " personCodeInCharge="+nexa.gds_contract.getColumn(rowNO,"PERSON_CODE_IN_CHARGE"),
+      "callback"
+   );
+};
+
+this.contract_regContract_Button02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+
+	var check = nexa.gds_contract.findRow("CHECKED", "1");
+   if(nexa.gds_contract.getColumn(check,"CHECKED")==null){
+      alert("체크박스를 선택 해주십시오");
+      return;
+   }
+   nexa.gds_estimateDetail.deleteAll();
+   this.transaction(
+      "cancelEstimate",
+      "svcLogisales::estimate/list/cancelEstimate", 
+	  "gds_estimateDetail=gds_estimateDetail:u", // 왜 디테일만 보내는데 사라지는 거지?
+      "",
+      "estimateNo='"+nexa.gds_contract.getColumn(check,"ESTIMATE_NO")+"'",
+      "callback",
+      false
+   );
+
+//    if(nexa.gds_contract.getColumn(rowNO,"CHECKED")==null){
+//       alert("체크박스를 선택 해주십시오");
+//       return;
+// 	  trace("삭제 버튼")
+//    }
+//    this.transaction(
+//       "cancelEstimate",
+//       "svcLogisales::estimate/list/cancelEstimate",
+//       "gds_estimate=gds_estimate gds_contractDetail=gds_contractDetail",
+//       "",
+//       "estimateNo='"+nexa.gds_contract.getColumn(rowNO,"ESTIMATE_NO")+"'",
+//       "callback",
+//       false
+//    );
+}
+
+this.callback =function callback(trId , ErrorCode, ErrorMsg){
+   trace("      @@@@@ trId: "+trId);
+   // 조회
+   if(trId.indexOf("search")!=-1) {
+      if(ErrorCode <0){
+         alert("조회 실패 : " + ErrorMsg);
+         return;
+      }
+   }else if(trId.indexOf("send")!=-1){
+      alert("전송 성공!");
+      
+   }   
+   switch(trId){
+   case "searchAvailableContract":
+      
+      nexa.gds_contract.clearData(); 
+      var eRow=nexa.gds_estimate.rowcount;      
+      if(eRow == null){
+         return;
+      }
+      
+      for(var index=0; index<eRow; index++){
+         var nRow=nexa.gds_contract.addRow();
+         // nRow: 값을 변경하려는 행의 위치; strColID: 값을 변경하려는 열의 ID; // varVal: 변경하려는 값;
+         nexa.gds_contract.setColumn(nRow, "ESTIMATE_NO", nexa.gds_estimate.getColumn(index,"ESTIMATE_NO"));
+         nexa.gds_contract.setColumn(nRow, "DESCRIPTION", nexa.gds_estimate.getColumn(index,"DESCRIPTION"));
+         nexa.gds_contract.setColumn(nRow, "CUSTOMER_CODE", nexa.gds_estimate.getColumn(index,"CUSTOMER_CODE"));
+         nexa.gds_contract.setColumn(nRow, "PERSON_CODE_IN_CHARGE", nexa.gds_estimate.getColumn(index,"PERSON_CODE_IN_CHARGE"));
+         
+      }
+      break;
+	  
+   case "addNewContract" :
+      alert("저장이 완료되었습니다");
+      this.reload();
+      break;
+	  
+   case "cancelEstimate" :   
+      alert("취소되었습니다");
+      this.reload();
+      break;
+   }
+}
+
+this.contract_searchContract_Button01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+   var eRow = nexa.gds_contract.rowposition;
+   var orderDraftNo = nexa.gds_contract.getColumn(eRow,"CONTRACT_NO");
+   system.execBrowser("http://localhost:9090/compinfo/report/contract?orderDraftNo="+orderDraftNo);
+};
+
+this.contract_searchContract_Button02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+   var eRow = nexa.gds_contractInfo.rowposition;
+   var orderDraftNo = nexa.gds_contractInfo.getColumn(eRow,"CONTRACT_NO");
+   var emailId = this.contract.searchContract.form.Edit02.value;
+   this.transaction(
+      "sendEmail",
+      "svcCompinfo::contractreportemail",
+      "gds_estimate=gds_estimate gds_estimateDetail=gds_estimateDetail",
+      "",
+      "orderDraftNo="+orderDraftNo+" emailId="+emailId,
+      "callback",
+         false
+   );
+};]]></Script>
+  </Form>
+</FDL>

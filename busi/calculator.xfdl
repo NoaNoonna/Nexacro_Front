@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="calculator" width="410" height="340" titletext="견적금액 계산기" onload="CalculatorDialog_onload">
+    <Layouts>
+      <Layout height="340" width="410">
+        <Div id="Div00" taborder="0" left="21" top="21" width="379" height="310" border="1px solid antiquewhite">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="0" text="견적수량" left="22" top="22" width="124" height="45" textAlign="center" font="normal bold 14pt/normal &quot;Arial&quot;" border="1px solid dimgray"/>
+              <Static id="Static00_00" taborder="1" text="견적단가" left="22" top="83" width="124" height="45" textAlign="center" font="normal bold 14pt/normal &quot;Arial&quot;" border="1px solid dimgray"/>
+              <Static id="Static00_01" taborder="2" text="합계액" left="22" top="146" width="124" height="45" textAlign="center" font="normal bold 14pt/normal &quot;Arial&quot;" border="1px solid dimgray"/>
+              <MaskEdit id="MaskEdit00" taborder="3" left="182" top="23" width="166" height="45" format="###,###,###,##0" font="normal 14pt/normal &quot;Arial&quot;" onkeyup="Div00_MaskEdit00_onkeyup"/>
+              <MaskEdit id="MaskEdit01" taborder="4" left="182" top="83" width="166" height="45" format="###,###,###,##0" font="normal 14pt/normal &quot;Arial&quot;" onkeyup="Div00_MaskEdit00_onkeyup"/>
+              <MaskEdit id="MaskEdit02" taborder="5" left="182" top="146" width="166" height="45" format="###,###,###,##0" font="normal 14pt/normal &quot;Arial&quot;"/>
+              <Button id="Button00" taborder="6" text="확인" left="62" top="228" width="96" height="45" onclick="Div00_Button00_onclick"/>
+              <Button id="Button00_00" taborder="7" text="취소" left="177" top="228" width="96" height="45" onclick="Div00_Button00_00_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[var parentName;
+var paramRow;
+var iprice;
+var nexa = nexacro.getApplication();
+
+
+// 견적단가 받아오기
+this.CalculatorDialog_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.transaction(
+				"calculation",
+				"svcLogiinfo::item/standardunitprice", 
+				"gds_codeDetail=gds_codeDetail", 
+				"gds_item=gds_item", 
+				"itemCode='"+this.parent.itemCode+"'", 
+				"callback"
+				);
+				
+	obj.set_titletext("CalculatorDialog");
+	parentName = obj.parent.name;
+	var amount;
+	var price;
+	var sum;
+	paramRow = obj.parent.eRow;
+	
+	// 견적 조회/수정 탭에서 값 받아서 calculator에 set;
+	if(parentName == "estimateCal"){
+		amount = nexa.gds_estimateDetail.getColumn(paramRow, "ESTIMATE_AMOUNT");
+		price = nexa.gds_estimateDetail.getColumn(paramRow, "UNIT_PRICE_OF_ESTIMATE");
+		sum = nexa.gds_estimateDetail.getColumn(paramRow, "SUM_PRICE_OF_ESTIMATE");
+	}else{
+		amount = nexa.gds_salesPlan.getColumn(paramRow, "SALES_AMOUNT");
+		price = nexa.gds_salesPlan.getColumn(paramRow, "UNIT_PRICE_OF_SALES");
+		sum = nexa.gds_salesPlan.getColumn(paramRow, "SUM_PRICE_OF_SALES");
+	}
+	this.Div00.form.MaskEdit00.set_value(amount);
+	this.Div00.form.MaskEdit01.set_value(price);
+	this.Div00.form.MaskEdit02.set_value(sum);
+};
+
+
+// 합계
+this.Div00_MaskEdit00_onkeyup = function(obj:nexacro.MaskEdit,e:nexacro.KeyEventInfo)
+{
+	this.Div00.form.MaskEdit02.set_value(this.Div00.form.MaskEdit00.value*this.Div00.form.MaskEdit01.value);
+};
+
+
+// 확인
+this.Div00_Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var amount = this.Div00.form.MaskEdit00.value;
+	var price  = this.Div00.form.MaskEdit01.value;
+	var sum    = this. Div00.form.MaskEdit02.value;
+	parentName = "estimateCal";
+	if(parentName == "estimateCal"){
+		nexa.gds_estimateDetail.setColumn(paramRow, "ESTIMATE_AMOUNT", amount);
+		nexa.gds_estimateDetail.setColumn(paramRow, "UNIT_PRICE_OF_ESTIMATE", price);
+		nexa.gds_estimateDetail.setColumn(paramRow, "SUM_PRICE_OF_ESTIMATE", sum);
+	}else{
+		this.close(amount+","+price+","+sum);
+	}
+	this.close();
+};
+
+
+// 취소
+this.Div00_Button00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close();
+};
+
+
+//callback
+this.callback = function(trid , ErrorCode, ErrorMsg)
+{
+	if(trid){
+		iprice = nexa.gds_item.getColumn(0,"STANDARD_UNIT_PRICE");
+		this.Div00.form.MaskEdit01.set_value(parseInt(iprice));
+	}
+}]]></Script>
+  </Form>
+</FDL>

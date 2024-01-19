@@ -1,0 +1,269 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Form_Work" width="1280" height="720" titletext="Form_Work" onload="Form_Work_onload">
+    <Layouts>
+      <Layout width="1280" height="720" screenid="Desktop_screen">
+        <BasicChart id="BasicChart00" taborder="0" left="90" top="15" width="1090" height="295" binddataset="ds_quarter" categorycolumn="bind:QUA" enableanimation="true" enable="true" enableevent="true" rangezoom="none" rotateaxis="false">
+          <Contents><![CDATA[{
+	"title": {
+		"id": "title",
+		"text": "서울IT물류센터 분기별 매출",
+		"textfont": "20pt/normal '맑은 고딕'",
+		"padding": "0px 0px 5px"
+	},
+	"legend": {
+		"id": "legend",
+		"padding": "3px 10px 3px 10px",
+		"itemtextfont": "9pt '맑은 고딕'",
+		"itemtextcolor": "#4c4c4c",
+		"align": "rightcenter",
+		"markertype": "circle"
+	},
+	"tooltip": {
+		"id": "tooltip",
+		"background": "#4b4b4b",
+		"linestyle": "0px none",
+		"textcolor": "white",
+		"textfont": "10pt/normal '맑은 고딕'",
+		"padding": "5px"
+	},
+	"board": {
+		"id": "board",
+		"visible": false
+	},
+	"categoryaxis": {
+		"id": "categoryaxis",
+		"titletext": "분기",
+		"titletextcolor": "#4c4c4c",
+		"titletextfont": "bold 12pt '맑은 고딕'",
+		"labeltextcolor": "#6f6f6f",
+		"labeltextfont": "11pt '맑은 고딕'",
+		"axislinestyle": "1px solid #525252",
+		"ticklinestyle": "1px solid #525252",
+		"boardlinestyle": "1px solid #d0d0d0",
+		"visible": "true",
+		"labeltype": "normal",
+		"boardlinevisible": "false",
+		"opposite": "false"
+	},
+	"seriesset": [
+		{
+			"id": "series0",
+			"titletext": "분기별 매출",
+			"barvisible": "true",
+			"barsize": "65",
+			"itemtextvisible": "false",
+			"itemtextcolor": "#003860",
+			"itemtextfont": "bold 12pt '맑은 고딕'",
+			"valuecolumn": "bind:PRICE",
+			"highlightbarvisible": "true"
+		},
+		{
+			"id": "series1",
+			"titletext": "반품된 금액",
+			"barvisible": true,
+			"barsize": "65",
+			"itemtextvisible": "false",
+			"itemtextcolor": "#003860",
+			"itemtextfont": "bold 12pt '맑은 고딕'",
+			"valuecolumn": "bind:REVERSE",
+			"highlightbarvisible": "true"
+		},
+		{
+			"id": "series2",
+			"titletext": "실제 매출",
+			"highlightbarvisible": "true",
+			"valuecolumn": "bind:TOTAL_PRICE"
+		}
+	],
+	"valueaxes": [
+		{
+			"id": "valueaxis0",
+			"boardlinevisible": "true",
+			"boardlinestyle": "1px solid #d0d0d0",
+			"labeltextcolor": "#6f6f6f",
+			"labeltextfont": "10pt/normal '맑은 고딕'",
+			"titletextcolor": "#4c4c4c",
+			"titletextfont": "bold 12pt '맑은 고딕'",
+			"ticklinestyle": "1px solid #525252",
+			"axislinestyle": "1px solid #525252",
+			"visible": "true"
+		}
+	],
+	"selection": {
+		"id": "selection",
+		"type": "xy",
+		"linestyle": "1px solid #525252",
+		"background": "#525252",
+		"opacity": "0.5"
+	}
+}]]></Contents>
+        </BasicChart>
+        <BasicChart id="BasicChart01" taborder="1" left="80" top="340" width="1110" height="350" binddataset="ds_stockchart" categorycolumn="bind:ITEM_NAME" enableanimation="true" enable="true" enableevent="true" rangezoom="none" rotateaxis="false">
+          <Contents><![CDATA[{
+	"title": {
+		"id": "title",
+		"text": "품목별 현 재고량 - 전체재고, 안전재고, 가용재고",
+		"textfont": "20pt/normal '맑은 고딕'",
+		"padding": "0px 0px 5px"
+	},
+	"legend": {
+		"id": "legend",
+		"padding": "3px 10px 3px 10px",
+		"itemtextfont": "9pt '맑은 고딕'",
+		"itemtextcolor": "#4c4c4c",
+		"align": "rightcenter"
+	},
+	"tooltip": {
+		"id": "tooltip",
+		"background": "#4b4b4b",
+		"linestyle": "0px none",
+		"textcolor": "white",
+		"textfont": "10pt/normal '맑은 고딕'",
+		"padding": "5px"
+	},
+	"board": {
+		"id": "board",
+		"visible": false
+	},
+	"categoryaxis": {
+		"id": "categoryaxis",
+		"titletextcolor": "#4c4c4c",
+		"titletextfont": "bold 12pt '맑은 고딕'",
+		"labeltextcolor": "#6f6f6f",
+		"labeltextfont": "7pt/normal \"맑은 고딕\"",
+		"axislinestyle": "1px solid #525252",
+		"ticklinestyle": "1px solid #525252",
+		"boardlinestyle": "1px solid #d0d0d0",
+		"visible": true,
+		"boardlinevisible": "false",
+		"opposite": "false",
+		"labelrotate": "45"
+	},
+	"seriesset": [
+		{
+			"id": "series0",
+			"titletext": "전체 재고",
+			"barvisible": true,
+			"barsize": "65",
+			"itemtextvisible": "false",
+			"itemtextcolor": "#003860",
+			"itemtextfont": "bold 12pt '맑은 고딕'",
+			"valuecolumn": "bind:STOCK_AMOUNT",
+			"highlightbarvisible": "true",
+			"highlightlinevisible": "false",
+			"lineareavisible": "false",
+			"pointvisible": "false"
+		},
+		{
+			"id": "series1",
+			"titletext": "안전 재고",
+			"barvisible": true,
+			"barsize": "65",
+			"itemtextvisible": "false",
+			"itemtextcolor": "#003860",
+			"itemtextfont": "bold 12pt '맑은 고딕'",
+			"valuecolumn": "bind:SAFTY_AMOUNT",
+			"highlightbarvisible": "true"
+		},
+		{
+			"id": "series2",
+			"titletext": "사용가능 재고",
+			"barvisible": true,
+			"barsize": "65",
+			"itemtextvisible": "false",
+			"itemtextcolor": "#003860",
+			"itemtextfont": "bold 12pt '맑은 고딕'",
+			"valuecolumn": "bind:ALLOWANCE_AMOUNT",
+			"highlightbarvisible": "true"
+		}
+	],
+	"valueaxes": [
+		{
+			"id": "valueaxis0",
+			"boardlinevisible": "true",
+			"boardlinestyle": "1px solid #d0d0d0",
+			"labeltextcolor": "#6f6f6f",
+			"labeltextfont": "10pt/normal '맑은 고딕'",
+			"titletextcolor": "#4c4c4c",
+			"titletextfont": "bold 12pt '맑은 고딕'",
+			"ticklinestyle": "1px solid #525252",
+			"axislinestyle": "1px solid #525252",
+			"opposite": "false",
+			"visible": "true"
+		}
+	],
+	"selection": {
+		"id": "selection",
+		"type": "xy",
+		"linestyle": "1px solid #525252",
+		"background": "#525252",
+		"opacity": "0.5"
+	}
+}]]></Contents>
+        </BasicChart>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_quarter">
+        <ColumnInfo>
+          <Column id="QUA" type="STRING" size="256"/>
+          <Column id="PRICE" type="STRING" size="256"/>
+          <Column id="REVERSE" type="STRING" size="256"/>
+          <Column id="TOTAL_PRICE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_stockchart">
+        <ColumnInfo>
+          <Column id="ITEM_NAME" type="STRING" size="256"/>
+          <Column id="STOCK_AMOUNT" type="STRING" size="256"/>
+          <Column id="SAFTY_AMOUNT" type="STRING" size="256"/>
+          <Column id="ALLOWANCE_AMOUNT" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[this.Form_Work_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.transaction(
+				"search_quater",
+				"svcSales::totalQuaChart",
+				"",
+				"ds_quarter=gds_quarter",
+				"",
+				"callback",
+				false
+				);
+	this.ds_quarter.set_keystring("S:QUA");
+	this.transaction(
+		"search_stock_chart",
+		"svcStock::sto/chart",
+		"",
+		"ds_stockchart=stockchart",
+		"",
+		"callback",
+		false
+	);
+};
+this.callback = function(trid , ErrorCode, ErrorMsg)
+{
+	if(trid.indexOf("search")!=-1){
+		if(ErrorCode <0){
+			alert("조회 실패 : " + ErrorMsg);
+		}
+	}else if(trid.indexOf("batch")!=-1){
+		if(ErrorCode <0){
+			alert("데이터 저장 실패 : " + ErrorMsg);
+		}else{
+			alert("저장 성공!");
+			this.reload();
+		}
+	}else if(trid.indexOf("send")!=-1){
+		if(ErrorCode <0){
+			alert("전송 실패 : " + ErrorMsg);
+		}else{
+			alert("전송 성공!");
+		}
+	}
+}]]></Script>
+  </Form>
+</FDL>

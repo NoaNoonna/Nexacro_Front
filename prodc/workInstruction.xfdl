@@ -1,0 +1,440 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="workInstruction" width="1280" height="720" titletext="작업지시" onload="workorder_onload">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <GroupBox id="GroupBox00" taborder="0" text="작업지시" left="10" top="10" width="1253" height="700" font="normal 300 23pt/normal &quot;Arial&quot;" color="black" titlealign="topcenter"/>
+        <Tab id="Tab00" taborder="1" tabindex="0" left="24" top="56" width="1229" height="638" onchanged="Tab00_onchanged" color="darkslategray">
+          <Tabpages>
+            <Tabpage id="Tabpage1" text="작업지시">
+              <Layouts>
+                <Layout>
+                  <GroupBox id="GroupBox00" taborder="0" text="작업지시 필요품목 검색 및 작업지시" left="36" top="20" width="390" height="75" font="normal 13pt/normal &quot;Arial&quot;" color="black"/>
+                  <Button id="Button00" taborder="1" text="작업지시 필요목록 조회" left="50" top="48" width="166" height="36" onclick="Tab00_Tabpage1_Button00_onclick" color="white" background="black"/>
+                  <Button id="Button01" taborder="2" text="작업지시" left="244" top="48" width="166" height="36" onclick="Tab00_Tabpage1_Button01_onclick" color="white" background="black"/>
+                  <Grid id="Grid00" taborder="3" left="8" top="108" width="1221" height="434" binddataset="gds_workOrderableMrpList" oncellclick="Tab00_Tabpage1_Grid00_oncellclick" color="orangered">
+                    <Formats>
+                      <Format id="default">
+                        <Columns>
+                          <Column size="25"/>
+                          <Column size="31"/>
+                          <Column size="138"/>
+                          <Column size="80"/>
+                          <Column size="80"/>
+                          <Column size="116"/>
+                          <Column size="57"/>
+                          <Column size="80"/>
+                          <Column size="89"/>
+                          <Column size="91"/>
+                        </Columns>
+                        <Rows>
+                          <Row size="24" band="head"/>
+                          <Row size="24"/>
+                        </Rows>
+                        <Band id="head">
+                          <Cell calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="1" calendardateformat="yyyy-MM-dd" textAlign="center" combodisplayrowcount="5" combotype="dropdown" editimeaction="none" displaytype="checkboxcontrol" edittype="checkbox"/>
+                          <Cell col="2" text="소요량취합번호" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="3" text="품목분류" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="4" text="품목코드" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="5" text="품목명" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="6" text="단위" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="7" text="필요수량" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="8" text="작업지시기한" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="9" text="작업완료기한" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                        </Band>
+                        <Band id="body">
+                          <Cell expr="currow+1" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="1" text="bind:CHECKED" displaytype="checkboxcontrol" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="2" text="bind:MRP_GATHERING_NO" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="3" text="bind:ITEM_CLASSIFICATION" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="4" text="bind:ITEM_CODE" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="5" text="bind:ITEM_NAME" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="6" text="bind:UNIT_OF_MRP" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="7" text="bind:REQUIRED_AMOUNT" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="8" text="bind:ORDER_DATE" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="9" text="bind:REQUIRED_DATE" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                        </Band>
+                      </Format>
+                    </Formats>
+                  </Grid>
+                </Layout>
+              </Layouts>
+            </Tabpage>
+            <Tabpage id="Tabpage2" text="작업지시현황">
+              <Layouts>
+                <Layout>
+                  <GroupBox id="GroupBox00" taborder="0" text="작업지시 현황조회 및 작업완료 등록" left="36" top="20" width="310" height="75" font="normal 13pt/normal &quot;Arial&quot;" color="black"/>
+                  <Button id="Button00" taborder="1" text="작업지시 현황조회" left="50" top="48" width="146" height="36" onclick="Tab00_Tabpage2_Button00_onclick" color="white" background="black"/>
+                  <Grid id="Grid00" taborder="2" left="6" top="112" width="1221" height="434" binddataset="gds_workOrderInfo" oncellclick="Tab00_Tabpage2_Grid00_oncellclick" color="orangered">
+                    <Formats>
+                      <Format id="default">
+                        <Columns>
+                          <Column size="25"/>
+                          <Column size="28"/>
+                          <Column size="123"/>
+                          <Column size="106"/>
+                          <Column size="71"/>
+                          <Column size="62"/>
+                          <Column size="114"/>
+                          <Column size="37"/>
+                          <Column size="73"/>
+                          <Column size="83"/>
+                          <Column size="96"/>
+                          <Column size="63"/>
+                          <Column size="97"/>
+                        </Columns>
+                        <Rows>
+                          <Row size="24" band="head"/>
+                          <Row size="24"/>
+                        </Rows>
+                        <Band id="head">
+                          <Cell calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="1" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="2" text="작업지시일련번호" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="3" text="소요량취합번호" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="4" text="품목분류" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="5" text="품목코드" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="6" text="품목명" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="7" text="단위" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="8" text="지시수량" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="9" text="생산공정명" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="10" text="작업장명" textAlign="center"/>
+                          <Cell col="11" text="완료상태" textAlign="center"/>
+                          <Cell col="12" text="작업완료된수량" textAlign="center"/>
+                        </Band>
+                        <Band id="body">
+                          <Cell expr="currow+1" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="1" text="bind:CHECKED" displaytype="checkboxcontrol" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="2" text="bind:WORK_ORDER_NO" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="3" text="bind:MRP_GATHERING_NO" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="4" text="bind:ITEM_CLASSIFICATION" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="5" text="bind:ITEM_CODE" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="6" text="bind:ITEM_NAME" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="7" text="bind:UNIT_OF_MRP" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="8" text="bind:REQUIRED_AMOUNT" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="9" text="bind:PRODUCTION_PROCESS_NAME" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="10" text="bind:WORK_SITE_NAME" textAlign="center"/>
+                          <Cell col="11" text="bind:COMPLETION_STATUS" textAlign="center"/>
+                          <Cell col="12" text="bind:ACTUAL_COMPLETION_AMOUNT" edittype="text" textAlign="center" displaytype="normal" editinputtype="digit"/>
+                        </Band>
+                      </Format>
+                    </Formats>
+                  </Grid>
+                  <Button id="Button01" taborder="3" text="작업완료 등록" left="226" top="48" width="101" height="36" onclick="Tab00_Tabpage2_Button01_onclick" color="white" background="black"/>
+                </Layout>
+              </Layouts>
+            </Tabpage>
+            <Tabpage id="Tabpage3" text="생산실적관리">
+              <Layouts>
+                <Layout>
+                  <GroupBox id="GroupBox00" taborder="0" text="생산실적 조회" left="36" top="20" width="170" height="75" font="normal 13pt/normal &quot;Arial&quot;" color="black"/>
+                  <Button id="Button00" taborder="1" text="생산실적 조회" left="47" top="48" width="146" height="36" onclick="Tab00_Tabpage3_Button00_onclick" color="white" background="black"/>
+                  <Grid id="Grid00" taborder="2" left="6" top="112" width="1070" height="434" binddataset="gds_productionPerformance" color="orangered">
+                    <Formats>
+                      <Format id="default">
+                        <Columns>
+                          <Column size="25"/>
+                          <Column size="123"/>
+                          <Column size="118"/>
+                          <Column size="119"/>
+                          <Column size="117"/>
+                          <Column size="71"/>
+                          <Column size="114"/>
+                          <Column size="62"/>
+                          <Column size="37"/>
+                          <Column size="88"/>
+                          <Column size="89"/>
+                          <Column size="96"/>
+                        </Columns>
+                        <Rows>
+                          <Row size="24" band="head"/>
+                          <Row size="24"/>
+                        </Rows>
+                        <Band id="head">
+                          <Cell calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="1" text="생산완료날짜" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="2" text="작업지시일련번호" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="3" text="수주상세일련번호" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="4" text="품목구분" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="5" text="품목코드" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="6" text="품목명" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="7" text="단위" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="8" text="작업지시수량" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="9" text="실제제작수량" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="10" text="공정성공률" textAlign="center"/>
+                          <Cell col="11" text="비고" textAlign="center"/>
+                        </Band>
+                        <Band id="body">
+                          <Cell expr="currow+1" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="1" text="bind:WORK_ORDER_COMPLETION_DATE" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="2" text="bind:WORK_ORDER_NO" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="3" calendardateformat="yyyy-MM-dd" textAlign="center" text="bind:CONTRACT_DETAIL_NO"/>
+                          <Cell col="4" text="bind:ITEM_CLASSIFICATION" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="5" text="bind:ITEM_CODE" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="6" text="bind:ITEM_NAME" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="7" text="bind:UNIT" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="8" text="bind:WORK_ORDER_AMOUNT" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="9" text="bind:ACTUAL_COMPLETION_AMOUNT" calendardateformat="yyyy-MM-dd" textAlign="center"/>
+                          <Cell col="10" text="bind:WORK_SUCCESS_RATE" textAlign="center"/>
+                          <Cell col="11" text="bind:blank" textAlign="center"/>
+                        </Band>
+                      </Format>
+                    </Formats>
+                  </Grid>
+                </Layout>
+              </Layouts>
+            </Tabpage>
+          </Tabpages>
+        </Tab>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+///////////////////////////////////////  	전역변수		///////////////////////////////////////
+
+include "Lib::commLib.xjs";
+var nexa = nexacro.getApplication();
+
+
+///////////////////////////////////////  	온로드		///////////////////////////////////////
+
+this.workorder_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	nexa.gds_workOrderableMrpList.clearData();
+	nexa.gds_workOrderInfo.clearData();
+};
+
+
+this.callback = function (trId, ErrorCode, ErrorMsg) //트랜잭션 콜백함수
+{
+	if(ErrorCode<0){
+		alert("데이터를 조회하실 수 없습니다");
+		return;
+	}else{
+		if(trId=="workOrderCompletion"){
+			alert("등록 성공!");
+			this.Tab00_Tabpage2_Button00_onclick();
+			this.reload();
+		}
+	}
+}
+
+
+///////////////////////////////////////  	작업지시 페이지		///////////////////////////////////////
+
+this.Tab00_Tabpage1_Button00_onclick = function() //작업지시 필요목록 조회
+{
+	this.transaction(
+				"getWorkInstructionList",
+				"svcQuality::workorder/mrpavailable",
+				"",
+				"gds_workOrderableMrpList=gds_workOrderableMrpList",
+				"",
+				"fn_callback",
+				false
+				);
+};
+
+this.Tab00_Tabpage1_Grid00_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo) //작업지시 그리드 셀클릭
+{
+	var check = nexa.gds_workOrderableMrpList.getColumn(e.row,"CHECKED");
+	
+	if(e.col == this.Tab00.Tabpage1.form.Grid00.getBindCellIndex("body", "CHECKED")) { // 체크박스 선택했을 경우
+		for(var i = 0; i<nexa.gds_workOrderableMrpList.rowcount; i++) { // 데이터셋 전체 확인
+			if(e.row == i) {	
+			nexa.gds_workOrderableMrpList.setColumn(i,"CHECKED","1");
+			
+			} else {
+				nexa.gds_workOrderableMrpList.setColumn(i,"CHECKED","0"); 
+                		// 클릭한 행의 체크박스를 제외한 나머지 체크박스는 체크 해제
+			}
+		}
+	}
+};
+
+this.Tab00_Tabpage1_Button01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) //모의 작업지시
+{
+	// 작업지시 그리드에서 선택한 행 위치
+	var nRow = nexa.gds_workOrderableMrpList.rowposition;
+	
+	// 멀티선택을 위한 추가부분
+	var mrpGatheringNo=[];
+	var mrpNo=[];
+	var g_isAllGrChecked;
+	var checkedStatus;
+	var rCount = nexa.gds_workOrderableMrpList.rowcount;
+	
+	// 품목분류 확인 변수
+	var itemType;
+	var fullItem;
+	var partItem;
+	var checkedItemType;
+	var checkedFullItem;
+	var checkedPartItem;
+	
+	for(var i=0; i<rCount; i++){
+		g_isAllGrChecked = nexa.gds_workOrderableMrpList.getColumn(i, "CHECKED");
+		itemType = nexa.gds_workOrderableMrpList.getColumn(i,"ITEM_CLASSIFICATION");
+
+		switch(itemType){
+			case "완제품" :  fullItem = "full"; break;
+			default : partItem = "part"; break;
+		}
+				
+		if(g_isAllGrChecked == 1){
+			checkedItemType = nexa.gds_workOrderableMrpList.getColumn(i,"ITEM_CLASSIFICATION");
+			checkedStatus = nexa.gds_workOrderableMrpList.getColumn(i, "CHECKED");
+			
+			mrpGatheringNo.push(nexa.gds_workOrderableMrpList.getColumn(i, "MRP_GATHERING_NO"));
+			mrpNo.push(nexa.gds_workOrderableMrpList.getColumn(i, "MRP_NO"));
+			
+			// 체크된 품목분류
+			switch(checkedItemType){
+				case "완제품" :  checkedFullItem = "full"; break;
+				default : checkedPartItem = "part"; break;
+			}
+		}
+	}
+	
+	var rCount = nexa.gds_workOrderableMrpList.rowcount;
+	if(rCount == 0){
+		alert("작업지시 필요목록 조회를 먼저 해주세요");
+	}else{
+		if(checkedStatus != 1){
+			alert("체크해주세요");
+			return;
+		} else if(partItem == "part" && checkedFullItem == "full"){
+			alert("재공품 및 반제품을 먼저 작업해주세요.");
+			
+			//전체 체크해제
+			nexa.grid_id.setCellProperty('Head',0,'text','0');
+			for(var i=0; i<dsRow; i++){
+				nexa.gds_workOrderableMrpList.setColumn(i,"CHECKED","0");
+			} 
+			
+		} else{
+			this.gfn_showModal(
+							"WISimulation",
+							{"mrpGatheringNo":nexa.gds_workOrderableMrpList.getColumn(nRow,"MRP_GATHERING_NO"),
+							  "mrpNo":nexa.gds_workOrderableMrpList.getColumn(nRow,"MRP_NO")},
+							"prodc::workorder_simul.xfdl",
+							"popupCallBack", 
+							this, 1270, 550, true, true, null);
+			
+		}
+	}
+	// 체크 해제
+	nexa.gds_workOrderableMrp.setColumn(nRow,"CHECKED","0");
+};
+
+this.popupCallBack = function(strPopupID, strReturn)  //팝업콜백(showModal의 리턴값 받음)
+{
+	if(strPopupID=="WISimulation"){
+		if(strReturn!=null){
+			if(strReturn){
+				this.Tab00_Tabpage1_Button00_onclick();
+			}
+		}
+	}
+};
+
+
+///////////////////////////////////////  	작업지시현황 페이지		///////////////////////////////////////
+
+this.Tab00_Tabpage2_Button00_onclick = function() //작업지시 현황조회
+{
+	this.transaction(
+				"searchWorkOrderInfoList",
+				"svcQuality::workorder/list",
+				"",
+				"gds_workOrderInfo=gds_workOrderInfo",
+				"",
+				"callback",
+				false
+				);
+};
+
+this.Tab00_Tabpage2_Grid00_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo) //작업지시 현황 그리드 셀클릭
+{
+	var check = nexa.gds_workOrderInfo.getColumn(e.row,"CHECKED");
+	
+	if(e.col==1){
+		if(check==null || check=='0'){
+			nexa.gds_workOrderInfo.setColumn(e.row,"CHECKED",'1');
+			
+		}else{
+			nexa.gds_workOrderInfo.setColumn(e.row,"CHECKED",'0');
+		}
+		var num = nexa.gds_workOrderInfo.getCaseCount("CHECKED == '1'");
+		if(num==2){
+			nexa.gds_workOrderInfo.setColumn(e.oldrow,"CHECKED",'0');
+		}
+	}
+};
+
+this.Tab00_Tabpage2_Button01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) //작업완료 등록
+{
+	// 그리드 선택행 위치
+	var nRow=nexa.gds_workOrderInfo.rowposition;//workInstruction.tap_workInstruction_presentCondition.grid_workInstruction_presentCondition.currentrow;
+	// 작업지시일련번호
+	var workOrderNo            =nexa.gds_workOrderInfo.getColumn(nRow,"WORK_ORDER_NO");
+	// 작업완료된수량
+	var actualCompletionAmount =nexa.gds_workOrderInfo.getColumn(nRow,"ACTUAL_COMPLETION_AMOUNT");
+	// 완료상태
+	var completionStatus       =nexa.gds_workOrderInfo.getColumn(nRow,"COMPLETION_STATUS");
+		trace("completionStatus:"+completionStatus);
+	// 유효성 검사 isChecked
+	var Checked= nexa.gds_workOrderInfo.getColumn(nRow,"CHECKED");
+	
+	if(Checked == undefined || Checked != 1 ){
+		alert("사용자 에러 \r\n"+"작업완료할 물품을 선택하지 않았습니다");
+		return;
+	} else{
+
+		if(completionStatus == "" || completionStatus == undefined){
+			alert("사용자에러 \r\n"+"작업공정이 다 끝난거같지 않습니다. \n작업장을 방문해 주세요! ");
+			return;
+		} else if(actualCompletionAmount =="" || actualCompletionAmount == undefined){
+			alert("사용자에러\r\n"+"작업완료수량을 적지 않았습니다.");
+			return;
+		}
+	}
+	
+	var confirmMsg = "작업을 완료합니다.\r\n" + 
+	"작업일련번호 : " + workOrderNo  + "\r\n" +
+	"작업완료된수량 : " + actualCompletionAmount  + "\r\n" +
+	"\r\n계속하시겠습니까?";
+	
+	if( confirmMsg ) {
+	
+      this.transaction(
+               "workOrderCompletion",
+               "svcQuality::workorder/completion",
+               "",   
+               "",
+               "workOrderNo='"+workOrderNo+"'"+
+                  " actualCompletionAmount='"+actualCompletionAmount+"'",
+               "callback",
+               false
+               );
+					
+	}
+};
+
+
+///////////////////////////////////////  	생산실적관리 페이지		///////////////////////////////////////
+
+this.Tab00_Tabpage3_Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.transaction(
+					"searchProductionPerformanceInfoList",
+					"svcQuality::workorder/performance-list",
+					"",
+					"gds_productionPerformance=gds_productionPerformance",
+					"",
+					"callback",
+					false
+					);
+};]]></Script>
+  </Form>
+</FDL>

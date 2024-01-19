@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="workorder_simul" width="1280" height="720" titletext="작업지시 모달" onload="workorder_simul_onload">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <GroupBox id="GroupBox00" taborder="0" text="작업지시" left="35" top="30" width="215" height="65" color="black"/>
+        <GroupBox id="GroupBox01" taborder="1" text="사업장 및 생산공정" left="285" top="30" width="295" height="65" color="black"/>
+        <Button id="Button00" taborder="2" text="현재 모의전개된 결과 작업지시" left="53" top="50" width="180" height="35" onclick="Button00_onclick" color="white" background="black"/>
+        <Edit id="Edit00" taborder="3" left="297" top="50" width="126" height="35" displaynulltext="사업장" textAlign="center" oneditclick="Edit00_oneditclick" color="white" background="black"/>
+        <Edit id="Edit01" taborder="4" left="432" top="50" width="130" height="35" displaynulltext="생산공정코드" textAlign="center" oneditclick="Edit01_oneditclick" color="white" background="black"/>
+        <Grid id="Grid00" taborder="5" left="17" top="115" width="1240" height="385" binddataset="gds_workOrderSimulation" color="orangered">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="24"/>
+                <Column size="115"/>
+                <Column size="72"/>
+                <Column size="80"/>
+                <Column size="127"/>
+                <Column size="49"/>
+                <Column size="105"/>
+                <Column size="143"/>
+                <Column size="134"/>
+                <Column size="87"/>
+                <Column size="83"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell/>
+                <Cell col="1" text="소요량취합번호"/>
+                <Cell col="2" text="품목분류"/>
+                <Cell col="3" text="품목코드"/>
+                <Cell col="4" text="품목명"/>
+                <Cell col="5" text="단위"/>
+                <Cell col="6" text="투입예정재고량"/>
+                <Cell col="7" text="재고소요/제품제작수량"/>
+                <Cell col="8" text="재고량(재고소요이후)"/>
+                <Cell col="9" text="작업지시기한"/>
+                <Cell col="10" text="작업완료기한"/>
+              </Band>
+              <Band id="body">
+                <Cell expr="currow+1"/>
+                <Cell col="1" text="bind:MRP_GATHERING_NO"/>
+                <Cell col="2" text="bind:ITEM_CLASSIFICATION"/>
+                <Cell col="3" text="bind:ITEM_CODE"/>
+                <Cell col="4" text="bind:ITEM_NAME"/>
+                <Cell col="5" text="bind:UNIT_OF_MRP"/>
+                <Cell col="6" text="bind:INPUT_AMOUNT"/>
+                <Cell col="7" text="bind:REQUIRED_AMOUNT"/>
+                <Cell col="8" text="bind:STOCK_AFTER_WORK"/>
+                <Cell col="9" text="bind:ORDER_DATE"/>
+                <Cell col="10" text="bind:REQUIRED_DATE"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[///////////////////////////////////////  	전역변수		///////////////////////////////////////
+
+include "Lib::commLib.xjs";
+var nexa = nexacro.getApplication();
+var pCode; //생산공정코드-다이얼로그에서 받아와서 값 넣음
+var workSiteCode;
+
+///////////////////////////////////////  	온로드		///////////////////////////////////////
+
+this.workorder_simul_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	
+	this.transaction(
+				"findCompanyList",
+				"svcCompinfo::company/list",
+				"",
+				"gds_company=gds_company",
+				"",
+				"fn_callback",
+				false
+				);
+	// 사업장코드 transaction
+	this.transaction(
+				"findWorkplaceList", 
+				"svcCompinfo::workplace/list", 
+				"gds_company=gds_company", 
+				"gds_workplace=gds_workplace", 
+				"",
+				"fn_callback"
+				);
+		
+	nexa.gds_workOrderSimulation.clearData();
+	trace("엠알피번호:"+obj.parent.mrpNo)
+	this.transaction(
+				"ShowWorkOrderDialog",
+				"svcQuality::workorder/dialog",
+				"",
+				"gds_workOrderSimulation=gds_workOrderSimulation",
+				"mrpNo='"+obj.parent.mrpNo+"' mrpGatheringNo='"+obj.parent.mrpGatheringNo+"'",
+				"fn_callback",
+				false
+				);
+				
+				var rowNum = nexa.gds_workOrderSimulation.rowcount;
+				
+				trace("rowNum: "+rowNum);
+};
+
+this.Edit00_oneditclick = function(obj:nexacro.Edit,e:nexacro.EditClickEventInfo) //사업장 edit 검색
+{
+	
+	this.gfn_showModal("WorkplaceCode",
+						{pFrame:"wo_simul"},
+						"Base::CommonDialog.xfdl","popupCallBack", 
+						this, 500, 300, true, true, null);
+};
+
+
+this.Edit01_oneditclick = function(obj:nexacro.Edit,e:nexacro.EditClickEventInfo) //생산공정코드 edit 검색
+{
+	this.gfn_showModal("CustomerCode",
+						{pFrame:"wo_simul", divisionCode:"PP"},
+						"Base::CommonDialog.xfdl","popupCallBack", 
+						this, 500, 300, true, true, null);
+};
+
+
+this.popupCallBack = function(strPopupID, strReturn)  //팝업콜백(showModal의 리턴값 받음)
+{
+	if(strPopupID=="searchWP"){
+		if(strReturn!=null){
+			workSiteCode = strReturn;
+		}
+	}else if(strPopupID=="customerCode"){
+		if(strReturn!=null){
+			pCode = strReturn;
+		}
+	}
+};
+
+
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) //현재 모의전개된 결과 작업지시
+{
+	var rValue         = nexa.getToday();
+	// ds_today value: todayAsMrpDate
+	var rChecked       = "todayAsMrpDate";
+	// gds_workplace - WORKPLACE_NAME
+	var workSiteName   = this.Edit00.value;
+	// gds_codeDetail - DETAIL_CODE_NAME
+	var processingName = this.Edit01.value;
+	// test
+	var productionProcessCode = pCode;
+		trace(g_customerCode);
+		trace(nexa.gds_workplace.getColumn(0,"WORKPLACE_CODE"));
+	if(workSiteName == null || workSiteName == undefined){
+	
+		alert("사업장을 선택해주세요");
+		return;
+	} else if(processingName == null || processingName == undefined){
+	
+		alert("생산공정을 선택해주세요");
+		return;
+	} else {
+		var size = nexa.gds_workOrderSimulation.rowcount;
+		for(var i=0; i<size;i++){
+			var saw = nexa.gds_workOrderSimulation.getColumn(i,"STOCK_AFTER_WORK");
+			if(saw=="재고부족"){
+				alert("재고가 부족합니다. \r\n" +
+							"재고가 충분할 때 작업지시 해주세요 ^^");
+				return;
+			}
+		}
+		
+		var mpsNo      = nexa.gds_workOrderSimulation.getColumn(nexa.gds_workOrderSimulation.rowposition, "MPS_NO");
+		
+		var confirmMsg = "주생산계획번호 " + this.parent.mrpGatheringNo  + " 에 대한 작업지시를 진행합니다. \r\n"
+			+ "계속 하시겠습니까?";
+		if(confirm(confirmMsg)){
+			this.transaction(
+						"WorkOrder",
+						"svcQuality::workorder",
+						"gds_workplace=gds_workplace",
+						"",
+						"productionProcessCode='"+g_customerCode+"' workPlaceCode='"+nexa.gds_workplace.getColumn(0,"WORKPLACE_CODE")+"'"+" mrpGatheringNo='"+this.parent.mrpGatheringNo+"'"+" mrpNo='"+this.parent.mrpNo+"'",
+						"fn_callback",
+						false
+						);
+		}
+	}
+};
+
+this.fn_callback = function fn_callback(trId, ErrorCode, ErrorMsg) //콜백
+{
+	trace("simulation_trId: "+trId);
+	trace("simulation_ErrorCode: "+ErrorCode);
+	trace("simulation_ErrorMsg: "+ErrorMsg);
+	
+	if(trId == "ShowWorkOrderDialog" && ErrorCode < 0){
+	
+		alert("모의 작업지시를 조회하실 수 없습니다");
+		return;
+		
+	} else if(trId == "WorkOrder"){
+		if(ErrorCode >= 0){
+			alert("작업지시완료. \r\n"+"작업장에서 검사 및 제작 상황을 볼 수 있습니다");
+			this.close("true");
+		}else if(ErrorCode < 0){
+			alert("작업지시 실패했습니다");
+			return;
+		}
+		this.close();
+	}
+}
+this.Edit00_onchanged = function(obj:nexacro.Edit,e:nexacro.ChangeEventInfo)
+{
+	
+};
+]]></Script>
+  </Form>
+</FDL>

@@ -1,0 +1,545 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script version="1.0" type="xscript5.1"><![CDATA[/***************************************************************************
+ * Program ID    : commForm.xjs
+ * Program Name  : Form 관련함수
+ * Author        : shji
+ * Created Date  : 2019.01.14
+ *
+ * =========================================================================
+ * 수정일자     수정자    내    용
+ * =========================================================================
+ * 2019.01.14   shji      최초작성
+ **************************************************************************/
+
+/***************************************************************************
+ * this.gfn_getFormName          : 현재 화면명 가져오기
+ * this.gfn_comboSetFocus		: Combo에 autoselect 처리
+ * this.gfn_comboEditClick		: Combo에 autoselect 처리.
+ * this.gfn_dialog               : 팝업화면을 호출한다.
+ * this.gfn_addPage              : Work FrameSet 영역에 화면 생성.
+ * this.gfn_getScreenParams      : 화면간의 parameter 들의 전달값 가져옴.
+ * this.gfn_getScreenParamsJson  : 화면간의 JSON parameter 들의 전달값 가져옴.
+ * this.gfn_openMenu             : Work FrameSet 영역에 화면  생성.
+ * this.gfn_openMenuJson         : Work FrameSet 영역에 화면 생성 - JSON 인자
+ * this.gfn_setScreenParams      : 화면간의 parameter 설정이벤트 handler
+ * this.gfn_setScreenParamsJson  : 화면간의 Json parameter 설정
+ * this.gfn_getCellBind          : Grid의 cell에 바인딩된 데이타셋의 컬럼ID를 구함
+ **************************************************************************/
+ 
+/**
+ * @class 현재 화면명 가져오기
+ * @return String - 화면명
+ */
+this.gfn_getFormName = function()
+{
+    var sMenuName;
+    // MDI창으로 호출시
+    if ( gv_mdi == "Y" )
+    {
+        var row = gds_menu.findRow(gv_menuIdCol, gv_menuId);
+        sMenuName = gds_menu.getColumn(row, gv_menuNameCol);
+    }
+    else
+    {
+        sMenuName = this.titletext;
+    }
+    return sMenuName;
+}
+
+
+/**
+ * @class Combo에 autoselect 처리
+ * @param obj - obj
+ * @param e - event 객체
+ * @return 없음
+ */
+this.gfn_comboSetFocus = function(obj, e)
+{
+    obj.userCheck = "1";
+    obj.setSelect();
+}
+
+
+/**
+ * @class Combo에 autoselect 처리
+ * @param obj - obj
+ * @param e - event 객체
+ * @return 없음
+ */
+this.gfn_comboEditClick = function(obj, e)
+{
+    if (obj.userCheck == "1")
+    {
+        obj.userCheck = "0";
+        obj.setSelect();
+    }
+}
+
+
+/**
+ * @class 팝업화면을 호출한다.
+ * @param strId      - Dialog ID
+ * @param strURL     - Form URL
+ * @param objArgument- Dialog 로 전달될 Argument - {strMessage1:'E'}
+ * @param nWidth     - Form Width
+ * @param nHeight    - Form Height
+ * @param strStyle   - 임시변수(미사용)
+ * @param nLeft      - Form Left Position
+ * @param nTop       - Form TOP Position
+ * @param isModeless - 9번째 true 면 Dialog 를 Modeless로 띄운다.
+ * @param bShowTitle - Form Title 을 표시 할지 여부
+ * @param strAlign   - Dialog 의 위치 - '-1' : 모니터의 중앙
+ *                   - 'Bottom Left' : Click 된 마우스 위치의 좌측 하단 정렬
+ *                   - 'Top Left' : Click 된 마우스 위치의 좌측 상단 정렬
+ *                   - 'Bottom Right' : Click 된 마우스 위치의 우측 하단 정렬
+ *                   - 'Top Right' : Click 된 마우스 위치의 우측 상단 정렬
+ *                   - 'offset' : Click 된 마우스 위치에서 nTop,nLeft만큼 들여쓰기
+ *                   - 'absolute' : 입력된 좌표를 Screen 좌표로 인식
+ *                   - '0' : 사용자 임의 정렬
+ * @param bResizable - 팝업 리사이즈 여부
+ * @return Variant
+ */
+this.gfn_dialog = function(strId, strURL, objArgument, nWidth, nHeight, strStyle, nLeft, nTop, isModeless, bShowTitle, strAlign, bResizable)
+{
+    if (this.gfn_isNull(strId))    strId    = strURL;
+    if (this.gfn_isNull(nWidth))   nWidth   = -1;
+    if (this.gfn_isNull(nHeight))  nHeight  = -1;
+    if (this.gfn_isNull(strStyle)) strStyle = "";
+    if (this.gfn_isNull(nLeft))    nLeft    = -1;
+    if (this.gfn_isNull(nTop))     nTop     = -1;
+
+    if (this.gfn_isNull(isModeless)) isModeless = false;
+    if (this.gfn_isNull(bShowTitle)) bShowTitle = true;
+    if (this.gfn_isNull(strAlign))   strAlign   = "-1";
+    if (this.gfn_isNull(bResizable)) bResizable = false;
+
+
+    // Modeless의 경우 창이 이미 떠있으면 포커스만 이동
+    if ( isModeless )
+    {
+        var objPopup = application.popupframes[strId];
+        if ( !this.gfn_isNull(objPopup) ) {
+            if ( objPopup.openstatus == "minimize" ) {
+                objPopup.openstatus = "normal";
+            }
+
+            objPopup.form.setFocus();
+            return;
+        }
+    }
+
+    var sFrameName = getOwnerFrame().name;
+    //trace("sFrameName >>> " + sFrameName);
+
+    if (sFrameName == "Frame_Top" || sFrameName == "Frame_Stat" || sFrameName == "Frame_Left")
+    {
+        var objParentFrame = application.mainframe;
+    }
+    else
+    {
+        var objParentFrame = getOwnerFrame();
+    }
+
+    var newChild = null;
+    var nRight  = 0;
+    var nBottom = 0;
+    var bAutoSize = false;
+    if ( nLeft < 0 )    nLeft = system.cursorx;
+    if ( nTop < 0 )     nTop  = system.cursory;
+    if ( nWidth < 0 && nHeight < 0)
+    {
+        bAutoSize = true;
+    }
+
+    newChild = new ChildFrame();
+
+    //trace(strAlign);
+
+    if (strAlign == "Bottom Left") {
+        nLeft   = system.cursorx - nWidth;
+        nTop    = system.cursory - 5;
+        nRight  = system.cursorx;
+        nBottom = nTop + nHeight;
+    } else if (strAlign == "Top Left") {
+        nLeft   = system.cursorx - nWidth;
+        nTop    = system.cursory - nHeight;
+        nRight  = system.cursorx;
+        nBottom = system.cursory - 5;
+    } else if (strAlign == "Bottom Right") {
+        nLeft   = system.cursorx;
+        nTop    = system.cursory - 5;
+        nRight  = nLeft + nWidth;
+        nBottom = nTop + nHeight;
+    } else if (strAlign == "Top Right") {
+        nLeft   = system.cursorx;
+        nTop    = system.cursory - nHeight;
+        nRight  = nLeft + nWidth;
+        nBottom = system.cursory - 5;
+    } else if (strAlign == "-1") {
+		newChild.openalign.halign = "center";
+        newChild.openalign.valign = "center";
+        nRight  = nLeft + nWidth;
+        nBottom = nTop + nHeight;
+    } else if (strAlign == "offset") {
+        nLeft  += system.cursorx;
+        nTop   += system.cursory;
+        nRight  = nLeft + nWidth;
+        nBottom = nTop + nHeight;
+    } else if (strAlign == "absolute") {
+        nRight  = nLeft + nWidth;
+        nBottom = nTop + nHeight;
+    } else {
+        nLeft  += mainframe.position.left;
+        nTop   += mainframe.position.top;
+        nRight  = nLeft + nWidth;
+        nBottom = nTop + nHeight;
+    }
+
+    // 화면 밖으로 벗어나는 Dialog 방지
+    var nMonitor = system.getMonitorIndex((nLeft+nRight)/2,(nTop+nBottom)/2);
+    var rectScreen = system.getScreenRect(nMonitor);
+
+    if (nBottom > rectScreen.bottom) {
+        nTop = rectScreen.bottom - (nBottom - nTop);
+        nBottom = rectScreen.bottom;
+    }
+
+    if (nTop < rectScreen.top) {
+        nBottom = rectScreen.top + (nBottom - nTop);
+        nTop = rectScreen.top;
+    }
+
+    if (nRight > rectScreen.right) {
+        nLeft = rectScreen.right - (nRight - nLeft);
+        nRight = rectScreen.right;
+    }
+
+    if (nLeft < rectScreen.left) {
+        nRight = rectScreen.left + (nRight - nLeft);
+        nLeft = rectScreen.left;
+    }
+
+    newChild.init(strId, nLeft, nTop, nRight, nBottom, strURL);
+
+    if (!bShowTitle) newChild.showtitlebar = false;
+
+    newChild.bordertype = "normal";
+    newChild.style.border = "1 solid #456fbc"; 	// "1 solid #456fbc"; 0 none ;  #5795E9
+    newChild.titlebar.style.background = "#456fbc"; //"#005AB5";
+    newChild.titlebar.style.border = "0 none, 0 none, 1 solid #48888b, 0 none";
+    newChild.style.titlebarheight = "30";
+
+    newChild.autosize  = bAutoSize;
+    newChild.resizable = bResizable;
+
+    // Modaless
+    if (isModeless == true)
+    {
+        newChild.style.border = "1 solid #456fbc";	// "2 solid #515d6f";
+        newChild.titlebar.style.background = "#456fbc"; //"#6f7a8c";
+        newChild.titlebar.style.border = "0 none, 0 none, 1 solid #697588, 0 none";
+
+        return newChild.showModeless(null, objArgument);
+    }
+    // Modal
+    else
+    {
+         try
+         {
+            if (typeof(objArgument) == "string")
+            {
+                objArgument = {IS_SHOW_MODAL:"TRUE"};
+            }
+            else
+            {
+                objArgument.IS_SHOW_MODAL = "TRUE";
+            }
+         }
+         catch (e)
+         {
+             objArgument = {IS_SHOW_MODAL:"TRUE"};
+         }
+
+        var rtn = newChild.showModal(objParentFrame, objArgument);
+        return rtn;
+    }
+}
+
+
+/**
+ * @class Work FrameSet 영역에 화면 생성.
+ * @param strMenuId - Menu Id
+ * @return 없음
+ */
+this.gfn_addPage = function(strMenuId, sCallFunc)
+{
+    //trace("gfn_addPage >>> strMenuId : " + strMenuId);
+    if (this.gfn_isNull(strMenuId)) return;
+
+    var fRow = -1;
+    // menuId로 들어왔으면 menuId로 찾고 formId로 넘어왔으면
+    // formId로 찾는다.
+    if (this.gfn_isNum(strMenuId))
+    {
+		fRow = gds_menu.findRow("menuId", strMenuId);
+	}
+	else
+	{
+		fRow = gds_menu.findRow("formId", strMenuId);
+		strMenuId = gds_menu.getColumn(fRow, "menuId");
+	}
+    if (fRow < 0) return;
+
+    var strUrl = "";
+    var strForm_Path = gds_menu.getColumn(fRow, "formPath");
+    var strFormId    = gds_menu.getColumn(fRow, "formId");
+    var strCaption   = gds_menu.getColumn(fRow, "menuNm");
+
+    strUrl = strForm_Path + "::" + strFormId + ".xfdl";
+
+    if (this.gfn_isNull(strForm_Path) || this.gfn_isNull(strFormId)) return;
+
+    var strPageId = "WORKFORM_" + strMenuId;
+
+    // 기 Open Window Focus 처리
+    var objPage	= afrm_WorkSet.all[strPageId];
+
+    afrm_WorkSet.reqMenuId = strMenuId;
+    // trace("gfn_addPage >>> afrm_WorkSet.reqMenuId : " + afrm_WorkSet.reqMenuId);
+
+    var openRow = gds_openPage.findRow("formId", strPageId);
+
+    if (!this.gfn_isNull(objPage) || openRow > -1)
+    {
+        // Intro 활성화 여부 체크
+        if (!afrm_WorkSet.visible)
+        {
+            afrm_WorkSet.visible = true;
+            afrm_Intro.visible  = false;
+        }
+        // ----------------------------------------
+        //objPage.form.setFocus();
+        //afrm_Tab.form.fn_ActiveTitle(gds_openPage.getColumn(openRow, "formId"));
+        afrm_Tab.form.fn_tab_WorkTitle_Change(openRow);
+
+        // LeftMenu Group Filter ------------------------------- Start
+        var v_TopMenuId  = gds_menu.getColumn(fRow, "menuId1Level");
+        var v_GrpMenuId  = gds_menu.getColumn(fRow, "menuId2Level");
+        
+        // 2019.01.25 shji 주석처리 - because... left menu collapse
+        //afrm_Top.form.fn_setSubMenu(v_TopMenuId, v_GrpMenuId);
+        
+        gds_menu_left.rowposition = gds_menu_left.findRow("menuId" ,strMenuId);
+
+        // 그리드 스크롤 포지션 조정
+        if (afrm_Left.form.grd_LF_SubMenu.vscrollbar.max > afrm_Left.form.fv_nMenuGrdPos)
+        {
+            afrm_Left.form.grd_LF_SubMenu.vscrollbar.pos = afrm_Left.form.fv_nMenuGrdPos;
+        }
+        // LeftMenu Group Filter ------------------------------- End
+
+        // 이미열려있는 화면일 경우 화면간 interface Arg 존재시 호출
+        var arrArg = this.gfn_getScreenParams();
+        //trace("gfn_addPage >>> arrArg :" + arrArg);
+        if (!this.gfn_isNull(arrArg))
+        {
+            objPage.form.div_Work.this.gfn_getScreenParams(arrArg);
+        }
+        else
+        {
+			// 이미열려있는 화면일 경우 화면간 interface Arg 존재시 호출
+			var jsonArg = this.gfn_getScreenParamsJson();
+			//trace("gfn_addPage >>> jsonArg :" + jsonArg);
+			if (!this.gfn_isNull(jsonArg) && this.gfn_getObjkeyLength(jsonArg) > 0)
+			{
+				objPage.form.div_Work.this.gfn_getScreenParamsJson(jsonArg);
+			}
+		}
+		
+		// 이미열려있는 화면일 경우 화면호출시 Function호출
+		if (!this.gfn_isNull(sCallFunc))
+		{
+			if (eval("objPage.form.div_Work."+sCallFunc))
+			{
+				var triggerEvent = eval("objPage.form.div_Work."+sCallFunc);
+				if (!this.gfn_isNull(arrArg))
+				{
+					triggerEvent(arrArg);
+				}
+				else
+				{
+					triggerEvent(jsonArg);
+				}
+			}
+		}
+
+        return;
+    }
+
+    // Max Window Count 체크
+    if (gds_openPage.getRowCount() > av_OpenWindowCnt - 1)
+    {
+        this.gfn_alert("msg.fail.maxmenu", gv_openCnt);	// 메뉴는 10개이상 오픈할 수 없습니다.
+        return;
+    }
+
+    // Intro 활성화 여부 체크
+    if (!afrm_WorkSet.visible)
+    {
+        afrm_WorkSet.visible = true;
+        afrm_Intro.visible  = false;
+    }
+    // ---------------------------------------
+    // 타이틀
+    var strTitletext = gds_menu.getColumn(fRow, "menuPath") ;
+    // gds_menu.lookup("menuId", gds_menu.getColumn(fRow, "menuId1Level"), "menuNm");
+    if (!this.gfn_isNull(strCaption))
+    {
+        //strTitletext += strCaption;
+        strTitletext += " > " + "<b v='true'>"  + strCaption + "</b>";
+    }
+
+    // ChildFrame 생성
+    var objNewPage = new ChildFrame();
+
+    objNewPage.init(strPageId, 0, 0, av_divWidth, av_divHeight, "frm::frmWork.xfdl");
+
+    afrm_WorkSet.addChild(strPageId, objNewPage);
+    objNewPage.ARG_FORM_URL = strUrl;
+    objNewPage.ARG_MENU_ID 	= strMenuId;
+    objNewPage.ARG_TITLE 	= strTitletext;					// Navigation
+    objNewPage.showtitlebar = false;
+    objNewPage.resizable 	= true;
+    objNewPage.show();
+    objNewPage.openstatus 	= "maximize";
+    objNewPage.style.border		= "0 none transparent";
+    objNewPage.style.bordertype	= "normal 0 0";
+    objNewPage.titletext = strCaption;						// 화면 Title
+
+    // Open 정보 추가
+    var nRow = gds_openPage.addRow();
+    gds_openPage.setColumn(nRow, "menuNm", strCaption);
+    gds_openPage.setColumn(nRow, "menuId", strMenuId);
+    gds_openPage.setColumn(nRow, "formId", strPageId);
+    gds_openPage.setColumn(nRow, "level" , "0");
+
+    // Title Tab 추가
+    afrm_Tab.form.fn_AddTitle(strPageId, strCaption);
+
+    // 화면 최대화
+    av_OpenStatus = "maximize";
+    av_arrange = "m";
+
+    return objNewPage;
+}
+
+
+/**
+ * @class 화면간의 parameter 들의 전달값 가져옴.
+ * @param 
+ * @return returnArray - 인자 array
+ */
+this.gfn_getScreenParams = function()
+{
+    var returnArray = av_ArrParam;
+
+    // 초기화
+    av_ArrParam = new Array();
+
+    //trace("gfn_getScreenParams - 화면간의 parameter 들의 전달값 가져옴 >>> returnArray : " + returnArray );
+
+    return returnArray;
+}
+
+
+/**
+ * @class 화면간의 JSON parameter 들의 전달값 가져옴.
+ * @param 
+ * @return returnJson - 인자 JSON Object
+ */
+this.gfn_getScreenParamsJson = function()
+{
+    var returnJson = av_JsonParam;
+
+    // 초기화
+    av_JsonParam = {};
+
+    //trace("gfn_getScreenParamsJson - 화면간의 parameter 들의 전달값 가져옴 >>> returnJson : " + returnJson );
+
+    return returnJson;
+}
+
+
+/**
+ * @class Work FrameSet 영역에 화면  생성.
+ * @param strMenuId - Menu Id
+ * @param arrParam - 인자 array
+ * @return
+ */
+this.gfn_openMenu = function(strMenuId, arrParam)
+{
+    this.gfn_setScreenParams(arrParam);  	// 화면간의 parameter 설정.
+
+    this.gfn_addPage(strMenuId);			// mdi 화면 생성
+}
+
+
+/**
+ * @class Work FrameSet 영역에 화면 생성 - JSON 인자
+ * @param strMenuId - Menu Id
+ * @param arrParam - 인자 Json
+ * @return
+ */
+this.gfn_openMenuJson = function(strMenuId, jsonParam, sCallFunc)
+{
+    this.gfn_setScreenParamsJson(jsonParam);  	// 화면간의 parameter 설정.
+
+    this.gfn_addPage(strMenuId, sCallFunc);			// mdi 화면 생성
+}
+
+
+/**
+ * @class 화면간의 parameter 설정
+ * @param arrParam - 인자 array
+ * @return
+ */
+this.gfn_setScreenParams = function(arrParam)
+{
+    av_ArrParam = arrParam;
+}
+
+
+/**
+ * @class 화면간의 Json parameter 설정
+ * @param jsonParam - 인자 Json
+ * @return
+ */
+this.gfn_setScreenParamsJson = function(jsonParam)
+{
+    av_JsonParam = jsonParam;
+}
+
+
+/**
+ * @class Grid의 cell에 바인딩된 데이타셋의 컬럼ID를 구함
+ * @param objGrid - {object} Grid
+ * @param cellIdx - cell index
+ * @param band - Grid band
+ * @return
+ */
+this.gfn_getCellBind = function(obj, cellIdx, band)
+{
+	if (gfn_isNull(band))
+		band = "body";
+
+	var cellText = obj.getCellProperty(band, cellIdx, "text");
+
+	if (this.gfn_isNull(cellText))
+		return "";
+
+	var arrText = cellText.split(":");
+	if (arrText[0].toLowerCase() != "bind")
+		return "";
+		
+	return arrText[1];
+}]]></Script>

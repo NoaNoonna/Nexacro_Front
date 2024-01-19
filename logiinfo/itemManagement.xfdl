@@ -30,7 +30,7 @@
                             <Cell col="2" text="품목그룹명"/>
                           </Band>
                           <Band id="body">
-                            <Cell text="bind:CHECKED" displaytype="checkboxcontrol" edittype="checkbox"/>
+                            <Cell displaytype="checkboxcontrol" edittype="checkbox" text="bind:CHECKED"/>
                             <Cell col="1" text="bind:ITEM_GROUP_CODE" textAlign="center"/>
                             <Cell col="2" text="bind:ITEM_GROUP_NAME" textAlign="center"/>
                           </Band>
@@ -130,6 +130,7 @@
           <Column id="DESCRIPTION" type="STRING" size="256"/>
         </ColumnInfo>
       </Dataset>
+      <Dataset id="Dataset00"/>
     </Objects>
     <Script type="xscript5.1"><![CDATA[include "Lib::commLib.xjs";
 /*********************
@@ -172,29 +173,35 @@ this.Div00_searchItem_Button00_onclick = function(obj:nexacro.Button,e:nexacro.C
 
 this.Div00_searchItemDetail_Button_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {
-	trace("품목상세조회 실행"); 
-	
-	
-	
-	// 필터로 체크한 값만 가져오기
-	 var row = this.ds_itemGroup.findRow("CHECKED","1");
-	 var eNumber = this.ds_itemGroup.getColumn(row,"ITEM_GROUP_CODE");
-	 trace("품목코드는? : "+eNumber);
-	 this.ds_item.filter("ITEM_GROUP_CODE =='"+eNumber+"'");
-	
-	this.transaction(
-				"searchItemDetailList",
-				"svcLogiinfo::searchItemDetailList",
-				"",
-				"ds_item=ds_item",
-				"eNumber='"+eNumber+"'",
-				"fn_callback",
-				false
-				);
-				
-	
-	trace("품목상세조회 종료");
-	
+   trace("품목상세조회 실행"); 
+      trace(itemGroupCode);
+      if(itemGroupCode== null){
+        alert("코드를 선택해주세요");
+        return;
+      }
+   
+   
+   // 필터로 체크한 값만 가져오기
+//     var row = this.ds_itemGroup.findRow("CHECKED","1");
+//     trace("CHECKED는? : " +row); //-1
+//     var eNumber = this.ds_itemGroup.getColumn(row,"ITEM_GROUP_CODE"); 
+//     trace("품목코드는? : "+eNumber); //undefined 
+//     this.ds_item.filter("ITEM_GROUP_CODE =='"+eNumber+"'");
+            /*"eNumber='"+eNumber+"'",*/
+   
+   this.transaction(
+            "searchItemDetailList",
+            "svcLogiinfo::searchItemDetailList",
+            "",
+            "ds_item=ds_item",
+            "itemGroupCode='"+itemGroupCode+"'",
+            "fn_callback",
+            false
+            );
+            
+   
+   trace("품목상세조회 종료");
+   
 };
 
 	

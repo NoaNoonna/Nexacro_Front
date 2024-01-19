@@ -57,7 +57,7 @@
         <Column id="ESTIMATE_NO" type="STRING" size="256"/>
         <Column id="CONTRACT_TYPE" type="STRING" size="256"/>
         <Column id="CUSTOMER_CODE" type="STRING" size="256"/>
-        <Column id="CONTRACT_DATE" type="STRING" size="256"/>
+        <Column id="CONTRACT_DATE" type="DATE" size="256"/>
         <Column id="CONTRACT_REQUESTER" type="STRING" size="256"/>
         <Column id="PERSON_CODE_IN_CHARGE" type="STRING" size="256"/>
         <Column id="DESCRIPTION" type="STRING" size="256"/>
@@ -243,8 +243,9 @@
         <Column id="UNIT_OF_STOCK" type="STRING" size="256"/>
         <Column id="LOSS_RATE" type="STRING" size="256"/>
         <Column id="LEAD_TIME" type="STRING" size="256"/>
-        <Column id="STANDARD_UNIT_PRICE" type="STRING" size="256"/>
+        <Column id="STANDARD_UNIT_PRICE" type="INT" size="256"/>
         <Column id="DESCRIPTION" type="STRING" size="256"/>
+        <Column id="CHECKED" type="STRING" size="256"/>
       </ColumnInfo>
     </Dataset>
     <Dataset id="gds_itemGroup">
@@ -613,6 +614,7 @@
         <Column id="INPUT_AMOUNT" type="STRING" size="256"/>
         <Column id="DELIVERY_AMOUNT" type="STRING" size="256"/>
         <Column id="TOTAL_STOCK_AMOUNT" type="STRING" size="256"/>
+        <Column id="CHECKED" type="STRING" size="256"/>
       </ColumnInfo>
     </Dataset>
     <Dataset id="gds_wareHouse">

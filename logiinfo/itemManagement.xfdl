@@ -126,7 +126,7 @@
           <Column id="UNIT_OF_STOCK" type="STRING" size="256"/>
           <Column id="LOSS_RATE" type="STRING" size="256"/>
           <Column id="LEAD_TIME" type="STRING" size="256"/>
-          <Column id="STANDARD_UNIT_PRICE" type="STRING" size="256"/>
+          <Column id="STANDARD_UNIT_PRICE" type="INT" size="256"/>
           <Column id="DESCRIPTION" type="STRING" size="256"/>
         </ColumnInfo>
       </Dataset>
@@ -137,6 +137,7 @@
 * 전역변수 선언
 *********************/
 var nexa = nexacro.getApplication();
+var itemGroupCode;
 
 
 /***********************
@@ -144,29 +145,29 @@ var nexa = nexacro.getApplication();
 ************************/
 this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
 {
-	obj.set_titletext("품목");
-//	nexa.gds_itemGroup.clearData();
-//	nexa.gds_item.clearData();
-	this.ds_item.clearData();
-	this.ds_itemGroup.clearData();
-	trace('RowCount값 : '+this.ds_itemGroup.rowcount);
+   obj.set_titletext("품목");
+//   nexa.gds_itemGroup.clearData();
+//   nexa.gds_item.clearData();
+   this.ds_item.clearData();
+   this.ds_itemGroup.clearData();
+   trace('RowCount값 : '+this.ds_itemGroup.rowcount);
 };
 
 
 this.Div00_searchItem_Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {
-	trace("품목조회 실행");
-			
-	this.transaction(
-				"searchItemList",
-				"svcLogiinfo::searchItemList",
-				"",
-				"ds_itemGroup=ds_itemGroup",
-				"",
-				"fn_callback",
-				false
-				);
-	trace("품목조회 종료");
+   trace("품목조회 실행");
+         
+   this.transaction(
+            "searchItemList",
+            "svcLogiinfo::searchItemList",
+            "",
+            "ds_itemGroup=ds_itemGroup",
+            "",
+            "fn_callback",
+            false
+            );
+   trace("품목조회 종료");
 };
 
 
@@ -204,7 +205,7 @@ this.Div00_searchItemDetail_Button_onclick = function(obj:nexacro.Button,e:nexac
    
 };
 
-	
+   
 
 /** 품목상세추가 **/
 
@@ -218,7 +219,7 @@ this.addDetailItemButton_onclick = function(obj:nexacro.Button,e:nexacro.ClickEv
 
 this.deleteButton_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {
-	var size = this.ds_item.getRowCount();
+   var size = this.ds_item.getRowCount();
    var row = null;
    for(var i=0; i<size; i++){
       row = this.ds_item.findRow("CHECKED","1");
@@ -233,7 +234,7 @@ this.deleteButton_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo
 
 this.saveButton_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {
-	 
+    
    this.transaction(
       "batchItemDetail", 
        "svcLogiinfo::item/batchsave", 
@@ -252,27 +253,30 @@ this.saveButton_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 
 this.fn_callback = function (trid , ErrorCode, ErrorMsg){
 
+   //품목 목록 조회
    if(trid == "searchItemList"){
-	trace("데이터로우카운트 조사 : "+this.ds_itemGroup.rowcount);
-	trace("데이터로우카운트 조사2 : "+this.ds_itemGroup.getColumn(0,'ITEM_GROUP_CODE'));
+   trace("데이터로우카운트 조사 : "+this.ds_itemGroup.rowcount);
+   trace("데이터로우카운트 조사2 : "+this.ds_itemGroup.getColumn(0,'ITEM_GROUP_CODE'));
       if(ErrorCode <0){
          alert("조회 실패 : " + ErrorMsg);
       }
-	 }
-	 
-	 if(trid == "searchItemDetailList"){
+    }
+    
+    //품목 상세 목록 조회
+    if(trid == "searchItemDetailList"){
       if(ErrorCode <0){
          alert("조회 실패 : " + ErrorMsg);
       }
-	 }
-	 
-	  if(trid == "batchItemDetail"){
+    }
+    
+    //일괄저장 
+     if(trid == "batchItemDetail"){
       if(ErrorCode <0){
          alert("저장 실패 : " + ErrorMsg);
       } else{
-	  alert("저장 되었습니다. : " + ErrorMsg);
-	}
-	 }
+     alert("저장 되었습니다. : " + ErrorMsg);
+   }
+    }
 };
 
 
@@ -287,92 +291,103 @@ this.fn_callback = function (trid , ErrorCode, ErrorMsg){
 this.ItemGrid00_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
 {
 
-	/*기존 체크박스 로직*/
+   itemGroupCode = this.ds_itemGroup.getColumn(e.row,'ITEM_GROUP_CODE')
+   trace(itemGroupCode);
+   trace('클릭값체크'+this.ds_itemGroup.getColumn(e.row,'CHECKED'));
+   
+   var check = this.ds_itemGroup.getColumn(e.row, 'CHECKED');
+   trace('check는? : '+check);
+   
+       if(e.col==1){
+      if(check==null || check=='0'){
+          this.ds_itemGroup.setColumn(e.row,"CHECKED",'1');
+       }else{
+          this.ds_itemGroup.setColumn(e.row,"CHECKED",'1 ');
+       }
+    }
+};
+   /*기존 체크박스 로직*/
 
-//  	trace('클릭값체크'+this.ds_itemGroup.getColumn(e.row,"CHECKED"));
-//  	var check = this.ds_itemGroup.getColumn(e.row,"CHECKED");
-//  	
-//  	if(e.col==1){
-// 		if(check==null || check=='0'){
-//  			this.ds_itemGroup.setColumn(e.row,"CHECKED",'1');
-//  		}else{
-//  			this.ds_itemGroup.setColumn(e.row,"CHECKED",'1 ');
-//  		}
-//  	}
+//     trace('클릭값체크'+this.ds_itemGroup.getColumn(e.row,"CHECKED"));
+//     var check = this.ds_itemGroup.getColumn(e.row,"CHECKED");
+//     
+//     if(e.col==1){
+//       if(check==null || check=='0'){
+//           this.ds_itemGroup.setColumn(e.row,"CHECKED",'1');
+//        }else{
+//           this.ds_itemGroup.setColumn(e.row,"CHECKED",'1 ');
+//        }
+//     }
 
-	
-	
-		
-	  if(e.col == this.ItemGrid00.getBindCellIndex("body", "CHECKED")) { // 체크박스 선택했을 경우
-      for(var i = 0; i<this.ds_itemGroup.rowcount; i++) { // 데이터셋 전체 확인
-         if(e.row == i) {// 현재 행의 체크박스를 눌렀을 경우
-            // 무반응 (체크 해제 안함)
-         } else {
-            this.ds_itemGroup.setColumn(i,"CHECKED","0"); 
-                      // 클릭한 행의 체크박스를 제외한 나머지 체크박스는 체크 해제
-			}
-		}
-	}
-	
- };
+//      if(e.col == this.ItemGrid00.getBindCellIndex("body", "CHECKED")) { // 체크박스 선택했을 경우
+//       for(var i = 0; i<this.ds_itemGroup.rowcount; i++) { // 데이터셋 전체 확인
+//          if(e.row == i) {// 현재 행의 체크박스를 눌렀을 경우
+//             // 무반응 (체크 해제 안함)
+//          } else {
+//             this.ds_itemGroup.setColumn(i,"CHECKED","0"); 
+//                       // 클릭한 행의 체크박스를 제외한 나머지 체크박스는 체크 해제
+//          }
+//       }
+//    }
+//    
+//  };
  
  
 /** 2. 품목상세조회 체크박스 **/
 
 this.grd_DetailItem_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
 {
-	trace('클릭값체크'+this.ds_item.getColumn(e.row,"CHECKED"));
-	var check = this.ds_item.getColumn(e.row,"CHECKED");
-	
-	if(e.col==1){
-		if(check==null || check=='0'){
-			this.ds_item.setColumn(e.row,"CHECKED",'1');
-		}else{
-			this.ds_item.setColumn(e.row,"CHECKED",'1 ');
-		}
-	}
+   trace('클릭값체크'+this.ds_item.getColumn(e.row,"CHECKED"));
+   var check = this.ds_item.getColumn(e.row,"CHECKED");
+   
+   if(e.col==1){
+      if(check==null || check=='0'){
+         this.ds_item.setColumn(e.row,"CHECKED",'1');
+      }else{
+         this.ds_item.setColumn(e.row,"CHECKED",'1 ');
+      }
+   }
 };
 
 /** 공통  
-	그리드 헤드체크박스 전체적용 및 해제 (헤드클릭 이벤트명을 동일하게 해주면 잘된다.)  **/
-
+   그리드 헤드체크박스 전체적용 및 해제 (헤드클릭 이벤트명을 동일하게 해주면 잘된다.)  **/
 this.grd_headCheck_onheadclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
 {
-	trace("obj이름은? : "+obj.name);
-	if(e.col == 0){
-		this.clickHeadCheckBox(obj, "CHECKED");
-	}
+   trace("obj이름은? : "+obj.name);
+   if(e.col == 0){
+      nexa.clickHeadCheckBox(obj, "CHECKED");
+   }
 };
 
 
 this.clickHeadCheckBox = function (obj, strColName)
-{		
-	var headerCell = obj.getBindCellIndex("body", strColName);
-	trace('이거 헤더셀 작동함? : '+headerCell);
+{      
+   var headerCell = obj.getBindCellIndex("body", strColName);
+   trace('이거 헤더셀 작동함? : '+headerCell);
 
-	var checkValue = "1";
-	if(obj.getCellProperty("Head", 0, "displaytype") == "checkboxcontrol") {
-		trace('첫이프문통과');
-		if (obj.getCellProperty("Head", 0, "text") == "0") { //현재 체크박스 값과 반대되게
-		    obj.setCellProperty("Head", 0, "text", checkValue);
-		} else {
-			checkValue=0;
-			obj.setCellProperty("Head", 0, "text", checkValue);
-		}
-	}
-	
-	obj.setCellProperty("Head", 0, "text", checkValue); //헤더 체크박스 값 변경
-	
-	var objDataset = obj.getBindDataset(); //그리드에 바인드되어있는 dataset 가져옴
-	trace("objDataset : " + objDataset.name);
-	if(objDataset.getRowCount() > 0) {
-		trace('지금이거됨? : '+objDataset.getRowCount());
-		//objDataset.set_enableevent(false); //이벤트 비활성화
-		for (var i=0; i<objDataset.getRowCount(); i++) {			
-		    objDataset.setColumn(i, "CHECKED", checkValue); //체크박스를 checkValue로 설정
-		}
-		objDataset.set_enableevent(true); //이벤트 활성화
-	}
+   var checkValue = "1";
+   if(obj.getCellProperty("Head", 0, "displaytype") == "checkboxcontrol") {
+      trace('첫이프문통과');
+      if (obj.getCellProperty("Head", 0, "text") == "0") { //현재 체크박스 값과 반대되게
+          obj.setCellProperty("Head", 0, "text", checkValue);
+      } else {
+         checkValue=0;
+         obj.setCellProperty("Head", 0, "text", checkValue);
+      }
+   }
+   
+   obj.setCellProperty("Head", 0, "text", checkValue); //헤더 체크박스 값 변경
+   
+   var objDataset = obj.getBindDataset(); //그리드에 바인드되어있는 dataset 가져옴
+   trace("objDataset : " + objDataset.name);
+   if(objDataset.getRowCount() > 0) {
+      trace('지금이거됨? : '+objDataset.getRowCount());
+      //objDataset.set_enableevent(false); //이벤트 비활성화
+      for (var i=0; i<objDataset.getRowCount(); i++) {         
+          objDataset.setColumn(i, "CHECKED", checkValue); //체크박스를 checkValue로 설정
+      }
+      objDataset.set_enableevent(true); //이벤트 활성화
+   }
 };]]></Script>
   </Form>
 </FDL>

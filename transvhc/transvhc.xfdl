@@ -1,0 +1,297 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="transvhc" width="1280" height="720" titletext="New Form">
+    <Layouts>
+      <Layout height="720" horizontalgap="0" mobileorientation="landscape" spacing="0px" tabletemplate="1* / 1*" verticalgap="0" width="1280">
+        <GroupBox id="estimateManage" taborder="0" text="운송수단관리" left="20.00" top="15" width="1200" height="650" titlealign="topcenter" font="normal bold 25pt/normal &quot;Arial&quot;" cssclass="grpBox_normal"/>
+        <Button id="Button00" taborder="1" text="운송수단 전체조회" left="250.00" top="87" width="160" height="34" font="normal 12pt/normal &quot;Arial&quot;" onclick="estimateForm_searchEstimate_Button00_onclick" cssclass="btn_normal"/>
+        <Button id="Button00_00_00" taborder="2" text="삭제" left="1030" top="87" height="34" font="normal 12pt/normal &quot;Arial&quot;" cssclass="btn_normal" width="100" onclick="Button00_00_00_onclick"/>
+        <Grid id="Grid00" taborder="3" left="70.00" top="140" width="1101" height="480" binddataset="gds_transvhc" color="orangered" onheadclick="Grid00_onheadclick" oncelldblclick="Grid00_oncelldblclick" oncellclick="Grid00_oncellclick">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="13" band="left"/>
+                <Column size="36" band="left"/>
+                <Column size="135"/>
+                <Column size="89"/>
+                <Column size="104"/>
+                <Column size="137"/>
+                <Column size="108"/>
+                <Column size="129"/>
+                <Column size="106"/>
+                <Column size="92"/>
+                <Column size="149"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell/>
+                <Cell col="1" displaytype="checkboxcontrol" edittype="checkbox" text="expr:0"/>
+                <Cell col="2" text="차량번호"/>
+                <Cell col="3" text="종류"/>
+                <Cell col="4" text="제조사"/>
+                <Cell col="5" text="제조년도"/>
+                <Cell col="6" text="적재용량"/>
+                <Cell col="7" text="유지보수날짜"/>
+                <Cell col="8" text="현재운전자"/>
+                <Cell col="9" text="연료타입"/>
+                <Cell col="10" text="운송수단상태"/>
+              </Band>
+              <Band id="body">
+                <Cell/>
+                <Cell col="1" displaytype="checkboxcontrol" edittype="none" text="bind:CHECKED"/>
+                <Cell col="2" text="bind:VEHICLE_NUMBER" color="#666666"/>
+                <Cell col="3" text="bind:TYPE"/>
+                <Cell col="4" text="bind:MANUFACTURING_COMPANY"/>
+                <Cell col="5" text="bind:YEAR_OF_MANUFACTURE"/>
+                <Cell col="6" text="bind:LOAD_CAPACITY"/>
+                <Cell col="7" text="bind:MAINTENANCE_DATE"/>
+                <Cell col="8" text="bind:OPERATOR"/>
+                <Cell col="9" text="bind:FUEL_TYPE"/>
+                <Cell col="10" text="bind:TRANSPORTATION_STATUS"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="Button00_00_01" taborder="4" text="운송수단 추가" left="744.00" top="86" width="126" height="34" font="normal 12pt/normal &quot;Arial&quot;" cssclass="btn_normal" onclick="Button00_00_01_onclick"/>
+        <Combo id="vhcType" taborder="5" text="선택하세요." left="79" top="90" width="150" height="31" value="" index="-1" onitemchanged="Combo00_onitemchanged" innerdataset="vehicleType" codecolumn="codecolumn" datacolumn="vehicleType"/>
+        <Button id="Button00_00_01_00" taborder="6" text="운송수단 수정" left="887.00" top="86" width="126" height="34" font="normal 12pt/normal &quot;Arial&quot;" cssclass="btn_normal" onclick="Button00_00_01_00_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[include "Lib::commLib.xjs";
+nexa = nexacro.getApplication();
+var vehicleNumber = "";
+
+// 전체조회
+this.estimateForm_searchEstimate_Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	{
+		trace("운송수단조회 실행");
+		
+		this.transaction(
+            "allTransVehicleList",
+            "svcTransvhc::allTransVehicleList",
+            "",
+            "gds_transvhc=ds_vehicle",
+            "",
+            ""
+		);
+		trace("운송수단조회 완");
+	};
+};
+
+// 운송수단 추가 모달
+this.Button00_00_01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	trace("운송수단 추가 모달띄울게");
+	// 	this.gfn_openPopup (
+	// 		"addTransvhc",
+	// 		"",
+	// 		"transvhc::addTransvhc.xfdl",
+	// 		this,
+	// 		50,
+	// 		50,
+	// 		true,	//모달
+	// 		false	//부모창이 비활성화
+	// 	);
+	
+	//띄울 poppdiv의 정보를 작성하고 
+	var sID="addTransvhc";
+	var sURL="transvhc::addTransvhc.xfdl";      
+	var param={}; // 열리는 폼에 파라미터를 넘겨준다. 
+	var callbackFunc="addTransvhc_callbackFunc";  
+	// 해당 프레임을 생성                                     //            --파라미터 순서-- 
+	var oChildFrame = new ChildFrame(sID,0, 0, 0, 0, null, null, sURL);  // 프레임명, 부모프레임의 왼쪽과의 거리,
+	// 부모프레임의 상단과의 거리, 해당 프레임의 넓이,
+	// 해당 프레임의 높이, 부로 프레임의 오른쪽과의 거리,
+	// 부모 프레임과의 하단과의 거리, 참조할 프레임의 주소
+	// 해당 프레임을 화면에 출력                                     // 참고 : 해당 프레임의 크기는 변경할수는 없는거 같다. 
+	oChildFrame.set_openalign("center middle"); 
+	oChildFrame.showModal(sID, this.getOwnerFrame(), param, this, callbackFunc);
+};
+
+// 등록
+this.addTransvhc_callbackFunc = function ()
+{
+	trace("등록함");
+	{
+        
+		this.transaction(
+            "allTransVehicleList",
+            "svcTransvhc::allTransVehicleList",
+            "",
+            "gds_transvhc=ds_vehicle",
+            "",
+            ""
+		);
+		trace("운송수단조회 완");
+	};
+};
+
+// 삭제
+this.Button00_00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	
+	var bool = confirm("삭제하시겠습니까?")
+	if (bool) { 
+		alert("운송수단이 삭제됩니다.");
+		var id = "deleteTransportation";
+		var url = "svcTransvhc::deleteTransportation";
+		var reqData = "";
+		var resData = "";
+		var args = "vehicleNumber="+vehicleNumber;
+		var callback = "delete_callbackFunc"; 
+		
+		this.transaction(id, url, reqData, resData, args, callback);
+		
+	}
+};
+
+// 삭제 후 다시조회페이지
+this.delete_callbackFunc = function ()
+{
+	this.estimateForm_searchEstimate_Button00_onclick();
+};
+
+// checked 되게하기
+this.Grid00_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+ 	trace("셀클릭");
+	
+	vehicleNumber = this.Grid00.getCellText(this.Grid00.currentrow, 2);
+ 	
+ 	var checkColumnId = "CHECKED";
+	var check = obj.getCellValue(e.row, checkColumnId);
+	trace("CHECKED Value:", check);
+ 	
+ 	var size = nexa.gds_transvhc.getRowCount();
+ 	
+ 	if(e.col==1){
+ 		if(check==null || check=='0'){
+ 			nexa.gds_transvhc.setColumn(e.row,"CHECKED",'1');
+ 			
+ 		}else{
+ 			nexa.gds_transvhc.setColumn(e.row,"CHECKED",'0');
+ 		}
+ 		var num = nexa.gds_transvhc.getCaseCount("CHECKED == '1'");
+ 		if(num==2){
+ 			for(var i=0; i<size; i++){
+ 				var rowNo = nexa.gds_transvhc.findRow("CHECKED",'1',i);
+ 				if(rowNo!=e.row){
+ 					nexa.gds_transvhc.setColumn(rowNo,"CHECKED",'0');
+ 					return;
+ 				}
+ 			}
+ 		}
+ 	}
+ 	trace("셀클릭끝");
+};
+
+// type별 조회
+this.Combo00_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	var selectedType = obj.text;
+	trace(selectedType);
+    if (selectedType == "전체") {
+		trace("seleeee");
+        nexa.gds_transvhc.filter("");
+    } else {
+		trace("seleeeegfd");
+        nexa.gds_transvhc.filter("TYPE == '" + selectedType + "'");
+    }
+};
+
+this.Button00_00_01_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var rowNo = nexa.gds_transvhc.findRow("CHECKED","1");
+	trace("rowNo:"+rowNo);
+	
+	if (rowNo < 0) {
+        alert("선택된 데이터가 없습니다.");
+        return;
+    }
+	
+	var vehicleNumber = nexa.gds_transvhc.getColumn(rowNo, "VEHICLE_NUMBER");
+	trace("vehicleNumber:"+vehicleNumber);
+	var type = nexa.gds_transvhc.getColumn(rowNo, "TYPE");
+	trace("type:"+type);
+	var manufacturingCompany = nexa.gds_transvhc.getColumn(rowNo, "MANUFACTURING_COMPANY");
+	trace("manufacturingCompany:"+manufacturingCompany);
+	var yearOfManufacture = nexa.gds_transvhc.getColumn(rowNo, "YEAR_OF_MANUFACTURE");
+	trace("yearOfManufacture:"+yearOfManufacture);
+	var loadCapacity = nexa.gds_transvhc.getColumn(rowNo, "LOAD_CAPACITY");
+	trace("loadCapacity:"+loadCapacity);
+	var maintenanceDate = nexa.gds_transvhc.getColumn(rowNo, "MAINTENANCE_DATE");
+	trace("maintenanceDate:"+maintenanceDate);
+	var operator = nexa.gds_transvhc.getColumn(rowNo, "OPERATOR");
+	trace("operator:"+operator);
+	var fuelType = nexa.gds_transvhc.getColumn(rowNo, "FUEL_TYPE");
+	trace("fuelType:"+fuelType);
+	var transportationStatus = nexa.gds_transvhc.getColumn(rowNo, "TRANSPORTATION_STATUS");
+	trace("transportationStatus:"+transportationStatus);
+	
+	trace("운송수단 수정 모달띄울게");
+	
+	// 띄울 poppdiv의 정보를 작성하고 
+	var sID="editTransvhc";
+	var sURL="transvhc::editTransvhc.xfdl"; 
+	
+	// 열리는 폼에 파라미터를 넘겨준다. 
+	var param={
+		VEHICLE_NUMBER: vehicleNumber,
+        TYPE: type,
+        MANUFACTURING_COMPANY: manufacturingCompany,
+        YEAR_OF_MANUFACTURE: yearOfManufacture,
+        LOAD_CAPACITY: loadCapacity,
+        MAINTENANCE_DATE: maintenanceDate,
+        OPERATOR: operator,
+        FUEL_TYPE: fuelType,
+        TRANSPORTATION_STATUS: transportationStatus
+	}; 
+	trace("Received parameters: " + JSON.stringify(param));
+	
+	var callbackFunc="editTransvhc_callbackFunc";  
+	
+	// 해당 프레임을 생성                                     //            --파라미터 순서-- 
+	var oChildFrame = new ChildFrame(sID,0, 0, 0, 0, null, null, sURL);  // 프레임명, 부모프레임의 왼쪽과의 거리,
+	// 부모프레임의 상단과의 거리, 해당 프레임의 넓이,
+	// 해당 프레임의 높이, 부로 프레임의 오른쪽과의 거리,
+	// 부모 프레임과의 하단과의 거리, 참조할 프레임의 주소
+	// 해당 프레임을 화면에 출력                                     // 참고 : 해당 프레임의 크기는 변경할수는 없는거 같다. 
+	oChildFrame.set_openalign("center middle"); 
+	oChildFrame.showModal(sID, this.getOwnerFrame(), param, this, callbackFunc);
+};
+
+this.editTransvhc_callbackFunc = function ()
+{
+	this.estimateForm_searchEstimate_Button00_onclick();
+};
+]]></Script>
+    <Objects>
+      <Dataset id="vehicleType">
+        <ColumnInfo>
+          <Column id="vehicleType" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="vehicleType">전체</Col>
+          </Row>
+          <Row>
+            <Col id="vehicleType">트럭</Col>
+          </Row>
+          <Row>
+            <Col id="vehicleType">비행기</Col>
+          </Row>
+          <Row>
+            <Col id="vehicleType">선박</Col>
+          </Row>
+          <Row>
+            <Col id="vehicleType">열차</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

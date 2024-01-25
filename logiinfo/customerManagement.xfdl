@@ -49,7 +49,7 @@
                 <Cell col="16" text="생산된제품" font="12px/normal &quot;Gulim&quot;"/>
               </Band>
               <Band id="body">
-                <Cell text="bind:CHECKED" displaytype="checkboxcontrol" edittype="none"/>
+                <Cell text="bind:CHECKED" displaytype="checkboxcontrol" edittype="none" textAlign="left"/>
                 <Cell col="1" text="bind:CUSTOMER_CODE" font="12px/normal &quot;Gulim&quot;" edittype="none"/>
                 <Cell col="2" text="bind:WORKPLACE_CODE" font="12px/normal &quot;Gulim&quot;"/>
                 <Cell col="3" text="bind:CUSTOMER_NAME" font="12px/normal &quot;Gulim&quot;"/>

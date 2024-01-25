@@ -9,6 +9,36 @@
       <Script rule_version="1.02"/>
       <GeneratorInfo rule_version="1.3"/>
     </Rule>
-    <Info project="C:\Users\choi\Desktop\nexa프로젝트\76_nexa\logistics_front\logistics_front\" generated="C:\Users\choi\Documents\TOBESOFT\Nexacro N\outputs\logi76_merge\"><File url="environment.xml" checksum="20230704154816" errormsg=""/><File url="typedefinition.xml" checksum="20230629193028" errormsg=""/><File url="appvariables.xml" checksum="20240119141723" errormsg=""/><File url="_resource_\_theme_\default\theme.xcss" checksum="20230629170804" errormsg=""/><File url="_resource_\_xcss_\Chart.xcss" checksum="20220719102530" errormsg=""/><File url="_resource_\_xcss_\temp_main.xcss" checksum="20230725190626" errormsg=""/><File url="_resource_\_xcss_\main.xcss" checksum="20230824103830" errormsg=""/><File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\framework\Framework.json" checksum="20231215111948" errormsg=""/><File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\resources\Resource.json" checksum="20231215111948" errormsg=""/><File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\CompBase.json" checksum="20231215111944" errormsg=""/><File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\ComComp.json" checksum="20231215111944" errormsg=""/><File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\Grid.json" checksum="20231215111946" errormsg=""/><File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\ListView.json" checksum="20231215111948" errormsg=""/><File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\DeviceAPI.json" checksum="20231215111946" errormsg=""/><File url="_extlib_\Chart.json" checksum="20230629170802" errormsg=""/><File url="logiinfo\itemManagement.xfdl" checksum="20240119141744" errormsg=""/><File url="Application_Desktop.xadl" checksum="20230823214444" errormsg=""/><File url="Base\codeManagement.xfdl" checksum="20230826173746" errormsg=""/></Info>
+    <Info project="C:\Users\choi\Desktop\nexa project\nexacro_logi\Nexacro_Front\" generated="C:\Users\choi\Documents\TOBESOFT\Nexacro N\outputs\logi76_merge\">
+      <File url="environment.xml" checksum="20230704154816" errormsg=""/>
+      <File url="typedefinition.xml" checksum="20240120093433" errormsg=""/>
+      <File url="appvariables.xml" checksum="20240125194425" errormsg=""/>
+      <File url="_resource_\_theme_\default\theme.xcss" checksum="20230629170804" errormsg=""/>
+      <File url="_resource_\_xcss_\Chart.xcss" checksum="20220719102530" errormsg=""/>
+      <File url="_resource_\_xcss_\temp_main.xcss" checksum="20230725190626" errormsg=""/>
+      <File url="_resource_\_xcss_\main.xcss" checksum="20230824103830" errormsg=""/>
+      <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\framework\Framework.json" checksum="20231215111948" errormsg=""/>
+      <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\resources\Resource.json" checksum="20231215111948" errormsg=""/>
+      <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\CompBase.json" checksum="20231215111944" errormsg=""/>
+      <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\ComComp.json" checksum="20231215111944" errormsg=""/>
+      <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\Grid.json" checksum="20231215111946" errormsg=""/>
+      <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\ListView.json" checksum="20231215111948" errormsg=""/>
+      <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\DeviceAPI.json" checksum="20231215111946" errormsg=""/>
+      <File url="_extlib_\Chart.json" checksum="20230629170802" errormsg=""/>
+      <File url="logiinfo\itemManagement.xfdl" checksum="20240120155129" errormsg=""/>
+      <File url="Application_Desktop.xadl" checksum="20230823214444" errormsg=""/>
+      <File url="transvhc\transvhc.xfdl" checksum="20240125173640" errormsg=""/>
+      <File url="transvhc\addTransvhc.xfdl" checksum="20240125101158" errormsg=""/>
+      <File url="hr\empAuthority.xfdl" checksum="20230823204924" errormsg=""/>
+      <File url="busi\contract.xfdl" checksum="20240118202033" errormsg=""/>
+      <File url="busi\estimate.xfdl" checksum="20240115205745" errormsg=""/>
+      <File url="logiinfo\newCustomer.xfdl" checksum="20240122211156" errormsg=""/>
+      <File url="Base\jusoapisearchpop_popup.xfdl" checksum="20230825194004" errormsg=""/>
+      <File url="logiinfo\customerManagement.xfdl" checksum="20240123213900" errormsg=""/>
+      <File url="busi\deliver.xfdl" checksum="20230829021858" errormsg=""/>
+      <File url="transvhc\editTransvhc.xfdl" checksum="20240125173727" errormsg=""/>
+      <File url="purcsto\Bom.xfdl" checksum="20230824100006" errormsg=""/>
+      <File url="purcsto\outSourc.xfdl" checksum="20230828171712" errormsg=""/>
+    </Info>
   </GenInfo>
 </root>

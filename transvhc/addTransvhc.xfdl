@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="addTransvhc" width="724" height="450" titletext="운송수단 추가">
+    <Layouts>
+      <Layout height="450" horizontalgap="0" mobileorientation="landscape" spacing="0px" tabletemplate="1* / 1*" verticalgap="0" width="724">
+        <Div id="Div00" taborder="0" left="25.00" top="21" width="699" height="429" border="1px solid antiquewhite" text="Div00">
+          <Layouts>
+            <Layout>
+              <TextArea id="vehicleNumber" taborder="4" left="178.00" top="22" width="148" height="36" readonly="true"/>
+              <Static id="Static00" taborder="0" text="차량번호" left="20.00" top="22" height="36" textAlign="center" font="normal bold 14pt/normal &quot;Arial&quot;" border="1px solid dimgray" right="549"/>
+              <Static id="Static00_00" taborder="1" text="종류" left="374" top="22" height="35" textAlign="center" font="normal bold 14pt/normal &quot;Arial&quot;" border="1px solid dimgray" right="197"/>
+              <Static id="Static00_01" taborder="2" text="제조사" left="20.00" top="78" width="128" height="36" textAlign="center" font="normal bold 14pt/normal &quot;Arial&quot;" border="1px solid dimgray"/>
+              <Button id="Button00" taborder="3" text="추가" left="284.00" top="338" width="96" height="45" onclick="Div00_Button00_onclick"/>
+              <TextArea id="manufacturingCompany" taborder="5" left="178.00" top="78" width="148" height="36"/>
+              <Static id="Static00_00_00" taborder="6" text="제조년도" left="374.00" top="73" width="124" height="35" textAlign="center" font="normal bold 14pt/normal &quot;Arial&quot;" border="1px solid dimgray"/>
+              <Static id="Static00_01_00" taborder="7" text="적재용량" left="20.00" top="138" width="128" height="36" textAlign="center" font="normal bold 14pt/normal &quot;Arial&quot;" border="1px solid dimgray"/>
+              <Static id="Static00_01_01" taborder="8" text="현재운전자" left="20.00" top="193" width="128" height="36" textAlign="center" font="normal bold 14pt/normal &quot;Arial&quot;" border="1px solid dimgray"/>
+              <Static id="Static00_00_00_00" taborder="9" text="유지보수날짜" left="374.00" top="128" width="124" height="35" textAlign="center" font="normal bold 14pt/normal &quot;Arial&quot;" border="1px solid dimgray"/>
+              <Static id="Static00_00_00_01" taborder="10" text="연료타입" left="374.00" top="178" width="124" height="35" textAlign="center" font="normal bold 14pt/normal &quot;Arial&quot;" border="1px solid dimgray"/>
+              <TextArea id="loadCapacity" taborder="11" left="178.00" top="130" width="148" height="36"/>
+              <TextArea id="operator" taborder="12" left="178.00" top="188" width="148" height="36"/>
+              <TextArea id="fuelType" taborder="13" left="518.00" top="178" width="148" height="36"/>
+              <Static id="Static00_01_01_00" taborder="14" text="운송수단상태" left="20.00" top="250" width="128" height="36" textAlign="center" font="normal bold 14pt/normal &quot;Arial&quot;" border="1px solid dimgray"/>
+              <TextArea id="transportationStatus" taborder="15" left="174.00" top="248" width="148" height="36"/>
+              <Calendar id="yearOfManufacture" taborder="16" left="518.00" top="69" width="148" height="36" dateformat="yyyy-MM-dd"/>
+              <Calendar id="maintenanceDate" taborder="17" left="520.00" top="124" width="148" height="36" dateformat="yyyy-MM-dd"/>
+              <Combo id="type" taborder="18" left="518" top="21" width="148" height="36" value="" index="-1" innerdataset="innerdataset" codecolumn="datacolumn" datacolumn="datacolumn" text="">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">truck</Col>
+                      <Col id="datacolumn">트럭</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">airplane</Col>
+                      <Col id="datacolumn">비행기</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">ship</Col>
+                      <Col id="datacolumn">선박</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">train</Col>
+                      <Col id="datacolumn">열차</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[include "Lib::commLib.xjs";
+nexa = nexacro.getApplication();
+
+this.Div00_Button00_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo)
+{
+	var div = this.Div00.form;
+	
+	if(div.type.value == null){
+		alert("종류를 선택해주세요");
+	} else {
+		// 		var row = nexa.gds_transvhc.addRow();
+		// 	
+		// 		nexa.gds_transvhc.setColumn(row, "VEHICLE_NUMBER", "");
+		// 		nexa.gds_transvhc.setColumn(row, "TYPE", div.type.value);
+		// 		nexa.gds_transvhc.setColumn(row, "MANUFACTURING_COMPANY", div.manufacturingCompany.value);
+		// 		nexa.gds_transvhc.setColumn(row, "YEAR_OF_MANUFACTURE", div.yearOfManufacture.value);
+		// 		nexa.gds_transvhc.setColumn(row, "LOAD_CAPACITY", div.loadCapacity.value);
+		// 		nexa.gds_transvhc.setColumn(row, "MAINTENANCE_DATE", div.maintenanceDate.value);
+		// 		nexa.gds_transvhc.setColumn(row, "OPERATOR", div.operator.value);
+		// 		nexa.gds_transvhc.setColumn(row, "FUEL_TYPE", div.fuelType.value);
+		// 		nexa.gds_transvhc.setColumn(row, "TRANSPORTATION_STATUS", div.transportationStatus.value);
+		//      this.close();
+		
+		trace("운송수단 넣어줘");
+		
+		var id = "addTransportation";
+		var url = "svcTransvhc::addTransportation";
+		var reqData = "ds_vehicle=ds_vehicle";
+		var resData = "";
+		var args = "";
+		var callback = "onload_callbackFunc";
+		
+		this.transaction(id, url, reqData, resData, args, callback);
+		
+		this.close();
+		
+// 		this.transaction (
+// 			"addTransportation",
+// 			"svcTransvhc::addTransportation",
+// 			"ds_vehicle=ds_vehicle",
+// 			"",
+// 			"",
+// 			""
+// 		);
+	}
+};
+]]></Script>
+    <Objects>
+      <Dataset id="vehicleType">
+        <ColumnInfo>
+          <Column id="vehicleType" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="vehicleType">트럭</Col>
+          </Row>
+          <Row>
+            <Col id="vehicleType">비행기</Col>
+          </Row>
+          <Row>
+            <Col id="vehicleType">선박</Col>
+          </Row>
+          <Row>
+            <Col id="vehicleType">열차</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_vehicle">
+        <ColumnInfo>
+          <Column id="VEHICLE_NUMBER" type="STRING" size="256"/>
+          <Column id="TYPE" type="STRING" size="256"/>
+          <Column id="MANUFACTURING_COMPANY" type="STRING" size="256"/>
+          <Column id="YEAR_OF_MANUFACTURE" type="STRING" size="256"/>
+          <Column id="LOAD_CAPACITY" type="STRING" size="256"/>
+          <Column id="MAINTENANCE_DATE" type="STRING" size="256"/>
+          <Column id="OPERATOR" type="STRING" size="256"/>
+          <Column id="FUEL_TYPE" type="STRING" size="256"/>
+          <Column id="TRANSPORTATION_STATUS" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <InitValue>
+      <Div id="Div00" text="Div00"/>
+    </InitValue>
+    <Bind>
+      <BindItem id="item0" compid="Div00.form.vehicleNumber" propid="value" datasetid="ds_vehicle" columnid="VEHICLE_NUMBER"/>
+      <BindItem id="item1" compid="Div00.form.type" propid="value" datasetid="ds_vehicle" columnid="TYPE"/>
+      <BindItem id="item2" compid="Div00.form.manufacturingCompany" propid="value" datasetid="ds_vehicle" columnid="MANUFACTURING_COMPANY"/>
+      <BindItem id="item3" compid="Div00.form.yearOfManufacture" propid="value" datasetid="ds_vehicle" columnid="YEAR_OF_MANUFACTURE"/>
+      <BindItem id="item4" compid="Div00.form.loadCapacity" propid="value" datasetid="ds_vehicle" columnid="LOAD_CAPACITY"/>
+      <BindItem id="item5" compid="Div00.form.maintenanceDate" propid="value" datasetid="ds_vehicle" columnid="MAINTENANCE_DATE"/>
+      <BindItem id="item6" compid="Div00.form.operator" propid="value" datasetid="ds_vehicle" columnid="OPERATOR"/>
+      <BindItem id="item7" compid="Div00.form.fuelType" propid="value" datasetid="ds_vehicle" columnid="FUEL_TYPE"/>
+      <BindItem id="item8" compid="Div00.form.transportationStatus" propid="value" datasetid="ds_vehicle" columnid="TRANSPORTATION_STATUS"/>
+    </Bind>
+  </Form>
+</FDL>

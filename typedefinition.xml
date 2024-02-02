@@ -59,6 +59,8 @@
     <Service prefixid="svcPurchase" type="JSP" version="0" cachelevel="none" include_subdir="false" communicationversion="0" url="http://localhost:9090/purchase/"/>
     <Service prefixid="svcStock" type="JSP" version="0" cachelevel="none" include_subdir="false" communicationversion="0" url="http://localhost:9090/stock/"/>
     <Service prefixid="Lib" type="js" url="./Lib/" version="0" cachelevel="session" include_subdir="false" communicationversion="0"/>
+    <Service prefixid="transvhc" type="form" url="./transvhc/" version="0" cachelevel="session" include_subdir="false" communicationversion="0"/>
+    <Service prefixid="svcTransvhc" type="JSP" version="0" cachelevel="none" include_subdir="false" communicationversion="0" url="http://localhost:9090/logi/trans/"/>
   </Services>
   <Protocols/>
   <DeviceAdaptors/>

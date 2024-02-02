@@ -9,68 +9,36 @@
       <Script rule_version="1.02"/>
       <GeneratorInfo rule_version="1.3"/>
     </Rule>
-    <Info project="C:\Users\Jihyo Park\Desktop\77th 2nd Nexa Logi\NexaLogi\logi_front Merge Ver\logistics_front\" generated="C:\Users\Jihyo Park\Documents\TOBESOFT\Nexacro N\outputs\logi76_merge\">
-      <File url="typedefinition.xml" checksum="20230629193028" errormsg=""/>
-      <File url="appvariables.xml" checksum="20230829152354" errormsg=""/>
+    <Info project="C:\Users\choi\Desktop\nexa project\nexacro_logi\Nexacro_Front\" generated="C:\Users\choi\Documents\TOBESOFT\Nexacro N\outputs\logi76_merge\">
       <File url="environment.xml" checksum="20230704154816" errormsg=""/>
+      <File url="typedefinition.xml" checksum="20240120093433" errormsg=""/>
+      <File url="appvariables.xml" checksum="20240125194425" errormsg=""/>
       <File url="_resource_\_theme_\default\theme.xcss" checksum="20230629170804" errormsg=""/>
-      <File url="Application_Desktop.xadl" checksum="20230823214444" errormsg=""/>
       <File url="_resource_\_xcss_\Chart.xcss" checksum="20220719102530" errormsg=""/>
       <File url="_resource_\_xcss_\temp_main.xcss" checksum="20230725190626" errormsg=""/>
       <File url="_resource_\_xcss_\main.xcss" checksum="20230824103830" errormsg=""/>
-      <File url="FrameBase\Form_Top.xfdl" checksum="20230825174618" errormsg=""/>
-      <File url="FrameBase\Form_Left.xfdl" checksum="20230823213406" errormsg=""/>
-      <File url="FrameBase\Form_Work.xfdl" checksum="20230905104802" errormsg=""/>
-      <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\framework\Framework.json" checksum="20231106185616" errormsg=""/>
-      <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\resources\Resource.json" checksum="20231106185616" errormsg=""/>
-      <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\CompBase.json" checksum="20231106185612" errormsg=""/>
-      <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\ComComp.json" checksum="20231106185612" errormsg=""/>
-      <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\Grid.json" checksum="20231106185614" errormsg=""/>
-      <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\ListView.json" checksum="20231106185616" errormsg=""/>
-      <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\DeviceAPI.json" checksum="20231106185612" errormsg=""/>
+      <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\framework\Framework.json" checksum="20231215111948" errormsg=""/>
+      <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\resources\Resource.json" checksum="20231215111948" errormsg=""/>
+      <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\CompBase.json" checksum="20231215111944" errormsg=""/>
+      <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\ComComp.json" checksum="20231215111944" errormsg=""/>
+      <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\Grid.json" checksum="20231215111946" errormsg=""/>
+      <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\ListView.json" checksum="20231215111948" errormsg=""/>
+      <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\DeviceAPI.json" checksum="20231215111946" errormsg=""/>
       <File url="_extlib_\Chart.json" checksum="20230629170802" errormsg=""/>
-      <File url="logiinfo\LoginForm.xfdl" checksum="20230823212522" errormsg=""/>
-      <File url="Base\CommonDialog.xfdl" checksum="20230728174952" errormsg=""/>
-      <File url="Base\Api.xfdl" checksum="20230727154330" errormsg=""/>
-      <File url="Base\codeManagement.xfdl" checksum="20230826173746" errormsg=""/>
-      <File url="Base\jusoapisearchpop_popup.xfdl" checksum="20230825194004" errormsg=""/>
-      <File url="busi\calculator.xfdl" checksum="20230823123940" errormsg=""/>
-      <File url="busi\contract.xfdl" checksum="20230828023050" errormsg=""/>
-      <File url="busi\deliver.xfdl" checksum="20230829021858" errormsg=""/>
-      <File url="busi\estimate.xfdl" checksum="20230823140456" errormsg=""/>
-      <File url="busi\trade.xfdl" checksum="20230823123940" errormsg=""/>
-      <File url="prodc\mpsRegister.xfdl" checksum="20230829111546" errormsg=""/>
-      <File url="prodc\mrpRegisterAndGather.xfdl" checksum="20230829113144" errormsg=""/>
-      <File url="prodc\mrpSimulation.xfdl" checksum="20230823202908" errormsg=""/>
-      <File url="prodc\newMpsByContract.xfdl" checksum="20230823202940" errormsg=""/>
-      <File url="prodc\workInstruction.xfdl" checksum="20230823203058" errormsg=""/>
-      <File url="prodc\workorder_simul.xfdl" checksum="20230823203128" errormsg=""/>
-      <File url="prodc\workplace_comp.xfdl" checksum="20230823203148" errormsg=""/>
-      <File url="prodc\workSite.xfdl" checksum="20230823203234" errormsg=""/>
-      <File url="purcsto\Bom.xfdl" checksum="20230824100006" errormsg=""/>
-      <File url="purcsto\orderRegister.xfdl" checksum="20230823171310" errormsg=""/>
-      <File url="purcsto\order_simul.xfdl" checksum="20230823171158" errormsg=""/>
-      <File url="purcsto\outSourc.xfdl" checksum="20230828171712" errormsg=""/>
-      <File url="purcsto\stockInfo.xfdl" checksum="20230823172006" errormsg=""/>
-      <File url="purcsto\stock_warehousing.xfdl" checksum="20230823171330" errormsg=""/>
-      <File url="logiinfo\customerManagement.xfdl" checksum="20230826114500" errormsg=""/>
-      <File url="logiinfo\itemManagement.xfdl" checksum="20230823210722" errormsg=""/>
-      <File url="logiinfo\newCustomer.xfdl" checksum="20230825171828" errormsg=""/>
-      <File url="logiinfo\warehouseManage.xfdl" checksum="20230823212800" errormsg=""/>
+      <File url="logiinfo\itemManagement.xfdl" checksum="20240120155129" errormsg=""/>
+      <File url="Application_Desktop.xadl" checksum="20230823214444" errormsg=""/>
+      <File url="transvhc\transvhc.xfdl" checksum="20240130155005" errormsg=""/>
+      <File url="transvhc\addTransvhc.xfdl" checksum="20240125101158" errormsg=""/>
       <File url="hr\empAuthority.xfdl" checksum="20230823204924" errormsg=""/>
-      <File url="Lib\commDataset.xjs" checksum="20230629170802" errormsg=""/>
-      <File url="Lib\commDate.xjs" checksum="20230629170802" errormsg=""/>
-      <File url="Lib\commFile.xjs" checksum="20230629170802" errormsg=""/>
-      <File url="Lib\commForm.xjs" checksum="20230629170802" errormsg=""/>
-      <File url="Lib\commFrame.xjs" checksum="20230629170802" errormsg=""/>
-      <File url="Lib\commLib.xjs" checksum="20230629170802" errormsg=""/>
-      <File url="Lib\commString.xjs" checksum="20230629170802" errormsg=""/>
-      <File url="Lib\commTrans.xjs" checksum="20230629170802" errormsg=""/>
-      <File url="Lib\commUtility.xjs" checksum="20230629170802" errormsg=""/>
-      <File url="Lib\popup.xjs" checksum="20230824202744" errormsg=""/>
-      <File url="Lib\libCommon.xjs" checksum="20230629170802" errormsg=""/>
-      <File url="Lib\lib_base.xjs" checksum="20230629170802" errormsg=""/>
-      <File url="Lib\lib_date.xjs" checksum="20230629170802" errormsg=""/>
+      <File url="busi\contract.xfdl" checksum="20240118202033" errormsg=""/>
+      <File url="busi\estimate.xfdl" checksum="20240115205745" errormsg=""/>
+      <File url="logiinfo\newCustomer.xfdl" checksum="20240122211156" errormsg=""/>
+      <File url="Base\jusoapisearchpop_popup.xfdl" checksum="20230825194004" errormsg=""/>
+      <File url="logiinfo\customerManagement.xfdl" checksum="20240123213900" errormsg=""/>
+      <File url="busi\deliver.xfdl" checksum="20230829021858" errormsg=""/>
+      <File url="transvhc\editTransvhc.xfdl" checksum="20240125173727" errormsg=""/>
+      <File url="purcsto\Bom.xfdl" checksum="20230824100006" errormsg=""/>
+      <File url="purcsto\outSourc.xfdl" checksum="20230828171712" errormsg=""/>
     </Info>
   </GenInfo>
 </root>

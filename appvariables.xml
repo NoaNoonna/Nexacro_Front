@@ -57,7 +57,7 @@
         <Column id="ESTIMATE_NO" type="STRING" size="256"/>
         <Column id="CONTRACT_TYPE" type="STRING" size="256"/>
         <Column id="CUSTOMER_CODE" type="STRING" size="256"/>
-        <Column id="CONTRACT_DATE" type="STRING" size="256"/>
+        <Column id="CONTRACT_DATE" type="DATE" size="256"/>
         <Column id="CONTRACT_REQUESTER" type="STRING" size="256"/>
         <Column id="PERSON_CODE_IN_CHARGE" type="STRING" size="256"/>
         <Column id="DESCRIPTION" type="STRING" size="256"/>
@@ -243,8 +243,9 @@
         <Column id="UNIT_OF_STOCK" type="STRING" size="256"/>
         <Column id="LOSS_RATE" type="STRING" size="256"/>
         <Column id="LEAD_TIME" type="STRING" size="256"/>
-        <Column id="STANDARD_UNIT_PRICE" type="STRING" size="256"/>
+        <Column id="STANDARD_UNIT_PRICE" type="INT" size="256"/>
         <Column id="DESCRIPTION" type="STRING" size="256"/>
+        <Column id="CHECKED" type="STRING" size="256"/>
       </ColumnInfo>
     </Dataset>
     <Dataset id="gds_itemGroup">
@@ -442,6 +443,19 @@
           <Col id="MENU_STATUS">1</Col>
           <Col id="MENU_URL">hr::empAuthority.xfdl</Col>
         </Row>
+        <Row>
+          <Col id="MENU_ID">ME009</Col>
+          <Col id="MENU_NAME">운송수단관리</Col>
+          <Col id="MENU_LEVEL">0</Col>
+          <Col id="MENU_STATUS">1</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_ID">ME009_1</Col>
+          <Col id="MENU_NAME">운송수단 조회/등록</Col>
+          <Col id="MENU_LEVEL">1</Col>
+          <Col id="MENU_STATUS">1</Col>
+          <Col id="MENU_URL">transvhc::transvhc.xfdl</Col>
+        </Row>
       </Rows>
     </Dataset>
     <Dataset id="gds_menuAvailableByPosition">
@@ -613,6 +627,7 @@
         <Column id="INPUT_AMOUNT" type="STRING" size="256"/>
         <Column id="DELIVERY_AMOUNT" type="STRING" size="256"/>
         <Column id="TOTAL_STOCK_AMOUNT" type="STRING" size="256"/>
+        <Column id="CHECKED" type="STRING" size="256"/>
       </ColumnInfo>
     </Dataset>
     <Dataset id="gds_wareHouse">
@@ -1192,6 +1207,20 @@
         <Column id="UNIT_PRICE" type="INT" size="256"/>
         <Column id="TOTAL_PRICE" type="STRING" size="256"/>
         <Column id="OUTSOURCING_DATE" type="DATETIME" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_transvhc">
+      <ColumnInfo>
+        <Column id="CHECKED" type="STRING" size="256"/>
+        <Column id="VEHICLE_NUMBER" type="STRING" size="256"/>
+        <Column id="TYPE" type="STRING" size="256"/>
+        <Column id="MANUFACTURING_COMPANY" type="STRING" size="256"/>
+        <Column id="YEAR_OF_MANUFACTURE" type="STRING" size="256"/>
+        <Column id="LOAD_CAPACITY" type="STRING" size="256"/>
+        <Column id="MAINTENANCE_DATE" type="STRING" size="256"/>
+        <Column id="OPERATOR" type="STRING" size="256"/>
+        <Column id="FUEL_TYPE" type="STRING" size="256"/>
+        <Column id="TRANSPORTATION_STATUS" type="STRING" size="256"/>
       </ColumnInfo>
     </Dataset>
   </Datasets>

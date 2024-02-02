@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="abroadInfo" width="1280" height="720" titletext="해외영업관리" onload="form_onload">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="1280">
+        <Div id="Div00" taborder="0" text="Div00" left="-18" top="-22" width="1040" height="711">
+          <Layouts>
+            <Layout>
+              <GroupBox id="GroupBox00" taborder="0" text="해외영업관리" left="27" top="31" width="957" height="650" titlealign="topcenter" font="bold 28pt &quot;Arial&quot;" color="black"/>
+              <Static id="Static00" taborder="1" text="📋 코드조회" left="44" top="56" width="147" height="51" onclick="Div00_Static00_onclick" color="black" font="bold 20px/normal &quot;Gulim&quot;"/>
+              <Button id="SearchCode_Button" taborder="2" text="코드조회" left="45" top="124" width="59" height="35" background="black" color="mintcream" font="bold 12px/normal &quot;Gulim&quot;" onclick="searchCode_Button_onclick"/>
+              <Button id="AddCode_Button" taborder="3" text="코드추가" left="118" top="124" width="59" height="35" background="black" color="mintcream" font="bold 12px/normal &quot;Gulim&quot;" onclick="addCode_Button_onclick"/>
+              <Button id="DeleteCode_Button" taborder="4" text="코드삭제" left="191" top="124" width="59" height="35" onclick="deleteButton_onclick" background="black" color="mintcream" font="bold 12px/normal &quot;Gulim&quot;"/>
+              <Grid id="grd_code" taborder="5" left="40" top="174" width="911" height="164" binddataset="gds_code" onheadclick="grd_headCheck_onheadclick" oncellclick="grd_Code_oncellclick">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="30"/>
+                      <Column size="170"/>
+                      <Column size="170"/>
+                      <Column size="170"/>
+                      <Column size="170"/>
+                      <Column size="200"/>
+                      <Column size="200"/>
+                      <Column size="200"/>
+                      <Column size="200"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="24" band="head"/>
+                      <Row size="24"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell displaytype="checkboxcontrol" edittype="checkbox" text="0"/>
+                      <Cell col="1" text="행사코드" textAlign="center"/>
+                      <Cell col="2" text="행사명" textAlign="center"/>
+                      <Cell col="3" text="행사유형" textAlign="center"/>
+                      <Cell col="4" text="위치" textAlign="center"/>
+                      <Cell col="5" text="날짜" textAlign="center"/>
+                      <Cell col="6" text="대상" textAlign="center"/>
+                      <Cell col="7" text="주최자" textAlign="center"/>
+                      <Cell col="8" text="상태" textAlign="center"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:CHECKED" displaytype="checkboxcontrol" edittype="checkbox"/>
+                      <Cell col="1" text="bind:DIVISION_CODE_NO" edittype="text" textAlign="center"/>
+                      <Cell col="2" text="bind:EVENT_NAME" edittype="text" textAlign="center"/>
+                      <Cell col="3" text="bind:EVENT_TYPE" edittype="text" textAlign="center"/>
+                      <Cell col="4" text="bind:EVENT_LOCATION" edittype="text" textAlign="center"/>
+                      <Cell col="5" text="bind:EVENT_DATE" edittype="text" textAlign="center"/>
+                      <Cell col="6" text="bind:EVENT_TARGET" edittype="text" textAlign="center"/>
+                      <Cell col="7" text="bind:EVENT_HOST" edittype="text" textAlign="center"/>
+                      <Cell col="8" text="bind:EVENT_STATE" edittype="text" textAlign="center"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Button id="save_Button01" taborder="10" text="코드 일괄저장" left="850" top="134" width="94" height="33" background="red" color="cornsilk" font="bold 12px/normal &quot;Gulim&quot;" onclick="saveButton_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[include "Lib::commLib.xjs";
+/*********************
+* 전역변수 선언
+*********************/
+var nexa = nexacro.getApplication();
+var divisionCode;
+var code;
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+      nexa.gds_code.clearData();
+      nexa.gds_codeDetail.clearData();
+	  obj.set_titletext("코드");
+};
+
+/** 코드조회 **/
+this.searchCode_Button_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+   trace("코드조회 실행");
+         
+   this.transaction(
+            "searchCodeList",
+            "svcCompinfo::code/list",
+            "",
+            "gds_code=gds_code",
+            "",
+            "fn_callback",
+            false
+            );
+   trace("코드조회 종료");
+};
+
+
+/** 코드추가 **/
+
+this.addCode_Button_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+   var row = nexa.gds_code.addRow();
+};
+
+
+
+/** 코드일괄저장 **/
+
+this.saveButton_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{    
+   code = "code"
+   
+   this.transaction(
+      "batchCodeList", 
+       "svcCompinfo::code/batch", 
+       "gds_code=gds_code:u", 
+       "", 
+       "code='"+code+"'", 
+       "fn_callback"
+   );
+   this.gds_code.clearData();
+   this.gds_code.clearData();
+};
+
+
+
+/** 코드삭제 **/
+this.deleteButton_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+   var size = nexa.gds_code.getRowCount();
+   var row = null;
+   for(var i=0; i<size; i++){
+      row = nexa.gds_code.findRow("CHECKED","1");
+      if(row!=-1){
+         nexa.gds_code.deleteRow(row); //해당번호삭제
+      }
+   }
+};
+
+
+// 콜백 함수
+this.fn_callback = function (trid , ErrorCode, ErrorMsg){
+
+   // 코드조회
+   if(trid == "searchCodeList"){
+    trace("데이터로우카운트 조사 : "+nexa.gds_code.rowcount);
+    trace("데이터로우카운트 조사2 : "+nexa.gds_code.getColumn(0,'DIVISION_CODE_NO'));
+      if(ErrorCode <0){
+         alert("조회 실패 : " + ErrorMsg);
+      }
+    }
+  }
+    
+    // 코드조회 일괄저장
+    if(trid == "batchCodeList"){
+      if(ErrorCode <0){
+         alert("저장 실패 : " + ErrorMsg);
+      } else{
+     alert("저장 되었습니다. : " + ErrorMsg);
+   }
+  }
+    
+
+/** 공통 그리드 체크박스 시작 **/
+
+/** 1. 코드조회 단일 체크박스 **/
+
+this.grd_Code_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+
+   divisionCode = nexa.gds_code.getColumn(e.row,'DIVISION_CODE_NO')
+   trace(divisionCode);
+   trace('클릭값체크'+nexa.gds_code.getColumn(e.row,"CHECKED"));
+   
+   var check = nexa.gds_code.getColumn(e.row,"CHECKED");
+   
+   if(e.col==1){
+      if(check==null || check=='0'){
+         nexa.gds_code.setColumn(e.row,"CHECKED",'1');
+      }else{
+         nexa.gds_code.setColumn(e.row,"CHECKED",'0');
+      }
+   }
+};
+
+
+
+/** 공통  
+   그리드 헤드체크박스 전체적용 및 해제 (헤드클릭 이벤트명을 동일하게 해주면 잘된다.)  **/
+
+this.grd_headCheck_onheadclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+   trace("obj이름은? : "+obj.name);
+   if(e.col == 0){
+      nexa.clickHeadCheckBox(obj, "CHECKED");
+   }
+};
+
+
+this.clickHeadCheckBox = function (obj, strColName)
+{      
+   var headerCell = obj.getBindCellIndex("body", strColName);
+   trace('이거 헤더셀 작동함? : '+headerCell);
+
+   var checkValue = "1";
+   if(obj.getCellProperty("Head", 0, "displaytype") == "checkboxcontrol") {
+      trace('첫이프문통과');
+      if (obj.getCellProperty("Head", 0, "text") == "0") { //현재 체크박스 값과 반대되게
+          obj.setCellProperty("Head", 0, "text", checkValue);
+      } else {
+         checkValue=0;
+         obj.setCellProperty("Head", 0, "text", checkValue);
+      }
+   }
+   
+   obj.setCellProperty("Head", 0, "text", checkValue); //헤더 체크박스 값 변경
+   
+   var objDataset = obj.getBindDataset(); //그리드에 바인드되어있는 dataset 가져옴
+   trace("objDataset : " + objDataset.name);
+   if(objDataset.getRowCount() > 0) {
+      trace('지금이거됨? : '+objDataset.getRowCount());
+      //objDataset.set_enableevent(false); //이벤트 비활성화
+      for (var i=0; i<objDataset.getRowCount(); i++) {         
+          objDataset.setColumn(i, "CHECKED", checkValue); //체크박스를 checkValue로 설정
+      }
+      objDataset.set_enableevent(true); //이벤트 활성화
+   }
+};]]></Script>
+  </Form>
+</FDL>

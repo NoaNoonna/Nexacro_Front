@@ -35,6 +35,12 @@
     <Component type="JavaScript" id="DataObject" classname="nexacro.DataObject"/>
     <Component type="JavaScript" id="BasicChart" classname="nexacro.BasicChart" iconindex="400" iconextra="true"/>
     <Component type="JavaScript" id="GoogleMap" classname="nexacro.GoogleMap"/>
+    <Component type="JavaScript" id="FileUpload" classname="nexacro.FileUpload"/>
+    <Component type="JavaScript" id="FileDownload" classname="nexacro.FileDownload"/>
+    <Component type="JavaScript" id="FileDialog" classname="nexacro.FileDialog"/>
+    <Component type="JavaScript" id="FileDownTransfer" classname="nexacro.FileDownTransfer"/>
+    <Component type="JavaScript" id="FileUpTransfer" classname="nexacro.FileUpTransfer"/>
+    <Component type="JavaScript" id="VirtualFile" classname="nexacro.VirtualFile"/>
   </Components>
   <Services>
     <Service prefixid="theme" type="resource" url="./_resource_/_theme_/" version="0" cachelevel="session" include_subdir="true"/>
@@ -59,8 +65,6 @@
     <Service prefixid="svcPurchase" type="JSP" version="0" cachelevel="none" include_subdir="false" communicationversion="0" url="http://localhost:9090/purchase/"/>
     <Service prefixid="svcStock" type="JSP" version="0" cachelevel="none" include_subdir="false" communicationversion="0" url="http://localhost:9090/stock/"/>
     <Service prefixid="Lib" type="js" url="./Lib/" version="0" cachelevel="session" include_subdir="false" communicationversion="0"/>
-    <Service prefixid="transvhc" type="form" url="./transvhc/" version="0" cachelevel="session" include_subdir="false" communicationversion="0"/>
-    <Service prefixid="svcTransvhc" type="JSP" version="0" cachelevel="none" include_subdir="false" communicationversion="0" url="http://localhost:9090/logi/trans/"/>
   </Services>
   <Protocols/>
   <DeviceAdaptors/>

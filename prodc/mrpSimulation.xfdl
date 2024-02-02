@@ -23,7 +23,7 @@
         </Radio>
         <Calendar id="Calendar00" taborder="1" left="252" top="29" width="236" height="35" dateformat="yyyy-MM-dd" visible="false" color="orangered"/>
         <Button id="btn_regist_mrp" taborder="2" text="전개된 결과 MRP등록" left="637" top="30" width="203" height="35" onclick="Tab00_Tabpage1_Div01_btn_regist_mrp_onclick" cssclass="btn_normal" background="black"/>
-        <Grid id="Grid01" taborder="3" left="20" top="80" width="1192" height="364" binddataset="gds_mrpOpenTemp" color="orangered">
+        <Grid id="Grid01" taborder="3" left="20.00" top="80" width="1160" height="364" binddataset="gds_mrpOpenTemp" color="orangered">
           <Formats>
             <Format id="default">
               <Columns>
@@ -39,7 +39,7 @@
                 <Column size="80"/>
                 <Column size="62"/>
                 <Column size="64"/>
-                <Column size="41"/>
+                <Column size="50"/>
               </Columns>
               <Rows>
                 <Row size="24" band="head"/>

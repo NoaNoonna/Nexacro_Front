@@ -8,21 +8,21 @@
         <Button id="Button00" taborder="2" text="현재 모의전개된 결과 작업지시" left="53" top="50" width="180" height="35" onclick="Button00_onclick" color="white" background="black"/>
         <Edit id="Edit00" taborder="3" left="297" top="50" width="126" height="35" displaynulltext="사업장" textAlign="center" oneditclick="Edit00_oneditclick" color="white" background="black"/>
         <Edit id="Edit01" taborder="4" left="432" top="50" width="130" height="35" displaynulltext="생산공정코드" textAlign="center" oneditclick="Edit01_oneditclick" color="white" background="black"/>
-        <Grid id="Grid00" taborder="5" left="17" top="115" width="1240" height="385" binddataset="gds_workOrderSimulation" color="orangered">
+        <Grid id="Grid00" taborder="5" left="17.00" top="115" width="1093" height="385" binddataset="gds_workOrderSimulation" color="orangered">
           <Formats>
             <Format id="default">
               <Columns>
                 <Column size="24"/>
-                <Column size="115"/>
-                <Column size="72"/>
-                <Column size="80"/>
-                <Column size="127"/>
+                <Column size="130"/>
+                <Column size="90"/>
+                <Column size="90"/>
+                <Column size="130"/>
                 <Column size="49"/>
                 <Column size="105"/>
                 <Column size="143"/>
                 <Column size="134"/>
-                <Column size="87"/>
-                <Column size="83"/>
+                <Column size="100"/>
+                <Column size="100"/>
               </Columns>
               <Rows>
                 <Row size="24" band="head"/>

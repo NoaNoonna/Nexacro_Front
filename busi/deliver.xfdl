@@ -352,7 +352,7 @@ this.deliver_deliver_Edit00_oneditclick = function(obj:nexacro.Edit,e:nexacro.Ed
    
    this.gfn_showModal("CustomerCode",{pFrame:"deliver",divisionCode:"CL-01",eForm:obj},"Base::CommonDialog.xfdl","popupCallBack",this, 500, 300, true, true, null);
    
-};
+}; 
 
 
 this.estimateForm_searchEstimate_Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) //납품가능수주조회
@@ -362,9 +362,12 @@ this.estimateForm_searchEstimate_Button00_onclick = function(obj:nexacro.Button,
    var startDate=nexacro.trim(delPath.Calendar00.text);
    var endDate=nexacro.trim(delPath.Calendar01.text);
    var customerCode=this.deliver.deliver.form.Edit00.value;
+   trace("searchCondition :" + searchCondition);
+   trace("customerCode :" + customerCode);
    
    if(searchCondition==null) {
 		alert("검색유형을 선택해주세요~"); return;}
+		
    else if(searchCondition=="searchByDate"){
 // 		startDate=nexacro.trim(delPath.Calendar00.text);
 // 		endDate=nexacro.trim(delPath.Calendar01.text);
@@ -374,7 +377,10 @@ this.estimateForm_searchEstimate_Button00_onclick = function(obj:nexacro.Button,
    }
    
    else if(searchCondition=="searchByCustomer") {
-      if(code==null) {alert("거래처 정보를 입력해주세요"); return;}
+      if(code==null) {
+		alert("거래처 정보를 입력해주세요"); 
+		return;
+		}
    }
    
    this.transaction(
@@ -399,6 +405,8 @@ this.deliver_deliver_Grid01_oncellclick = function(obj:nexacro.Grid,e:nexacro.Gr
 {
    var check = nexa.gds_contractDetail.getColumn(e.row,"CHECKED");
    var size = nexa.gds_contractDetail.getRowCount();
+   	trace("check :" + check);
+	trace("size :" + size);	
    
    if(e.col==1){
       if(check==null || check=='0'){
@@ -570,6 +578,11 @@ this.deliver_reverse_Grid00_oncellclick = function(obj:nexacro.Grid,e:nexacro.Gr
 this.deliver_Tabpage1_Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {
 	// 분기별 판매량 조회
+};
+
+this.deliver_deliver_Edit00_onchanged = function(obj:nexacro.Edit,e:nexacro.ChangeEventInfo)
+{
+	
 };
 ]]></Script>
   </Form>

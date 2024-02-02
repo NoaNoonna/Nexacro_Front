@@ -16,10 +16,10 @@
             <Format id="default">
               <Columns>
                 <Column size="25"/>
-                <Column size="60"/>
-                <Column size="119"/>
+                <Column size="30"/>
+                <Column size="120"/>
                 <Column size="80"/>
-                <Column size="80"/>
+                <Column size="100"/>
                 <Column size="80"/>
                 <Column size="80"/>
                 <Column size="80"/>

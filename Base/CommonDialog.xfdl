@@ -474,26 +474,30 @@ this.fn_grd_commonDialog_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridC
       
          var edRposition= nexa.gds_codeDetail.rowposition;
          trace("@@ edRposition: "+edRposition);
-         if(this.opener.name=="deliver"){
-               this.opener.deliver.deliver.form.Edit00.set_value(nexa.gds_codeDetail.getColumn(e.row, "DETAIL_CODE_NAME"));
-               g_customerCode =nexa.gds_codeDetail.getColumn(e.row, "DETAIL_CODE");
-               trace("@@누른회사 코드"+g_customerCode)
+        
+		if(this.opener.name=="deliver"){
+            this.opener.deliver.deliver.form.Edit00.set_value(nexa.gds_codeDetail.getColumn(e.row, "DETAIL_CODE_NAME"));
+            g_customerCode =nexa.gds_codeDetail.getColumn(e.row, "DETAIL_CODE");
+            trace("@@누른회사 코드"+g_customerCode);
+			this.close();
+            return;
+              
+		} else if(this.opener.name=="output") {
+			this.opener.Tab.Tabpage1.form.codeEdit.set_value(nexa.gds_codeDetail.getColumn(e.row, "DETAIL_CODE_NAME"));
+            g_customerCode = nexa.gds_codeDetail.getColumn(e.row, "DETAIL_CODE");
+            trace("@@누른회사 코드" + g_customerCode);
+			
             this.close();
             return;
+         
+		 } else {
+             this.opener.Edit01.set_value(nexa.gds_codeDetail.getColumn(eRow, "DETAIL_CODE_NAME"));
+             g_customerCode = nexa.gds_codeDetail.getColumn(eRow, "DETAIL_CODE");
+             this.close();
          }
-
-
-         this.opener.Edit01.set_value(nexa.gds_codeDetail.getColumn(e.row, "DETAIL_CODE_NAME"));
-         g_customerCode =nexa.gds_codeDetail.getColumn(e.row, "DETAIL_CODE");
-         this.close();
          break;
-         
-   
-            
-         
-   }
-   
-   
+
+    }
 };]]></Script>
   </Form>
 </FDL>

@@ -27,7 +27,7 @@
                       <Row size="24"/>
                     </Rows>
                     <Band id="head">
-                      <Cell displaytype="checkboxcontrol" edittype="checkbox" text="0"/>
+                      <Cell displaytype="checkboxcontrol" edittype="checkbox" text="expr:0"/>
                       <Cell col="1" text="코드번호" textAlign="center"/>
                       <Cell col="2" text="코드유형" textAlign="center"/>
                       <Cell col="3" text="코드이름" textAlign="center"/>
@@ -300,7 +300,7 @@ this.grd_DetailCode_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickE
    var check = nexa.gds_codeDetail.getColumn(e.row,"CHECKED");
    
    if(e.col==1){
-      if(check==null || check=='0'){
+      if(check==null || check==0 ){
          nexa.gds_codeDetail.setColumn(e.row,"CHECKED",'1');
       }else{
          nexa.gds_codeDetail.setColumn(e.row,"CHECKED",'0');

@@ -145,7 +145,6 @@ this.Button00_00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventIn
 		var callback = "delete_callbackFunc"; 
 		
 		this.transaction(id, url, reqData, resData, args, callback);
-		
 	}
 };
 

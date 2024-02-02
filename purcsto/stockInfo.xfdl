@@ -13,10 +13,10 @@
                     <Formats>
                       <Format id="default">
                         <Columns>
-                          <Column size="37"/>
-                          <Column size="80"/>
-                          <Column size="80"/>
-                          <Column size="130"/>
+                          <Column size="30"/>
+                          <Column size="100"/>
+                          <Column size="100"/>
+                          <Column size="140"/>
                           <Column size="81"/>
                           <Column size="80"/>
                           <Column size="80"/>
@@ -41,16 +41,16 @@
                           <Cell col="9" text="납품예정재고"/>
                         </Band>
                         <Band id="body">
-                          <Cell expr="currow+1"/>
-                          <Cell col="1" text="bind:WAREHOUSE_CODE"/>
-                          <Cell col="2" text="bind:ITEM_CODE"/>
-                          <Cell col="3" text="bind:ITEM_NAME"/>
-                          <Cell col="4" text="bind:UNIT_OF_STOCK"/>
-                          <Cell col="5" text="bind:SAFETY_ALLOWANCE_AMOUNT"/>
-                          <Cell col="6" text="bind:STOCK_AMOUNT"/>
-                          <Cell col="7" text="bind:ORDER_AMOUNT"/>
-                          <Cell col="8" text="bind:INPUT_AMOUNT"/>
-                          <Cell col="9" text="bind:DELIVERY_AMOUNT"/>
+                          <Cell expr="currow+1" textAlign="center"/>
+                          <Cell col="1" text="bind:WAREHOUSE_CODE" textAlign="center"/>
+                          <Cell col="2" text="bind:ITEM_CODE" textAlign="center"/>
+                          <Cell col="3" text="bind:ITEM_NAME" textAlign="center"/>
+                          <Cell col="4" text="bind:UNIT_OF_STOCK" textAlign="center"/>
+                          <Cell col="5" text="bind:SAFETY_ALLOWANCE_AMOUNT" textAlign="center"/>
+                          <Cell col="6" text="bind:STOCK_AMOUNT" textAlign="center"/>
+                          <Cell col="7" text="bind:ORDER_AMOUNT" textAlign="center"/>
+                          <Cell col="8" text="bind:INPUT_AMOUNT" textAlign="center"/>
+                          <Cell col="9" text="bind:DELIVERY_AMOUNT" textAlign="center"/>
                         </Band>
                       </Format>
                     </Formats>
@@ -62,14 +62,14 @@
             <Tabpage id="Tabpage2" text="재고 로그" color="darkslategray">
               <Layouts>
                 <Layout>
-                  <Grid id="Grid00" taborder="1" left="15" top="84" width="1210" height="507" binddataset="gds_stockLog" color="orangered">
+                  <Grid id="Grid00" taborder="1" left="15.00" top="84" width="1170" height="507" binddataset="gds_stockLog" color="orangered">
                     <Formats>
                       <Format id="default">
                         <Columns>
-                          <Column size="36"/>
+                          <Column size="30"/>
                           <Column size="184"/>
                           <Column size="80"/>
-                          <Column size="124"/>
+                          <Column size="130"/>
                           <Column size="80"/>
                           <Column size="145"/>
                           <Column size="172"/>
@@ -90,13 +90,13 @@
                           <Cell col="7" text="EFFECT"/>
                         </Band>
                         <Band id="body">
-                          <Cell expr="currow+1"/>
-                          <Cell col="1" text="bind:LOG_DATE"/>
-                          <Cell col="2" text="bind:ITEM_CODE"/>
-                          <Cell col="3" text="bind:ITEM_NAME"/>
-                          <Cell col="4" text="bind:AMOUNT"/>
-                          <Cell col="5" text="bind:REASON"/>
-                          <Cell col="6" text="bind:CAUSE"/>
+                          <Cell expr="currow+1" textAlign="center"/>
+                          <Cell col="1" text="bind:LOG_DATE" textAlign="center"/>
+                          <Cell col="2" text="bind:ITEM_CODE" textAlign="center"/>
+                          <Cell col="3" text="bind:ITEM_NAME" textAlign="center"/>
+                          <Cell col="4" text="bind:AMOUNT" textAlign="center"/>
+                          <Cell col="5" text="bind:REASON" textAlign="center"/>
+                          <Cell col="6" text="bind:CAUSE" textAlign="center"/>
                           <Cell col="7" text="bind:EFFECT"/>
                         </Band>
                       </Format>

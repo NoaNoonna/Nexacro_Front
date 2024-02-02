@@ -335,7 +335,7 @@ this.gfn_downloadFileDirect = function(v_sFileName)
 	// 첨부파일을 볼때 첨부파일을 시간별로 별도로 생성
 	vFileDown.open("%MyDocument%"+"\\" + gv_fileDownPath + "\\View_" + sTodayTime + "_" + v_sFileName, VirtualFile.openWrite|VirtualFile.openBinary);
 
-	// 첨부파일을 볼때 기존 첨부파일을 그대로 덥어써서 생성
+	// 첨부파일을 볼때 기존 첨부파일을 그대로 덮어쓰고 생성
 	//vFileDown.open("%MyDocument%"+"\\taihoinst\\" + v_sFileName, VirtualFile.openWrite|VirtualFile.openBinary);						
 	fv_fullpath = vFileDown.fullpath;
 	
@@ -481,14 +481,21 @@ this.gfn_fileDialog = function(strOpenMode, strFilterFlag)
 	var vFile = fd.open(v_Title, v_ConstMode, "%MyDocument%");
 	var filePath = "";
 
-	if (vFile == undefined || vFile == null) 
-	{
-		filePath = "";
-	} 
-	else 
-	{
+// 	if (vFile == undefined || vFile == null) 
+// 	{
+// 		filePath = "";
+// 	} 
+// 	else 
+// 	{
+// 		filePath = vFile.fullpath;
+// 		vFile.close();
+// 	}
+	if (vFile instanceof VirtualFile) {
 		filePath = vFile.fullpath;
 		vFile.close();
+	
+	} else {
+		filePath = "";
 	}
 
 	if (strOpenMode == "SAVE" && strFilterFlag == "EXCEL") 
@@ -499,4 +506,7 @@ this.gfn_fileDialog = function(strOpenMode, strFilterFlag)
 	fd = null;
 
 	return filePath;
-}]]></Script>
+}
+
+
+]]></Script>

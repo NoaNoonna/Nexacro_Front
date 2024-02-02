@@ -26,13 +26,13 @@
                             <Row size="24"/>
                           </Rows>
                           <Band id="head">
-                            <Cell displaytype="checkboxcontrol" edittype="checkbox" text="0"/>
+                            <Cell displaytype="checkboxcontrol" edittype="checkbox" text="expr:0"/>
                             <Cell col="1" text="품목그룹코드"/>
                             <Cell col="2" text="품목그룹명"/>
                             <Cell col="3" text="비고"/>
                           </Band>
                           <Band id="body">
-                            <Cell text="bind:CHECKED" displaytype="checkboxcontrol" edittype="checkbox"/>
+                            <Cell text="bind:CHECKED" displaytype="checkboxcontrol" edittype="none"/>
                             <Cell col="1" text="bind:ITEM_GROUP_CODE" edittype="text" textAlign="center"/>
                             <Cell col="2" text="bind:ITEM_GROUP_NAME" textAlign="center"/>
                             <Cell col="3" text="bind:DESCRIPTION" edittype="text" textAlign="center"/>
@@ -61,7 +61,7 @@
                           </Rows>
                           <Band id="head">
                             <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
-                            <Cell col="1" text="품목코드품목그룹코드" textAlign="center"/>
+                            <Cell col="1" text="품목그룹코드" textAlign="center"/>
                             <Cell col="2" text="품목명" textAlign="center"/>
                             <Cell col="3" text="품목코드" textAlign="center"/>
                             <Cell col="4" text="품목분류" textAlign="center"/>
@@ -111,7 +111,7 @@ var itemGroupCode;
 * 화면이 시작할 때 실행
 ************************/
 this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
-{
+{ 
 	obj.set_titletext("품목");
 //	nexa.gds_itemGroup.clearData();
 //	nexa.gds_item.clearData();

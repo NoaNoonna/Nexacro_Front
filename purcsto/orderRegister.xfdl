@@ -13,16 +13,16 @@
                     <Formats>
                       <Format id="default">
                         <Columns>
-                          <Column size="35"/>
-                          <Column size="48"/>
-                          <Column size="143"/>
+                          <Column size="30"/>
+                          <Column size="30"/>
+                          <Column size="150"/>
                           <Column size="125"/>
                           <Column size="194"/>
-                          <Column size="86"/>
-                          <Column size="97"/>
+                          <Column size="100"/>
+                          <Column size="100"/>
                           <Column size="131"/>
-                          <Column size="107"/>
-                          <Column size="106"/>
+                          <Column size="120"/>
+                          <Column size="120"/>
                         </Columns>
                         <Rows>
                           <Row size="30" band="head"/>
@@ -50,7 +50,7 @@
                           <Cell col="6" text="bind:REQUIRED_AMOUNT" textAlign="center"/>
                           <Cell col="7" text="bind:STOCK_AMOUNT" textAlign="center"/>
                           <Cell col="8" text="bind:ORDER_DATE" textAlign="center"/>
-                          <Cell col="9" text="bind:REQUIRED_DATE"/>
+                          <Cell col="9" text="bind:REQUIRED_DATE" textAlign="center"/>
                         </Band>
                       </Format>
                     </Formats>
@@ -61,9 +61,9 @@
                   <Button id="Button01" taborder="4" text="모의재고처리 및 취합발주" left="472" top="26" width="158" height="34" font="normal 10pt/normal &quot;Arial&quot;" onclick="estimate_searchEstimate_Button01_onclick" cssclass="btn_normal" background="black"/>
                   <Button id="Button00" taborder="5" text="재고처리 / 발주필요 목록조회" left="290" top="26" width="170" height="34" font="normal 9pt/normal &quot;Arial&quot;" onclick="estimateForm_searchEstimate_Button00_onclick" cssclass="btn_normal" background="black"/>
                   <GroupBox id="GroupBox01" taborder="6" text="임의발주 품목검색/수량입력" left="660" top="5" width="350" height="68" font="normal bold 11pt/normal &quot;Arial&quot;" titlealign="topcenter" cssclass="grpBox_normal" color="black"/>
-                  <Edit id="Edit00" taborder="7" left="677" top="26" width="123" height="34" displaynulltext="품목코드 검색" font="normal normal 11pt/normal &quot;Arial&quot;" visible="true" oneditclick="deliver_deliver_Edit00_oneditclick" cssclass="edit_normal"/>
-                  <Edit id="Edit01" taborder="8" left="807" top="26" width="83" height="34" displaynulltext="수량" font="normal normal 11pt/normal &quot;Arial&quot;" visible="true" oneditclick="deliver_deliver_Edit00_oneditclick" cssclass="edit_normal"/>
-                  <Button id="Button02" taborder="9" text="임의발주" left="912" top="26" width="78" height="34" font="normal 10pt/normal &quot;Arial&quot;" onclick="estimate_searchEstimate_Button01_onclick" cssclass="btn_normal" background="black"/>
+                  <Edit id="itemCode_Edit" taborder="7" left="677" top="26" width="123" height="34" displaynulltext="품목코드 검색" font="normal normal 11pt/normal &quot;Arial&quot;" visible="true" oneditclick="deliver_deliver_Edit00_oneditclick" cssclass="edit_normal"/>
+                  <Edit id="itemAmount_Edit" taborder="8" left="807" top="26" width="83" height="34" displaynulltext="수량" font="normal normal 11pt/normal &quot;Arial&quot;" visible="true" oneditclick="deliver_deliver_Edit00_oneditclick" cssclass="edit_normal"/>
+                  <Button id="Button02" taborder="9" text="임의발주" left="912" top="26" width="78" height="34" font="normal 10pt/normal &quot;Arial&quot;" onclick="order_tab_order_Button02_onclick" cssclass="btn_normal" background="black"/>
                   <Button id="Button03" taborder="10" text="프린트" left="1018" top="16" width="60" height="55" onclick="order_tab_order_Button03_onclick" cssclass="btn_normal" background="black"/>
                 </Layout>
               </Layouts>
@@ -71,17 +71,17 @@
             <Tabpage id="tab_orderInfo" text="발주현황">
               <Layouts>
                 <Layout>
-                  <Grid id="Grid00" taborder="0" left="4" top="98" width="816" height="425" binddataset="gds_orderInfo" color="orangered">
+                  <Grid id="Grid00" taborder="0" left="4.00" top="98" width="836" height="425" binddataset="gds_orderInfo" color="orangered">
                     <Formats>
                       <Format id="default">
                         <Columns>
-                          <Column size="34"/>
-                          <Column size="106"/>
-                          <Column size="97"/>
-                          <Column size="168"/>
-                          <Column size="101"/>
-                          <Column size="91"/>
-                          <Column size="119"/>
+                          <Column size="30"/>
+                          <Column size="140"/>
+                          <Column size="110"/>
+                          <Column size="155"/>
+                          <Column size="100"/>
+                          <Column size="100"/>
+                          <Column size="120"/>
                           <Column size="80"/>
                         </Columns>
                         <Rows>
@@ -99,14 +99,14 @@
                           <Cell col="7" text="발주수량"/>
                         </Band>
                         <Band id="body">
-                          <Cell text="currow+1" displaytype="none"/>
-                          <Cell col="1" text="bind:ORDER_NO"/>
-                          <Cell col="2" text="bind:ORDER_DATE"/>
-                          <Cell col="3" text="bind:ORDER_INFO_STATUS"/>
-                          <Cell col="4" text="bind:ORDER_SORT"/>
-                          <Cell col="5" text="bind:ITEM_CODE"/>
-                          <Cell col="6" text="bind:ITEM_NAME"/>
-                          <Cell col="7" text="bind:ORDER_AMOUNT"/>
+                          <Cell displaytype="normal" expr="currow+1" edittype="none" textAlign="center"/>
+                          <Cell col="1" text="bind:ORDER_NO" textAlign="center"/>
+                          <Cell col="2" text="bind:ORDER_DATE" textAlign="center"/>
+                          <Cell col="3" text="bind:ORDER_INFO_STATUS" textAlign="center"/>
+                          <Cell col="4" text="bind:ORDER_SORT" textAlign="center"/>
+                          <Cell col="5" text="bind:ITEM_CODE" textAlign="center"/>
+                          <Cell col="6" text="bind:ITEM_NAME" textAlign="center"/>
+                          <Cell col="7" text="bind:ORDER_AMOUNT" textAlign="center"/>
                         </Band>
                       </Format>
                     </Formats>
@@ -144,6 +144,7 @@ var nexa = nexacro.getApplication();
 var startDate;
 var endDate;
 var price;
+var orderPath = this.order.tab_order.form;
 
 ///////////////////////////////////////  	온로드		///////////////////////////////////////
 
@@ -153,6 +154,7 @@ this.order_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
 	nexa.gds_orderTemp.clearData();
 	nexa.gds_codeDetail.clearData();
 	nexa.gds_item.clearData();
+	nexa.gds_orderInfo.clearData();
 };
 
 
@@ -160,14 +162,14 @@ this.order_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
 
 this.estimateForm_searchEstimate_Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) //목록조회
 {
-	this.order.tab_order.form.Calendar00.value;
-	this.order.tab_order.form.Calendar01.value;
-	if(this.order.tab_order.form.Calendar00.value==null || this.order.tab_order.form.Calendar01.value==null){
+	orderPath.Calendar00.value;
+	orderPath.Calendar01.value;
+	if(orderPath.Calendar00.value==null || orderPath.Calendar01.value==null){
 		alert("날짜를 선택 바랍니다"); 
 		return;
 	}
-	startDate=nexa.changeDate(this.order.tab_order.form.Calendar00.value);
-	endDate=nexa.changeDate(this.order.tab_order.	form.Calendar01.value);
+	startDate=nexa.changeDate(orderPath.Calendar00.value);
+	endDate=nexa.changeDate(orderPath.Calendar01.value);
 		this.transaction(
 					"search_order_list",
 					"svcPurchase::order/list",
@@ -242,6 +244,33 @@ this.estimate_searchEstimate_Button01_onclick = function(obj:nexacro.Button,e:ne
 	}
 };
 
+
+//임의발주
+this.order_tab_order_Button02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.ds_order.clearData();
+	var itemList ="";
+	var itemCode = orderPath.itemCode_Edit.value;
+	var itemAmount = orderPath.itemAmount_Edit.value;
+	trace("itemCode: "+itemCode);
+	trace("itemAmount: "+itemAmount);
+	
+	itemList = itemList.concat(itemCode+" : "+itemAmount+"개\n");
+	var msg = "입력한 품목에 대해 임의발주 처리합니다.\n"+itemList+"\n계속하시겠습니까?";
+	
+	if(confirm(msg)){
+	
+	  var id = "search_optionOrder";
+      var url = "svcPurchase::optionOrder";
+      var reqData = "";
+      var resData = "";
+      var args = "itemCode='"+itemCode+"' itemAmount='"+itemAmount+"'";
+      var callback = "callback";
+	  
+	  this.transaction(id, url, reqData, resData, args, callback);
+	}
+};
+
 ///////////////////////////////////////  	공통		///////////////////////////////////////
 
 this.popupCallBack = function(strPopupID, strReturn)  //팝업콜백(showModal의 리턴값 받음)
@@ -302,6 +331,8 @@ this.order_tab_order_Button03_onclick = function(obj:nexacro.Button,e:nexacro.Cl
 		this.alert('프린트에 실패하였습니다.');
 	}
 };
+
+
 ]]></Script>
   </Form>
 </FDL>

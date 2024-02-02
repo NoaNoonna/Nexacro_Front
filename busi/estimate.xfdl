@@ -3,27 +3,27 @@
   <Form id="estimate" width="1280" height="720" titletext="견적관리" onload="estimateForm_onload">
     <Layouts>
       <Layout height="720" width="1280">
-        <GroupBox id="estimateManage" taborder="0" text="견적관리" left="20" top="15" width="1200" height="650" titlealign="topcenter" font="normal bold 25pt/normal &quot;Arial&quot;" cssclass="grpBox_normal"/>
+        <GroupBox id="estimateManage" taborder="0" text="견적관리" left="20.00" top="15" width="1160" height="650" titlealign="topcenter" font="normal bold 25pt/normal &quot;Arial&quot;" cssclass="grpBox_normal"/>
         <Tab id="estimate" taborder="1" tabindex="0" left="36" top="66" width="1109" height="587" onchanged="estimate_onchanged" font="normal 9pt/normal &quot;Arial&quot;" selectedtabbuttonheight="30" selectedtabbuttonwidth="100" tabposition="top" color="orangered">
           <Tabpages>
             <Tabpage id="searchEstimate" text="견적 조회/수정">
               <Layouts>
                 <Layout>
                   <Calendar id="Calendar00" taborder="0" left="214" top="8" width="133" height="34" dateformat="yyyy-MM-dd" displaynulltext="시작일" font="normal bold 12pt/normal &quot;Arial&quot;" color="orangered"/>
-                  <Button id="Button00" taborder="1" text="견적조회" left="503" top="8" width="98" height="34" font="normal 12pt/normal &quot;Arial&quot;" onclick="estimateForm_searchEstimate_Button00_onclick" cssclass="btn_normal"/>
-                  <Grid id="Grid00" taborder="2" left="4" top="63" width="1098" height="217" binddataset="gds_estimate" oncellclick="estimate_searchEstimate_Grid00_oncellclick" color="orangered">
+                  <Button id="Button00" taborder="1" text="견적조회" left="503.00" top="8" width="98" height="34" font="normal 12pt/normal &quot;Arial&quot;" onclick="estimateForm_searchEstimate_Button00_onclick" cssclass="btn_normal"/>
+                  <Grid id="Grid00" taborder="2" left="4.00" top="63" width="1100" height="217" binddataset="gds_estimate" oncellclick="estimate_searchEstimate_Grid00_oncellclick" color="orangered">
                     <Formats>
                       <Format id="default">
                         <Columns>
                           <Column size="35"/>
-                          <Column size="178"/>
-                          <Column size="167"/>
-                          <Column size="142"/>
+                          <Column size="180"/>
+                          <Column size="170"/>
+                          <Column size="150"/>
                           <Column size="109"/>
-                          <Column size="99"/>
-                          <Column size="114"/>
-                          <Column size="101"/>
-                          <Column size="81"/>
+                          <Column size="110"/>
+                          <Column size="150"/>
+                          <Column size="110"/>
+                          <Column size="85"/>
                         </Columns>
                         <Rows>
                           <Row size="30" band="head"/>
@@ -54,22 +54,22 @@
                       </Format>
                     </Formats>
                   </Grid>
-                  <Grid id="Grid01" taborder="3" left="4" top="332" width="1098" height="221" binddataset="gds_estimateDetail" oncellclick="estimate_searchEstimate_Grid01_oncellclick" onheadclick="estimate_searchEstimate_Grid01_onheadclick" color="orangered">
+                  <Grid id="Grid01" taborder="3" left="4.00" top="332" width="1100" height="221" binddataset="gds_estimateDetail" oncellclick="estimate_searchEstimate_Grid01_oncellclick" onheadclick="estimate_searchEstimate_Grid01_onheadclick" color="orangered">
                     <Formats>
                       <Format id="default">
                         <Columns>
                           <Column size="30"/>
                           <Column size="33"/>
-                          <Column size="132"/>
+                          <Column size="140"/>
                           <Column size="130"/>
                           <Column size="146"/>
                           <Column size="50"/>
-                          <Column size="105"/>
+                          <Column size="110"/>
                           <Column size="82"/>
                           <Column size="98"/>
                           <Column size="93"/>
-                          <Column size="104"/>
-                          <Column size="63"/>
+                          <Column size="120"/>
+                          <Column size="70"/>
                         </Columns>
                         <Rows>
                           <Row size="30" band="head"/>
@@ -108,7 +108,7 @@
                   </Grid>
                   <Button id="Button03" taborder="4" text="일괄저장" left="121" top="288" width="106" height="34" font="normal 11pt/normal &quot;Arial&quot;" onclick="estimate_searchEstimate_Button03_onclick" cssclass="btn_normal"/>
                   <Button id="Button02" taborder="5" text="체크한상세삭제" left="6" top="288" width="98" height="34" font="normal 9pt/normal &quot;Arial&quot;" onclick="estimate_searchEstimate_Button02_onclick" cssclass="btn_normal"/>
-                  <Calendar id="Calendar01" taborder="6" left="359" top="8" width="133" height="34" dateformat="yyyy-MM-dd" displaynulltext="종료일" font="normal bold 12pt/normal &quot;Arial&quot;" color="orangered"/>
+                  <Calendar id="Calendar01" taborder="6" left="359.00" top="8" width="133" height="34" dateformat="yyyy-MM-dd" displaynulltext="종료일" font="normal bold 12pt/normal &quot;Arial&quot;" color="orangered"/>
                   <Radio id="Radio00" taborder="7" left="12" top="14" width="193" height="24" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" direction="vertical" font="normal bold 11pt/normal &quot;Arial&quot;" cssclass="edit_normal">
                     <Dataset id="innerdataset">
                       <ColumnInfo>
@@ -127,9 +127,9 @@
                       </Rows>
                     </Dataset>
                   </Radio>
-                  <Button id="Button01" taborder="8" left="614" top="8" width="98" height="34" text="PDF 출력" font="normal 11pt/normal &quot;Arial&quot;" onclick="estimate_searchEstimate_Button01_onclick" cssclass="btn_normal"/>
-                  <Button id="Button04" taborder="9" text="메일전송" left="722" top="8" width="98" height="34" font="normal 11pt/normal &quot;Arial&quot;" onclick="estimate_searchEstimate_Button04_onclick" cssclass="btn_normal"/>
-                  <Edit id="Edit00" taborder="10" left="840" top="8" width="208" height="34"/>
+                  <Button id="Button01" taborder="8" left="614.00" top="8" width="98" height="34" text="PDF 출력" font="normal 11pt/normal &quot;Arial&quot;" onclick="estimate_searchEstimate_Button01_onclick" cssclass="btn_normal"/>
+                  <Button id="Button04" taborder="9" text="메일전송" left="722.00" top="8" width="98" height="34" font="normal 11pt/normal &quot;Arial&quot;" onclick="estimate_searchEstimate_Button04_onclick" cssclass="btn_normal"/>
+                  <Edit id="Edit00" taborder="10" left="840.00" top="8" width="208" height="34" onchanged="estimate_searchEstimate_Edit00_onchanged"/>
                 </Layout>
               </Layouts>
             </Tabpage>
@@ -784,14 +784,15 @@ this.estimate_searchEstimate_Button04_onclick = function(obj:nexacro.Button,e:ne
    var emailId = this.estimate.searchEstimate.form.Edit00.value;
    this.transaction(
       "sendEmail",
-      "svcCompinfo::estimatereportemail",
+      "svcCompinfo::estimateReportEmail",
       "",
       "",
       "orderDraftNo="+orderDraftNo+" emailId="+emailId,
       "callback",
          false
    );
-};]]></Script>
+};
+]]></Script>
     <Objects/>
   </Form>
 </FDL>

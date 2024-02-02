@@ -37,16 +37,16 @@
                 <Cell col="9" text="원재료검사"/>
               </Band>
               <Band id="body">
-                <Cell expr="currow+1"/>
+                <Cell expr="currow+1" textAlign="center"/>
                 <Cell col="1" displaytype="checkboxcontrol" text="bind:CHECKED"/>
                 <Cell col="2" text="bind:ORDER_NO"/>
-                <Cell col="3" text="bind:ORDER_DATE"/>
-                <Cell col="4" text="bind:ORDER_INFO_STATUS"/>
-                <Cell col="5" text="bind:ORDER_SORT"/>
-                <Cell col="6" text="bind:ITEM_CODE"/>
-                <Cell col="7" text="bind:ITEM_NAME"/>
-                <Cell col="8" text="bind:ORDER_AMOUNT"/>
-                <Cell col="9" text="bind:INSPECTION_STATUS"/>
+                <Cell col="3" text="bind:ORDER_DATE" textAlign="center"/>
+                <Cell col="4" text="bind:ORDER_INFO_STATUS" textAlign="center"/>
+                <Cell col="5" text="bind:ORDER_SORT" textAlign="center"/>
+                <Cell col="6" text="bind:ITEM_CODE" textAlign="center"/>
+                <Cell col="7" text="bind:ITEM_NAME" textAlign="center"/>
+                <Cell col="8" text="bind:ORDER_AMOUNT" textAlign="center"/>
+                <Cell col="9" text="bind:INSPECTION_STATUS" textAlign="center"/>
               </Band>
             </Format>
           </Formats>

@@ -26,7 +26,7 @@
         <Edit id="edt_rank" taborder="6" left="86" top="258" width="133" height="30" readonly="true" background="white"/>
         <Edit id="edt_empName" taborder="7" left="86" top="290" width="133" height="30" readonly="true" background="white"/>
         <Button id="btn_logout" taborder="8" text="logout" left="169" top="21" width="50" height="20" background="black" border="3px none antiquewhite,3px none,3px none" onclick="btn_logout_onclick" color="white"/>
-        <ImageViewer id="ImageViewer00" taborder="9" left="11" top="44" width="204" height="176" image="url('imagerc::Konchi_King.jpg')" stretch="none" onclick="ImageViewer00_onclick"/>
+        <ImageViewer id="ImageViewer00" taborder="9" left="3.00" top="44" width="217" height="176" image="url('imagerc::꼬질왕자.png')" stretch="none" onclick="ImageViewer00_onclick"/>
       </Layout>
     </Layouts>
     <Bind>
@@ -139,10 +139,7 @@ this.grd_mymenu_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEvent
 	obj.setTreeStatus(nGridRow,nStatus);
 };
 
-this.ImageViewer00_onclick = function(obj:nexacro.ImageViewer,e:nexacro.ClickEventInfo)
-{
-	
-};
+
 ]]></Script>
   </Form>
 </FDL>

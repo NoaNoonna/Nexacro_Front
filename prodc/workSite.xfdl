@@ -9,20 +9,20 @@
             <Tabpage id="Tabpage1" text="작업장">
               <Layouts>
                 <Layout>
-                  <Grid id="Grid00" taborder="0" left="10" top="91" width="1170" height="474" binddataset="gds_workOrderInfo" oncellclick="Tab00_Tabpage1_Grid00_oncellclick" color="orangered">
+                  <Grid id="Grid00" taborder="0" left="10.00" top="91" width="1070" height="474" binddataset="gds_workOrderInfo" oncellclick="Tab00_Tabpage1_Grid00_oncellclick" color="orangered">
                     <Formats>
                       <Format id="default">
                         <Columns>
                           <Column size="25"/>
                           <Column size="35"/>
-                          <Column size="119"/>
-                          <Column size="103"/>
-                          <Column size="67"/>
-                          <Column size="62"/>
-                          <Column size="105"/>
+                          <Column size="130"/>
+                          <Column size="120"/>
+                          <Column size="80"/>
+                          <Column size="80"/>
+                          <Column size="110"/>
                           <Column size="43"/>
-                          <Column size="81"/>
-                          <Column size="81"/>
+                          <Column size="100"/>
+                          <Column size="110"/>
                           <Column size="75"/>
                           <Column size="80"/>
                           <Column size="80"/>

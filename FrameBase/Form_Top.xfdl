@@ -3,7 +3,7 @@
   <Form id="frameTop" width="1540" height="70" titletext="New Form">
     <Layouts>
       <Layout height="70" width="1540">
-        <Menu id="Menu00" taborder="0" left="280" top="0" width="1210" height="70" onmenuclick="Menu00_onmenuclick" innerdataset="gds_menuTop" idcolumn="MENU_ID" captioncolumn="MENU_NAME" userdatacolumn="MENU_URL" levelcolumn="MENU_LEVEL" color="white" background="black" border="0px none,0px none,0px solid black" font="bold 16px/normal &quot;Gulim&quot;" borderRadius="0px 0px 0px 0px"/>
+        <Menu id="Menu00" taborder="0" left="280.00" top="0" width="1260" height="70" onmenuclick="Menu00_onmenuclick" innerdataset="gds_menuTop" idcolumn="MENU_ID" captioncolumn="MENU_NAME" userdatacolumn="MENU_URL" levelcolumn="MENU_LEVEL" color="white" background="black" border="0px none,0px none,0px solid black" font="bold 16px/normal &quot;Gulim&quot;" borderRadius="0px 0px 0px 0px"/>
         <ImageViewer id="ImageViewer00" taborder="1" left="0" top="0" width="280" height="70" text="" fittocontents="none" stretch="fixaspectratio" image="url('imagerc::logistics2.png')" onclick="ImageViewer00_onclick" border="0px white"/>
       </Layout>
     </Layouts>

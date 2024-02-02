@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sample_fileupload_01" left="0" top="0" width="1024" height="768" titletext="New Form" border="" background="">
+    <Layouts>
+      <Layout height="768" width="1024" stepcount="0">
+        <FileUpload id="fileupload" taborder="0" left="104.00" top="270" width="311" height="220" itemcount="1" multiselect="true" itemheight="50" buttonsize="50" onitemchanged="fileupload_onitemchanged" onitemclick="fileupload_onitemclick"/>
+        <Button id="btnAdd" taborder="1" text="ADD" left="110.00" top="30" width="70" height="50" onclick="btnAdd_onclick"/>
+        <Button id="btnUpload" taborder="2" text="UPLOAD" left="205.00" top="30" width="90" height="50" onclick="btnUpload_onclick"/>
+        <TextArea id="TextArea00" taborder="3" left="105.00" top="100" width="310" height="157"/>
+        <ImageViewer id="ImgView" taborder="4" text="ImageViewer" left="446" top="34" width="260" height="286" stretch="fixaspectratio"/>
+        <Button id="Button00" taborder="5" text="Button00" left="108" top="360" width="120" height="50" onclick="Button00_onclick"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <VirtualFile id="VirtualFile00"/>
+      <FileDialog id="FileDialog" onclose="FileDialog_onclose"/>
+      <Dataset id="ds_img">
+        <ColumnInfo>
+          <Column id="IMAGE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="IMAGE">C:\Users\Jihyo Park\Desktop\PICTURE\baboWangja.jpg</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_resimg">
+        <ColumnInfo>
+          <Column id="IMAGE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <FileUpTransfer id="FileUpTransfer00"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[// this.btnAdd_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+// {
+// 	this.fileupload.appendItem();
+// };
+// 
+// 
+// this.btnUpload_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+// {
+// 	
+// 	if (this.fileupload.filelist.length > 0)
+// 	{
+// 		this.alert(this.fileupload.filelist.length);
+// 
+// 		// 선택한 파일의 경로를 가져와서 이미지 뷰어에 설정
+// 		var firstFile = this.fileupload.filelist[0];
+// 		trace("this.fileupload.filelist: "+this.fileupload.filelist);
+// 		trace("firstFile: "+firstFile);
+// 		
+// 		var filePath = firstFile.fullpath;
+// 		trace("filePath: "+filePath);
+// 
+// 	this.ImgView.set_image("");
+// 	  
+// 	  var id = "imgfileupload";
+//       var url = "svcCompinfo::imgfileupload";
+//       var reqData = ""; 
+//       var resData = "";
+//       var args = "";
+//       var callback = "callback"; 
+//       
+//       this.transaction(id, url, reqData, resData,  args, callback);
+// 	  
+// 	// 업로드 완료 후 서버에서 전송되는 응답을 처리할 callback 함수
+//     var callback = function (id, error, data) {
+//         if (error == -1 || error == -2) {
+//             // 에러가 발생한 경우
+//             trace("Upload failed: " + data.errorMsg);
+//         } else {
+//             // 정상적으로 업로드된 경우
+//             trace("Upload successful");
+//             
+// 		var imgUrl = data.ImgUrl;
+//         if (imgUrl) {
+//             this.ImgView.set_image(imgUrl);
+//         } else {
+//             trace("Image URL not found in server response.");
+//         }
+//         }
+// 		}
+//     };
+// 	
+// 	/*this.FileUpTransfer00.upload(callback);*/
+// };
+// 
+this.btnUpload_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo)
+{
+	if (this.fileupload.filelist.length > 0)
+	{
+		this.alert(this.fileupload.filelist.length);
+
+		// 선택한 파일의 경로를 가져와서 이미지 뷰어에 설정
+		var firstFile = this.fileupload.filelist[0];
+		trace("this.fileupload.filelist: "+this.fileupload.id);
+		trace("firstFile: "+firstFile);
+		
+		var filePath = firstFile.fullpath;
+		trace("filePath: "+filePath);
+		this.ImgView.set_image("file://"+filePath);
+		this.ImgView.addEventHandler("onload", this.onImageLoad, this);
+
+		// 선택한 파일들 초기화
+		/*this.fileupload.clear();*/
+
+		// 선택한 파일 목록 표시 갱신
+		this.fn_checklist();
+	}
+	else
+	{
+		// 선택한 파일이 없는 경우 경고 또는 다른 동작 수행
+		this.alert("선택한 파일이 없습니다.");
+	}
+};
+// 
+// 
+// this.fileupload_onitemchanged = function(obj:nexacro.FileUpload,e:nexacro.FileUploadItemChangeEventInfo)
+// {
+// 	this.fn_checklist();
+// };
+// 
+// 
+// 
+// this.fn_checklist = function()
+// {
+// 	var filelist = "";
+// 	if(this.fileupload.filelist.length > 0)
+// 	{
+// 		for(var i=0;i<this.fileupload.filelist.length;i++)
+// 		{
+// 			filelist += this.fileupload.filelist[i].filename+"\n";
+// 		}
+// 		this.TextArea00.set_value(filelist);
+// 	} else {
+// 		this.TextArea00.set_value("NO SELECTED FILES");
+// 	}
+// }
+// 
+// this.fileupload_onitemclick = function(obj:nexacro.FileUpload,e:nexacro.FileUploadItemEventInfo)
+// {
+// 	if(this.confirm("Delete Item"))
+// 	{
+// 		this.fileupload.deleteItem(e.index);
+// 		this.fn_checklist();
+// 	}
+// };
+// 
+// this.cutFileSize = function(filesize)
+// {
+// 	var sOutput = filesize + " bytes";
+// 	for (var aMultiples = ["KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"], nMultiple = 0, nApprox = filesize / 1024; nApprox > 1; nApprox /= 1024, nMultiple++) 
+// 	{
+// 		sOutput = nApprox.toFixed(3) + " " + aMultiples[nMultiple];
+// 	}
+// 	return sOutput;
+// }
+// var vFile;
+// var empFilename;
+//     this.ImgView.set_image("file://"+realPath);
+//       this.ImgView.set_stretch("fit");
+//      trace("image :", this.ImgView.image);
+//      
+// };
+// this.btnUpload_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+// {
+// 	this.transaction("test", "svcHR::imgtest", "gds_employee=ds_img", "ds_resimg=gds_employee",  "", "fn_testest");
+// };
+// 
+// this.fn_testest = function()
+// {
+// 	var imagetest = this.ds_resimg.getColumn(0, "IMAGE");
+// 	trace(imagetest);
+// 	this.ImgView.image = imagetest
+// }
+// 
+// this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+// {
+// 	var base64Data = "your_base64_image_data";
+// 	this.ImgView.
+// 	trace(this.ImgView.image.getBase64String());
+// };
+
+// this.btnAdd_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+// {
+// 	this.FileDialog.open( "FileOpen", FileDialog.LOAD );
+// };
+// 
+// var imagepath = "C:\Users\Jihyo Park\Desktop\PICTURE\baboWangja.jpg"
+// 
+// this.FileDialog_onclose = function(obj:nexacro.FileDialog,e:nexacro.FileDialogEventInfo)
+// {
+//       vFile = e.virtualfiles[0];
+//      trace("vFile : " , vFile);
+//       vFile.addEventHandler("onsuccess", this.FileList_onsuccess, this);
+//       vFile.addEventHandler("onerror", this.FileList_onerror, this);
+//       vFile.open(vFile.fullpath, VirtualFile.openBinary);
+// 
+//       empFileName = vFile.filename;
+//       trace("empFileName : ", empFileName);
+//       var realPath = system.convertRealPath(vFile.fullpath);
+//      trace("realPath : ", realPath);
+//      newPath = new String(realPath);
+//      trace("newPath : ", newPath);
+//   ]]></Script>
+  </Form>
+</FDL>

@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="releaseRegister" width="540" height="490" titletext="출고등록" onload="releaseRegist_Dialog_onload" scrolltype="both" dragscrolltype="both" scrollbartype="auto auto" scrollbarsize="10">
+    <Layouts>
+      <Layout height="490" horizontalgap="0" mobileorientation="landscape" spacing="0px" tabletemplate="1* / 1*" verticalgap="0" width="540">
+        <GroupBox id="GroupBox00" taborder="0" text="출고등록" left="20.00" top="10" width="330" height="380" font="bold 18pt &quot;Arial&quot;"/>
+        <Static id="Static00" taborder="1" text="출고일련번호" left="40.00" top="64" width="110" height="20" font="bold 12px/normal &quot;Calibri&quot;" letterSpacing="1px"/>
+        <Edit id="Release_Edit" taborder="2" left="40.00" top="90" width="278" height="30" color="orangered" readonly="true"/>
+        <Static id="Static00_02_00" taborder="3" text="창고코드" left="183.00" top="230" width="90" height="20" font="bold 12px/normal &quot;Calibri&quot;" letterSpacing="1px"/>
+        <Edit id="WhrsCode_Edit" taborder="4" left="183.00" top="255" width="135" height="30"/>
+        <Static id="Static00_00_02_00" taborder="5" text="출고담당자" left="40.00" top="230" width="90" height="20" onclick="Static00_00_onclick" font="bold 12px/normal &quot;Calibri&quot;" letterSpacing="1px"/>
+        <Edit id="Person_Edit" taborder="6" left="40.00" top="255" width="135" height="30"/>
+        <Button id="Cancel_Button" taborder="7" text="취소" left="160.00" top="320" width="74" height="40" background="lightgray" font="bold 14px/normal &quot;Calibri&quot;" onclick="Cancel_Button_onclick" borderRadius="5px"/>
+        <Button id="Add_Button" taborder="8" text="등록" left="244.00" top="320" width="74" height="40" background="lightcyan" font="bold 14px/normal &quot;Calibri&quot;" cursor="pointer" color="black" onclick="Add_Button_onclick" borderRadius="5px"/>
+        <Static id="Static00_01" taborder="9" text="등록일자" left="40.00" top="145" width="90" height="20" font="bold 12px/normal &quot;Calibri&quot;" letterSpacing="1px"/>
+        <Calendar id="RegistDate_Calendar" taborder="10" left="40.00" top="170" width="135" height="30" dateformat="yyyy-MM-dd"/>
+        <Static id="Static00_01_00" taborder="11" text="출고예정일" left="183.00" top="145" width="90" height="20" font="bold 12px/normal &quot;Calibri&quot;" letterSpacing="1px"/>
+        <Calendar id="PlanDate_Calendar" taborder="12" left="183.00" top="170" width="135" height="30" dateformat="yyyy-MM-dd"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[var parentName;
+var paramRow;
+var nexa = nexacro.getApplication();
+var releaseNo;
+
+this.releaseRegist_Dialog_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo){
+
+	obj.set_titletext("releaseRegist_Dialog");
+	parentName = obj.parent.name;
+	paramRow = obj.parent.eRow;
+
+	if(parentName == "releaseDialog"){
+		releaseNo = nexa.gds_releaseInfo.getColumn(paramRow, "RELEASE_NO");
+
+	}
+	this.Release_Edit.set_value(releaseNo);
+	trace("releaseNo: " + releaseNo);
+}
+
+/** 출고현황 수정 : 등록 **/
+this.Add_Button_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var rowNo = nexa.gds_releaseInfo.findRow("CHECKED","1");
+	trace("rowNo:"+rowNo);
+	
+    nexa.gds_releaseInfo.setColumn(rowNo, "REGISTER_DATE", this.RegistDate_Calendar.text); 
+    nexa.gds_releaseInfo.setColumn(rowNo, "PLANNED_RELEASE_DATE", this.PlanDate_Calendar.text); 
+    nexa.gds_releaseInfo.setColumn(rowNo, "PERSON_IN_CHARGE", this.Person_Edit.value); 
+    nexa.gds_releaseInfo.setColumn(rowNo, "WAREHOUSE_CODE", this.WhrsCode_Edit.value);
+    
+       var id = "batch_update_ReleaseInfo";
+       var url = "svcSales::update/releaseInfo";
+       var reqData = "gds_releaseInfo=gds_releaseInfo:u";
+       var resData = "";
+       var args = "";
+       var callback = "callback";
+		   
+       this.transaction(id, url, reqData, resData, args, callback);
+	   
+    this.close();
+};
+
+
+
+/** 취소버튼 **/
+this.Cancel_Button_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close();
+};
+
+
+/** 콜백함수 **/
+this.callback = function (trid , ErrorCode, ErrorMsg){
+   if(trid.indexOf("search")!=-1){
+      if(ErrorCode <0){
+         alert("조회 실패 : " + ErrorMsg);
+      }
+   }else if(trid.indexOf("batch")!=-1){
+      if(ErrorCode <0){
+         alert("오류 : 실패 : " + ErrorMsg);
+      }else{
+         alert("완료!");
+         this.reload();
+      }
+   }
+}
+]]></Script>
+    <Objects/>
+  </Form>
+</FDL>

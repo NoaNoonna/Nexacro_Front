@@ -33,7 +33,7 @@
                   <Calendar id="endC" taborder="5" left="396" top="67" width="134" height="35" dateformat="yyyy-MM-dd" displaynulltext="종료일" color="orangered"/>
                   <Button id="btn_searchMps" taborder="6" text="MPS조회" left="544" top="67" width="92" height="35" onclick="Tab00_Tabpage1_Div00_btn_searchMps_onclick" cssclass="btn_normal" background="black"/>
                   <Button id="btn_simulate_mrp" taborder="7" text="선택한 MPS로 모의전개" left="695" top="67" width="141" height="35" onclick="Tab00_Tabpage1_Div00_btn_simulate_mrp_onclick" cssclass="btn_normal" background="black"/>
-                  <Grid id="Grid00" taborder="8" left="22" top="114" width="1190" height="482" binddataset="gds_mps" oncellclick="Tab00_Tabpage1_Grid00_oncellclick" color="orangered">
+                  <Grid id="Grid00" taborder="8" left="22.00" top="114" width="1176" height="482" binddataset="gds_mps" oncellclick="Tab00_Tabpage1_Grid00_oncellclick" color="orangered">
                     <Formats>
                       <Format id="default">
                         <Columns>
@@ -50,7 +50,7 @@
                           <Column size="100"/>
                           <Column size="98"/>
                           <Column size="87"/>
-                          <Column size="47"/>
+                          <Column size="55"/>
                         </Columns>
                         <Rows>
                           <Row size="24" band="head"/>
@@ -97,21 +97,21 @@
             <Tabpage id="Tabpage2" text="소요량취합">
               <Layouts>
                 <Layout>
-                  <Button id="Button00" taborder="0" text="소요량 모의 취합결과조회" left="14" top="7" width="176" height="30" onclick="Tab00_Tabpage2_Button00_onclick" cssclass="btn_normal" background="black"/>
-                  <Grid id="Grid00" taborder="1" left="12" top="44" width="1196" height="255" binddataset="gds_mrp" color="orangered">
+                  <Button id="Button00" taborder="0" text="소요량 모의 취합결과조회" left="4.00" top="17" width="176" height="30" onclick="Tab00_Tabpage2_Button00_onclick" cssclass="btn_normal" background="black"/>
+                  <Grid id="Grid00" taborder="1" left="2.00" top="54" width="1136" height="255" binddataset="gds_mrp" color="orangered">
                     <Formats>
                       <Format id="default">
                         <Columns>
                           <Column size="24"/>
                           <Column size="144"/>
-                          <Column size="126"/>
-                          <Column size="108"/>
-                          <Column size="97"/>
+                          <Column size="130"/>
+                          <Column size="110"/>
+                          <Column size="100"/>
                           <Column size="170"/>
                           <Column size="130"/>
                           <Column size="155"/>
                           <Column size="90"/>
-                          <Column size="94"/>
+                          <Column size="80"/>
                         </Columns>
                         <Rows>
                           <Row size="24" band="head"/>
@@ -135,7 +135,7 @@
                           <Cell col="2" text="bind:MPS_NO" textAlign="center"/>
                           <Cell col="3" text="bind:ITEM_CLASSIFICATION" textAlign="center"/>
                           <Cell col="4" text="bind:ITEM_CODE" textAlign="center"/>
-                          <Cell col="5" text="bind:ITEM_NAME" textAlign="left"/>
+                          <Cell col="5" text="bind:ITEM_NAME" textAlign="center"/>
                           <Cell col="6" text="bind:ORDER_DATE" displaytype="normal" textAlign="center"/>
                           <Cell col="7" text="bind:REQUIRED_DATE" displaytype="normal" textAlign="center"/>
                           <Cell col="8" text="bind:REQUIRED_AMOUNT" textAlign="center"/>
@@ -144,8 +144,8 @@
                       </Format>
                     </Formats>
                   </Grid>
-                  <GroupBox id="GroupBox00" taborder="2" text="소요량취합 등록일자" left="17" top="305" width="206" height="52" cssclass="grpBox_normal" color="black"/>
-                  <Radio id="Radio00" taborder="3" left="38" top="322" width="187" height="33" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" direction="vertical" font="normal 10pt/normal &quot;Arial&quot;" onitemchanged="Tab00_Tabpage2_Radio00_onitemchanged" cssclass="edit_normal" color="black">
+                  <GroupBox id="GroupBox00" taborder="2" text="소요량취합 등록일자" left="7.00" top="325" width="206" height="52" cssclass="grpBox_normal" color="black"/>
+                  <Radio id="Radio00" taborder="3" left="28.00" top="342" width="187" height="33" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" direction="vertical" font="normal 10pt/normal &quot;Arial&quot;" onitemchanged="Tab00_Tabpage2_Radio00_onitemchanged" cssclass="edit_normal" color="black">
                     <Dataset id="innerdataset">
                       <ColumnInfo>
                         <Column id="codecolumn" size="256"/>
@@ -163,20 +163,21 @@
                       </Rows>
                     </Dataset>
                   </Radio>
-                  <Calendar id="Calendar00" taborder="4" left="248" top="310" width="141" height="47" dateformat="yyyy-MM-dd" visible="false" color="orangered"/>
-                  <Button id="btn_regist_zippedmrp" taborder="5" text="현재취합된 결과를 등록" left="248" top="310" width="176" height="43" onclick="Tab00_Tabpage2_btn_regist_zippedmrp_onclick" cssclass="btn_normal" background="black"/>
-                  <Grid id="Grid01" taborder="6" left="12" top="359" width="1192" height="256" binddataset="gds_mrpGathering" color="orangered">
+                  <Calendar id="Calendar00" taborder="4" left="248.00" top="330" width="141" height="47" dateformat="yyyy-MM-dd" visible="false" color="orangered"/>
+                  <Button id="btn_regist_zippedmrp" taborder="5" text="현재취합된 결과를 등록" left="238.00" top="330" width="176" height="43" onclick="Tab00_Tabpage2_btn_regist_zippedmrp_onclick" cssclass="btn_normal" background="black"/>
+                  <Grid id="Grid01" taborder="6" left="2.00" top="389" width="1136" height="256" binddataset="gds_mrpGathering" color="orangered">
                     <Formats>
                       <Format id="default">
                         <Columns>
-                          <Column size="36"/>
-                          <Column size="117"/>
-                          <Column size="110"/>
-                          <Column size="120"/>
+                          <Column size="30"/>
+                          <Column size="140"/>
+                          <Column size="130"/>
+                          <Column size="140"/>
                           <Column size="80"/>
-                          <Column size="131"/>
-                          <Column size="137"/>
-                          <Column size="80"/>
+                          <Column size="150"/>
+                          <Column size="160"/>
+                          <Column size="100"/>
+                          <Column size="230"/>
                         </Columns>
                         <Rows>
                           <Row size="24" band="head"/>
@@ -189,8 +190,9 @@
                           <Cell col="3" text="품목명"/>
                           <Cell col="4" text="단위"/>
                           <Cell col="5" text="발주/작업지시 기한"/>
-                          <Cell col="6" text="발주/작업지시 기한"/>
+                          <Cell col="6" text="발주/작업지시 완료기한"/>
                           <Cell col="7" text="필요수량"/>
+                          <Cell col="8" text="비고"/>
                         </Band>
                         <Band id="body">
                           <Cell expr="currow+1" textAlign="center"/>
@@ -201,6 +203,7 @@
                           <Cell col="5" text="bind:CLAIM_DATE" displaytype="normal" textAlign="center"/>
                           <Cell col="6" text="bind:DUE_DATE" displaytype="normal" textAlign="center"/>
                           <Cell col="7" text="bind:NECESSARY_AMOUNT" textAlign="center"/>
+                          <Cell col="8" textAlign="center"/>
                         </Band>
                       </Format>
                     </Formats>

@@ -110,7 +110,7 @@
                 </Layout>
               </Layouts>
             </Tabpage>
-            <Tabpage id="regist" text="BOM 등록">
+            <Tabpage id="regist" text="BOM 등록" tabindex="1">
               <Layouts>
                 <Layout>
                   <GroupBox id="GroupBox00" taborder="0" text="품목분류" left="66" top="13" width="182" height="66" font="normal bold 11pt/normal &quot;Arial&quot;" titlealign="topcenter" color="black"/>
@@ -204,10 +204,11 @@ var code; //완,반,원재료 코드
 ///////////////////////////////////////     온로드      ///////////////////////////////////////
 
 
-this.bom_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo) //온로드
+this.Bom_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo) //온로드
 {
    obj.set_titletext("BOM");
    nexa.gds_bomDeploy.clearData();
+   nexa.gds_bomInfo.clearData();	
 };
 
 
@@ -217,10 +218,11 @@ this.bom_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo) //온로드
 this.bomInfo_onchanged = function(obj:nexacro.Tab,e:nexacro.TabIndexChangeEventInfo) //탭변경시
 {
    tabIndex = e.postindex;
+   trace("tabIndex: "+tabIndex);
    if(tabIndex==1){
       itemCFCode = null;     //품목분류코드
       itemCd = null;         //품목코드
-      nexa.gds_bomInfo.clearData();
+	  nexa.gds_bom.clearData();	
       editPack = this.bomInfo.regist.form.Edit00;
       cls = this.bomInfo.regist.form.item_cls;
    }else{

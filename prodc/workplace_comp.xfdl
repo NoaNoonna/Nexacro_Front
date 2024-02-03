@@ -4,19 +4,19 @@
     <Layouts>
       <Layout height="720" width="1280">
         <GroupBox id="GroupBox00" taborder="0" text="완료버튼" left="35" top="30" width="155" height="65" color="black"/>
-        <Grid id="Grid00" taborder="1" left="17" top="115" width="1083" height="385" binddataset="gds_workSiteSimulation" color="orangered">
+        <Grid id="Grid00" taborder="1" left="17.00" top="115" width="963" height="385" binddataset="gds_workSiteSimulation" color="orangered">
           <Formats>
             <Format id="default">
               <Columns>
                 <Column size="24"/>
-                <Column size="102"/>
-                <Column size="80"/>
-                <Column size="85"/>
-                <Column size="88"/>
-                <Column size="120"/>
+                <Column size="130"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="90"/>
+                <Column size="130"/>
                 <Column size="92"/>
                 <Column size="86"/>
-                <Column size="114"/>
+                <Column size="130"/>
                 <Column size="80"/>
               </Columns>
               <Rows>

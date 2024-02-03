@@ -21,11 +21,11 @@
               <Static id="Static00_04_00" taborder="12" text="고객팩스번호" left="625" top="144" width="124" height="30" font="normal 16px &quot;Ariel&quot;"/>
               <Static id="Static00_05_00" taborder="13" text="고객노트" left="625" top="174" width="124" height="54" font="normal 16px &quot;Ariel&quot;"/>
               <Static id="Static00_06_00" taborder="14" text="생산된제품" left="625" top="228" width="124" height="30" font="normal 16px &quot;Ariel&quot;"/>
-              <Combo id="workplaceCode" taborder="15" left="279" top="0" width="330" height="30" innerdataset="gds_codeDetail" codecolumn="DETAIL_CODE" datacolumn="DETAIL_CODE_NAME" text="" onitemchanged="Div00_workplaceCode_onitemchanged"/>
+              <Combo id="workplaceCode" taborder="15" left="279" top="0" width="330" height="30" innerdataset="gds_codeDetail" codecolumn="DETAIL_CODE" datacolumn="DETAIL_CODE_NAME" text=""/>
               <Edit id="customerName" taborder="16" left="279" top="30" width="330" height="30"/>
               <Edit id="customerCeo" taborder="17" left="279" top="90" width="330" height="30"/>
               <Edit id="businessLicenseNumber" taborder="18" left="279" top="120" width="330" height="30"/>
-              <Combo id="customerType" taborder="19" left="279" top="60" width="330" height="30" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" onitemchanged="Div00_customerType_onitemchanged">
+              <Combo id="customerType" taborder="19" left="279" top="60" width="330" height="30" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn">
                 <Dataset id="innerdataset">
                   <ColumnInfo>
                     <Column id="codecolumn" size="256"/>
@@ -111,9 +111,6 @@ this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 		false
 	);
 };
-
-
-
 ]]></Script>
   </Form>
 </FDL>

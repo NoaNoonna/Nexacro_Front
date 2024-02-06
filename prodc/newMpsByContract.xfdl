@@ -17,20 +17,19 @@
               <Columns>
                 <Column size="25"/>
                 <Column size="30"/>
-                <Column size="120"/>
+                <Column size="130"/>
                 <Column size="80"/>
                 <Column size="100"/>
+                <Column size="70"/>
                 <Column size="80"/>
-                <Column size="80"/>
-                <Column size="80"/>
+                <Column size="70"/>
                 <Column size="80"/>
                 <Column size="80"/>
                 <Column size="80"/>
                 <Column size="80"/>
                 <Column size="67"/>
-                <Column size="101"/>
+                <Column size="120"/>
                 <Column size="40"/>
-                <Column size="80"/>
               </Columns>
               <Rows>
                 <Row size="24" band="head"/>
@@ -52,25 +51,23 @@
                 <Cell col="12" text="품목코드"/>
                 <Cell col="13" text="품목명"/>
                 <Cell col="14" text="단위"/>
-                <Cell col="15" text="비고"/>
               </Band>
               <Band id="body">
                 <Cell expr="currow+1"/>
                 <Cell col="1" displaytype="checkboxcontrol" edittype="none" text="bind:CHECKED"/>
-                <Cell col="2" text="bind:CONTRACT_DETAIL_NO"/>
-                <Cell col="3" text="bind:CONTRACT_TYPE"/>
-                <Cell col="4" text="bind:CONTRACT_DATE"/>
-                <Cell col="5" text="bind:ESTIMATE_AMOUNT"/>
-                <Cell col="6" text="bind:STOCK_AMOUNT_USE"/>
-                <Cell col="7" text="bind:PRODUCTION_REQUIREMENT"/>
-                <Cell col="8" displaytype="normal" edittype="date" calendardateformat="yyyy-MM-dd" calendardisplayinvalidtype="none" text="bind:MPS_PLAN_DATE"/>
-                <Cell col="9" displaytype="normal" edittype="date" calendardisplaynulltext="0000-00-00" calendardateformat="yyyy-MM-dd" text="bind:SCHEDULED_END_DATE"/>
-                <Cell col="10" text="bind:DUE_DATE_OF_CONTRACT"/>
-                <Cell col="11" text="bind:CUSTOMER_CODE"/>
-                <Cell col="12" text="bind:ITEM_CODE"/>
-                <Cell col="13" text="bind:ITEM_NAME"/>
-                <Cell col="14" text="bind:UNIT_OF_CONTRACT"/>
-                <Cell col="15" text="bind:DESCRIPTION"/>
+                <Cell col="2" text="bind:CONTRACT_DETAIL_NO" textAlign="center"/>
+                <Cell col="3" text="bind:CONTRACT_TYPE" textAlign="center"/>
+                <Cell col="4" text="bind:CONTRACT_DATE" textAlign="center"/>
+                <Cell col="5" text="bind:ESTIMATE_AMOUNT" textAlign="center"/>
+                <Cell col="6" text="bind:STOCK_AMOUNT_USE" textAlign="center"/>
+                <Cell col="7" text="bind:PRODUCTION_REQUIREMENT" textAlign="center"/>
+                <Cell col="8" displaytype="normal" edittype="date" calendardateformat="yyyy-MM-dd" calendardisplayinvalidtype="none" text="bind:MPS_PLAN_DATE" textAlign="center"/>
+                <Cell col="9" displaytype="normal" edittype="date" calendardisplaynulltext="0000-00-00" calendardateformat="yyyy-MM-dd" text="bind:SCHEDULED_END_DATE" textAlign="center"/>
+                <Cell col="10" text="bind:DUE_DATE_OF_CONTRACT" textAlign="center"/>
+                <Cell col="11" text="bind:CUSTOMER_CODE" textAlign="center"/>
+                <Cell col="12" text="bind:ITEM_CODE" textAlign="center"/>
+                <Cell col="13" text="bind:ITEM_NAME" textAlign="center"/>
+                <Cell col="14" text="bind:UNIT_OF_CONTRACT" textAlign="center"/>
               </Band>
             </Format>
           </Formats>

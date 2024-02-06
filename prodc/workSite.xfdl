@@ -73,18 +73,18 @@
             <Tabpage id="Tabpage2" text="작업장로그">
               <Layouts>
                 <Layout>
-                  <Grid id="Grid00" taborder="0" left="15" top="94" width="1145" height="507" binddataset="gds_workSiteLog" color="orangered">
+                  <Grid id="Grid00" taborder="0" left="15.00" top="94" width="1155" height="507" binddataset="gds_workSiteLog" color="orangered">
                     <Formats>
                       <Format id="default">
                         <Columns>
                           <Column size="31"/>
                           <Column size="121"/>
                           <Column size="80"/>
-                          <Column size="120"/>
+                          <Column size="130"/>
                           <Column size="88"/>
                           <Column size="100"/>
                           <Column size="367"/>
-                          <Column size="80"/>
+                          <Column size="100"/>
                           <Column size="138"/>
                         </Columns>
                         <Rows>

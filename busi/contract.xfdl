@@ -585,8 +585,9 @@ this.callback =function callback(trId , ErrorCode, ErrorMsg){
 this.contract_searchContract_Button01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {
    var eRow = nexa.gds_contractInfo.rowposition;
+   trace("eRow: "+eRow);
    var orderDraftNo = nexa.gds_contractInfo.getColumn(eRow,"CONTRACT_NO");
-   trace("orderDractNo: " + orderDraftNo);
+   trace("orderDraftNo: " + orderDraftNo);
    system.execBrowser("http://localhost:9090/compinfo/report/contract?orderDraftNo="+orderDraftNo);
 };
 

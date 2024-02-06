@@ -269,7 +269,7 @@
       </ColumnInfo>
       <Rows>
         <Row>
-          <Col id="MENU_ID">ME000</Col>
+          <Col id="MENU_ID">ME010</Col>
           <Col id="MENU_NAME">HOME</Col>
           <Col id="MENU_LEVEL">0</Col>
           <Col id="MENU_STATUS">1</Col>
@@ -277,18 +277,27 @@
           <Col id="MENU_ORDER">[Undefined]</Col>
         </Row>
         <Row>
-          <Col id="MENU_ID">ME001</Col>
-          <Col id="MENU_NAME">거래원장 및 거래 관리</Col>
+          <Col id="MENU_ID">ME006</Col>
+          <Col id="MENU_NAME">권한 관리</Col>
           <Col id="MENU_LEVEL">0</Col>
           <Col id="MENU_STATUS">1</Col>
-          <Col id="MENU_URL">busi::trade.xfdl</Col>
+          <Col id="MENU_URL"></Col>
           <Col id="MENU_ORDER">[Undefined]</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_ID">ME006_1</Col>
+          <Col id="MENU_NAME">사원권한관리</Col>
+          <Col id="MENU_LEVEL">1</Col>
+          <Col id="MENU_STATUS">1</Col>
+          <Col id="MENU_ORDER"></Col>
+          <Col id="MENU_URL">hr::empAuthority.xfdl</Col>
         </Row>
         <Row>
           <Col id="MENU_ID">ME002</Col>
           <Col id="MENU_NAME">물류정보 관리</Col>
           <Col id="MENU_LEVEL">0</Col>
           <Col id="MENU_STATUS">1</Col>
+          <Col id="MENU_URL"></Col>
           <Col id="MENU_ORDER">[Undefined]</Col>
         </Row>
         <Row>
@@ -310,6 +319,7 @@
           <Col id="MENU_NAME">창고 관리</Col>
           <Col id="MENU_LEVEL">1</Col>
           <Col id="MENU_STATUS">1</Col>
+          <Col id="MENU_ORDER"></Col>
           <Col id="MENU_URL">logiinfo::warehouseManage.xfdl</Col>
         </Row>
         <Row>
@@ -317,13 +327,15 @@
           <Col id="MENU_NAME">거래처 관리</Col>
           <Col id="MENU_LEVEL">1</Col>
           <Col id="MENU_STATUS">1</Col>
+          <Col id="MENU_ORDER"></Col>
           <Col id="MENU_URL">logiinfo::customerManagement.xfdl</Col>
         </Row>
         <Row>
           <Col id="MENU_ID">ME003</Col>
           <Col id="MENU_NAME">영업 관리</Col>
-          <Col id="MENU_LEVEL">0</Col>
           <Col id="MENU_STATUS">1</Col>
+          <Col id="MENU_LEVEL">0</Col>
+          <Col id="MENU_URL"></Col>
           <Col id="MENU_ORDER">[Undefined]</Col>
         </Row>
         <Row>
@@ -331,12 +343,13 @@
           <Col id="MENU_NAME">견적 관리</Col>
           <Col id="MENU_LEVEL">1</Col>
           <Col id="MENU_STATUS">1</Col>
+          <Col id="MENU_URL"></Col>
         </Row>
         <Row>
           <Col id="MENU_ID">ME003_1_1</Col>
           <Col id="MENU_NAME">견적 등록/조회</Col>
-          <Col id="MENU_STATUS">0</Col>
           <Col id="MENU_LEVEL">2</Col>
+          <Col id="MENU_STATUS">0</Col>
           <Col id="MENU_URL">busi::estimate.xfdl</Col>
         </Row>
         <Row>
@@ -344,27 +357,23 @@
           <Col id="MENU_NAME">수주 관리</Col>
           <Col id="MENU_LEVEL">1</Col>
           <Col id="MENU_STATUS">1</Col>
+          <Col id="MENU_URL"></Col>
+          <Col id="MENU_ORDER"></Col>
         </Row>
         <Row>
           <Col id="MENU_ID">ME003_2_1</Col>
           <Col id="MENU_NAME">수주 등록/조회</Col>
           <Col id="MENU_LEVEL">2</Col>
           <Col id="MENU_STATUS">1</Col>
+          <Col id="MENU_ORDER"></Col>
           <Col id="MENU_URL">busi::contract.xfdl</Col>
-        </Row>
-        <Row>
-          <Col id="MENU_ID">ME007</Col>
-          <Col id="MENU_NAME">납품 관리</Col>
-          <Col id="MENU_LEVEL">0</Col>
-          <Col id="MENU_STATUS">1</Col>
-          <Col id="MENU_URL">busi::deliver.xfdl</Col>
-          <Col id="MENU_ORDER">[Undefined]</Col>
         </Row>
         <Row>
           <Col id="MENU_ID">ME004</Col>
           <Col id="MENU_NAME">구매 관리</Col>
           <Col id="MENU_LEVEL">0</Col>
           <Col id="MENU_STATUS">1</Col>
+          <Col id="MENU_URL"></Col>
           <Col id="MENU_ORDER">[Undefined]</Col>
         </Row>
         <Row>
@@ -379,6 +388,7 @@
           <Col id="MENU_NAME">발주 및 재고처리</Col>
           <Col id="MENU_LEVEL">1</Col>
           <Col id="MENU_STATUS">1</Col>
+          <Col id="MENU_ORDER"></Col>
           <Col id="MENU_URL">purcsto::orderRegister.xfdl</Col>
         </Row>
         <Row>
@@ -387,12 +397,14 @@
           <Col id="MENU_LEVEL">1</Col>
           <Col id="MENU_STATUS">1</Col>
           <Col id="MENU_URL">purcsto::stockInfo.xfdl</Col>
+          <Col id="MENU_ORDER"></Col>
         </Row>
         <Row>
           <Col id="MENU_ID">ME005</Col>
           <Col id="MENU_NAME">생산 관리</Col>
           <Col id="MENU_LEVEL">0</Col>
           <Col id="MENU_STATUS">1</Col>
+          <Col id="MENU_URL"></Col>
           <Col id="MENU_ORDER">[Undefined]</Col>
         </Row>
         <Row>
@@ -428,6 +440,8 @@
           <Col id="MENU_NAME">외주 관리</Col>
           <Col id="MENU_LEVEL">1</Col>
           <Col id="MENU_STATUS">1</Col>
+          <Col id="MENU_ORDER"></Col>
+          <Col id="MENU_URL"></Col>
         </Row>
         <Row>
           <Col id="MENU_ID">ME005_6_1</Col>
@@ -435,30 +449,46 @@
           <Col id="MENU_LEVEL">2</Col>
           <Col id="MENU_STATUS">1</Col>
           <Col id="MENU_URL">purcsto::outSourc.xfdl</Col>
+          <Col id="MENU_ORDER"></Col>
         </Row>
         <Row>
-          <Col id="MENU_ID">ME006</Col>
-          <Col id="MENU_NAME">권한 관리</Col>
+          <Col id="MENU_ID">ME007</Col>
+          <Col id="MENU_NAME">납품 관리</Col>
           <Col id="MENU_LEVEL">0</Col>
           <Col id="MENU_STATUS">1</Col>
+          <Col id="MENU_URL">busi::deliver.xfdl</Col>
           <Col id="MENU_ORDER">[Undefined]</Col>
         </Row>
         <Row>
-          <Col id="MENU_ID">ME006_1</Col>
-          <Col id="MENU_NAME">사원권한관리</Col>
-          <Col id="MENU_LEVEL">1</Col>
+          <Col id="MENU_ID">ME001</Col>
+          <Col id="MENU_NAME">거래원장 및 거래 관리</Col>
+          <Col id="MENU_LEVEL">0</Col>
           <Col id="MENU_STATUS">1</Col>
-          <Col id="MENU_URL">hr::empAuthority.xfdl</Col>
+          <Col id="MENU_URL">busi::trade.xfdl</Col>
+          <Col id="MENU_ORDER">[Undefined]</Col>
         </Row>
         <Row>
-          <Col id="MENU_NAME">출고관리</Col>
           <Col id="MENU_ID">ME008</Col>
+          <Col id="MENU_NAME">출고관리</Col>
           <Col id="MENU_LEVEL">0</Col>
           <Col id="MENU_STATUS">1</Col>
           <Col id="MENU_URL">busi::output.xfdl</Col>
           <Col id="MENU_ORDER">[Undefined]</Col>
         </Row>
-        <Row/>
+        <Row>
+          <Col id="MENU_ID">ME009</Col>
+          <Col id="MENU_NAME">운송수단관리</Col>
+          <Col id="MENU_LEVEL">0</Col>
+          <Col id="MENU_STATUS">1</Col>
+          <Col id="MENU_URL"></Col>
+        </Row>
+        <Row>
+          <Col id="MENU_ID">ME009_1</Col>
+          <Col id="MENU_NAME">운송수단 조회/등록</Col>
+          <Col id="MENU_LEVEL">1</Col>
+          <Col id="MENU_STATUS">1</Col>
+          <Col id="MENU_URL">transvhc::transvhc.xfdl</Col>
+        </Row>
       </Rows>
     </Dataset>
     <Dataset id="gds_menuAvailableByPosition">
@@ -963,8 +993,8 @@
         <Column id="ITEM_CODE" type="STRING" size="256"/>
         <Column id="ITEM_NAME" type="STRING" size="256"/>
         <Column id="UNIT_OF_MRP" type="STRING" size="256"/>
-        <Column id="REQUIRED_AMOUNT" type="STRING" size="256"/>
-        <Column id="STOCK_AMOUNT" type="STRING" size="256"/>
+        <Column id="REQUIRED_AMOUNT" type="INT" size="256"/>
+        <Column id="STOCK_AMOUNT" type="INT" size="256"/>
         <Column id="ORDER_DATE" type="STRING" size="256"/>
         <Column id="REQUIRED_DATE" type="STRING" size="256"/>
       </ColumnInfo>
@@ -1233,6 +1263,19 @@
         <Column id="WAREHOUSE_CODE" type="STRING" size="256"/>
         <Column id="INSPECTION_STATUS" type="STRING" size="256"/>
         <Column id="CHECKED" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_transvhc">
+      <ColumnInfo>
+        <Column id="VEHICLE_NUMBER" type="STRING" size="256"/>
+        <Column id="TYPE" type="STRING" size="256"/>
+        <Column id="MANUFACTURING_COMPANY" type="STRING" size="256"/>
+        <Column id="YEAR_OF_MANUFACTURE" type="STRING" size="256"/>
+        <Column id="LOAD_CAPACITY" type="STRING" size="256"/>
+        <Column id="MAINTENANCE_DATE" type="STRING" size="256"/>
+        <Column id="OPERATOR" type="STRING" size="256"/>
+        <Column id="FUEL_TYPE" type="STRING" size="256"/>
+        <Column id="TRANSPORTATION_STATUS" type="STRING" size="256"/>
       </ColumnInfo>
     </Dataset>
   </Datasets>

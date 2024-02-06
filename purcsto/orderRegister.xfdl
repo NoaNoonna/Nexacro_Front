@@ -71,7 +71,7 @@
             <Tabpage id="tab_orderInfo" text="발주현황">
               <Layouts>
                 <Layout>
-                  <Grid id="Grid00" taborder="0" left="4.00" top="98" width="836" height="425" binddataset="gds_orderInfo" color="orangered">
+                  <Grid id="Grid00" taborder="0" left="24.00" top="108" width="836" height="425" binddataset="gds_orderInfo" color="orangered" scrollbarsize="10">
                     <Formats>
                       <Format id="default">
                         <Columns>
@@ -111,10 +111,10 @@
                       </Format>
                     </Formats>
                   </Grid>
-                  <GroupBox id="GroupBox00" taborder="1" text="발주현황조회" left="22" top="15" width="478" height="68" font="normal bold 11pt/normal &quot;Arial&quot;" titlealign="topcenter" cssclass="grpBox_normal"/>
-                  <Calendar id="Calendar00" taborder="2" left="37" top="36" width="133" height="34" dateformat="yyyy-MM-dd" displaynulltext="시작일" font="normal bold 12pt/normal &quot;Arial&quot;" visible="true" color="orangered"/>
-                  <Calendar id="Calendar01" taborder="3" left="175" top="36" width="133" height="34" dateformat="yyyy-MM-dd" displaynulltext="종료일" font="normal bold 12pt/normal &quot;Arial&quot;" visible="true" color="orangered"/>
-                  <Button id="Button00" taborder="4" text="발주현황조회" left="344" top="36" width="126" height="34" font="normal 11pt/normal &quot;Arial&quot;" onclick="estimate_regEstimate_Button00_onclick" cssclass="btn_normal"/>
+                  <GroupBox id="GroupBox00" taborder="1" text="발주현황조회" left="42.00" top="25" width="478" height="68" font="normal bold 11pt/normal &quot;Arial&quot;" titlealign="topcenter" cssclass="grpBox_normal"/>
+                  <Calendar id="Calendar00" taborder="2" left="57.00" top="46" width="133" height="34" dateformat="yyyy-MM-dd" displaynulltext="시작일" font="normal bold 12pt/normal &quot;Arial&quot;" visible="true" color="orangered"/>
+                  <Calendar id="Calendar01" taborder="3" left="195.00" top="46" width="133" height="34" dateformat="yyyy-MM-dd" displaynulltext="종료일" font="normal bold 12pt/normal &quot;Arial&quot;" visible="true" color="orangered"/>
+                  <Button id="Button00" taborder="4" text="발주현황조회" left="364.00" top="46" width="126" height="34" font="normal 11pt/normal &quot;Arial&quot;" onclick="estimate_regEstimate_Button00_onclick" cssclass="btn_normal"/>
                 </Layout>
               </Layouts>
             </Tabpage>

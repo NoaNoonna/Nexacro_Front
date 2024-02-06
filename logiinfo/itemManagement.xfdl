@@ -10,9 +10,9 @@
               <Div id="Div01" taborder="1" text="" left="27" top="51" width="1045" height="606" background="white">
                 <Layouts>
                   <Layout>
-                    <Static id="Static00" taborder="0" text="품목 목록 조회" left="29" top="15" width="142" height="40" font="bold 20px/normal &quot;Gulim&quot;" color="black"/>
-                    <Static id="Static00_00" taborder="1" text="품목 상세 목록 조회" left="29" top="305" width="209" height="40" color="black" font="bold 20px/normal &quot;Gulim&quot;"/>
-                    <Grid id="ItemGrid00" taborder="2" left="26.00" top="102" width="949" height="165" binddataset="ds_itemGroup" oncellclick="ItemGrid00_oncellclick" onheadclick="grd_headCheck_onheadclick" autofittype="none">
+                    <Static id="Static00" taborder="0" text="품목 목록 조회" left="69.00" top="15" width="142" height="40" font="bold 20px/normal &quot;Gulim&quot;" color="black"/>
+                    <Static id="Static00_00" taborder="1" text="품목 상세 목록 조회" left="69.00" top="305" width="209" height="40" color="black" font="bold 20px/normal &quot;Gulim&quot;"/>
+                    <Grid id="ItemGrid00" taborder="2" left="66.00" top="102" width="949" height="165" binddataset="ds_itemGroup" oncellclick="ItemGrid00_oncellclick" onheadclick="grd_headCheck_onheadclick" autofittype="none">
                       <Formats>
                         <Format id="default">
                           <Columns>
@@ -40,19 +40,19 @@
                         </Format>
                       </Formats>
                     </Grid>
-                    <Grid id="grd_DetailItem" taborder="3" left="26.00" top="405" width="955" height="181" binddataset="ds_item" oncellclick="grd_DetailItem_oncellclick" onheadclick="grd_headCheck_onheadclick">
+                    <Grid id="grd_DetailItem" taborder="3" left="66.00" top="405" width="949" height="181" binddataset="ds_item" oncellclick="grd_DetailItem_oncellclick" onheadclick="grd_headCheck_onheadclick">
                       <Formats>
                         <Format id="default">
                           <Columns>
                             <Column size="48" band="left"/>
                             <Column size="130"/>
-                            <Column size="100"/>
+                            <Column size="130"/>
                             <Column size="100"/>
                             <Column size="100"/>
                             <Column size="100"/>
                             <Column size="90"/>
                             <Column size="100"/>
-                            <Column size="100"/>
+                            <Column size="60"/>
                             <Column size="90"/>
                           </Columns>
                           <Rows>
@@ -86,14 +86,14 @@
                         </Format>
                       </Formats>
                     </Grid>
-                    <Button id="saveButton" taborder="4" text="일괄저장" left="878.00" top="365" width="103" height="29" background="black" font="bold 12px/normal &quot;Gulim&quot;" onclick="saveButton_onclick" cssclass="btn_normal"/>
+                    <Button id="saveButton" taborder="4" text="일괄저장" left="908.00" top="365" width="103" height="29" background="black" font="bold 12px/normal &quot;Gulim&quot;" onclick="saveButton_onclick" cssclass="btn_normal"/>
                   </Layout>
                 </Layouts>
               </Div>
-              <Button id="searchItem_Button" taborder="2" text="품목 조회" left="50.00" top="110" width="70" height="30" onclick="Div00_searchItem_Button00_onclick" background="black" font="bold 12px/normal &quot;Gulim&quot;" cssclass="btn_normal"/>
-              <Button id="searchItemDetail_Button" taborder="3" text="품목 상세조회" left="130.00" top="110" width="90" height="30" onclick="Div00_searchItemDetail_Button_onclick" background="black" font="bold 12px/normal &quot;Gulim&quot;" cssclass="btn_normal"/>
-              <Button id="addDetailItemButton" taborder="4" text="품목상세추가" left="50" top="410" width="102" height="30" background="black" font="bold 12px/normal &quot;Gulim&quot;" onclick="addDetailItemButton_onclick" cssclass="btn_normal"/>
-              <Button id="Button01_00" taborder="5" text="품목상세삭제" left="160" top="410" width="102" height="30" background="black" font="bold 12px/normal &quot;Gulim&quot;" onclick="deleteButton_onclick" cssclass="btn_normal"/>
+              <Button id="searchItem_Button" taborder="2" text="품목 조회" left="90.00" top="110" width="70" height="30" onclick="Div00_searchItem_Button00_onclick" background="black" font="bold 12px/normal &quot;Gulim&quot;" cssclass="btn_normal"/>
+              <Button id="searchItemDetail_Button" taborder="3" text="품목 상세조회" left="170.00" top="110" width="90" height="30" onclick="Div00_searchItemDetail_Button_onclick" background="black" font="bold 12px/normal &quot;Gulim&quot;" cssclass="btn_normal"/>
+              <Button id="addDetailItemButton" taborder="4" text="품목상세추가" left="90.00" top="410" width="102" height="30" background="black" font="bold 12px/normal &quot;Gulim&quot;" onclick="addDetailItemButton_onclick" cssclass="btn_normal"/>
+              <Button id="Button01_00" taborder="5" text="품목상세삭제" left="200.00" top="410" width="102" height="30" background="black" font="bold 12px/normal &quot;Gulim&quot;" onclick="deleteButton_onclick" cssclass="btn_normal"/>
             </Layout>
           </Layouts>
         </Div>

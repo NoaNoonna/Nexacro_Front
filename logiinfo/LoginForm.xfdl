@@ -10,7 +10,7 @@
               <Edit id="edt_workplace" taborder="0" left="24" top="45" width="187" height="55" value="사업자명" text="사업자명" onchanged="Div00_edt_workplace_onchanged" boxShadow="2px 2px 2px #c7b1d1"/>
               <Button id="btn_workplace" taborder="1" left="225" top="45" width="110" height="55" background="black" text="사업자코드" color="white" font="bold 18px/normal &quot;Gulim&quot;,&quot;맑은 고딕&quot;" onclick="btn_findMyJob" boxShadow="2px 2px 2px #c7b1d1"/>
               <Static id="Static00_00" taborder="2" text="PW" left="30" top="218" width="59" height="52" textAlign="center" font="bold 18px/normal &quot;Gulim&quot;"/>
-              <Edit id="edt_id" taborder="3" left="84" top="149" width="246" height="51" value="이소명" text="이소명" onchanged="edt_id_onchanged" boxShadow="2px 2px 2px #c7b1d1"/>
+              <Edit id="edt_id" taborder="3" left="84" top="149" width="246" height="51" value="박노아" text="박노아" onchanged="edt_id_onchanged" boxShadow="2px 2px 2px #c7b1d1"/>
               <Static id="Static00" taborder="4" text="ID" left="24" top="143" width="59" height="52" textAlign="center" font="bold 18px/normal &quot;Gulim&quot;"/>
               <Button id="btn_goLogin" taborder="5" text="Login" left="98" top="294" width="160" height="66" font="normal 700 20px/normal &quot;fontc::Gugi-Regular.ttf&quot;" border="0px none" background="black" onclick="btn_login_onclick" boxShadow="2px 2px 2px 0px #c7b1d1" color="white"/>
               <Edit id="edt_pw" taborder="6" left="87" top="219" width="248" height="51" password="true" value="1111" text="1111" onchanged="edt_pw_onchanged" boxShadow="2px 2px 2px #c7b1d1"/>

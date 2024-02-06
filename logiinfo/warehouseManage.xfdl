@@ -3,11 +3,11 @@
   <Form id="WarehouseManage" width="1280" height="720" titletext="창고관리" onload="WarehouseManageForm_onload">
     <Layouts>
       <Layout height="720" mobileorientation="landscape" width="1280">
-        <Div id="Div00" taborder="0" text="Div00" left="39" top="39" width="989" height="648">
+        <Div id="Div00" taborder="0" text="Div00" left="39" top="39" width="989" height="648" formscrollbarsize="10" formscrolltype="none">
           <Layouts>
             <Layout>
-              <GroupBox id="GroupBox00" taborder="0" text="창고 관리" left="-1.92%" top="-5" width="98.28%" height="692" titlealign="topcenter" cursor="help" font="bold 36px/normal &quot;Gulim&quot;" cssclass="grpBox_normal" color="black"/>
-              <Grid id="Grid00" taborder="1" left="1.11%" top="151" width="920" height="145" binddataset="ds_warehouseList" oncellclick="warehouseList_Grid01_oncellclick" onheadclick="warehouseList_Grid01_onheadclick">
+              <GroupBox id="GroupBox00" taborder="0" text="창고 관리" left="0.00%" top="-5" width="100.00%" height="692" titlealign="topcenter" cursor="help" font="bold 36px/normal &quot;Gulim&quot;" cssclass="grpBox_normal" color="black"/>
+              <Grid id="Grid00" taborder="1" left="7.28%" top="151" width="799" height="145" binddataset="ds_warehouseList" oncellclick="warehouseList_Grid01_oncellclick" onheadclick="warehouseList_Grid01_onheadclick" scrollbarsize="10">
                 <Formats>
                   <Format id="default">
                     <Columns>
@@ -41,18 +41,18 @@
                   </Format>
                 </Formats>
               </Grid>
-              <Grid id="Grid01" taborder="2" left="0.40%" top="396" width="926" height="225" oncellclick="warehouseList_Grid02_oncellclick" onheadclick="warehouseList_Grid02_onheadclick" binddataset="gds_stock">
+              <Grid id="Grid01" taborder="2" left="6.67%" top="396" width="804" height="225" oncellclick="warehouseList_Grid02_oncellclick" onheadclick="warehouseList_Grid02_onheadclick" binddataset="gds_stock" scrolltype="both" scrollbartype="default default" scrollbarsize="10">
                 <Formats>
                   <Format id="default">
                     <Columns>
-                      <Column size="41"/>
+                      <Column size="30"/>
                       <Column size="120"/>
                       <Column size="120"/>
-                      <Column size="120"/>
-                      <Column size="120"/>
-                      <Column size="120"/>
-                      <Column size="120"/>
-                      <Column size="121"/>
+                      <Column size="140"/>
+                      <Column size="80"/>
+                      <Column size="110"/>
+                      <Column size="100"/>
+                      <Column size="105"/>
                     </Columns>
                     <Rows>
                       <Row size="24" band="head"/>
@@ -70,28 +70,28 @@
                     </Band>
                     <Band id="body">
                       <Cell edittype="checkbox" displaytype="checkboxcontrol" text="bind:CHECKED"/>
-                      <Cell col="1" text="bind:WAREHOUSE_CODE" edittype="text"/>
-                      <Cell col="2" text="bind:ITEM_CODE" edittype="text"/>
-                      <Cell col="3" text="bind:ITEM_NAME" edittype="text"/>
-                      <Cell col="4" text="bind:UNIT_OF_STOCK" edittype="text"/>
-                      <Cell col="5" text="bind:SAFETY_ALLOWANCE_AMOUNT" edittype="text"/>
-                      <Cell col="6" text="bind:STOCK_AMOUNT" edittype="text"/>
-                      <Cell col="7" text="bind:ORDER_AMOUNT" edittype="text"/>
+                      <Cell col="1" text="bind:WAREHOUSE_CODE" edittype="text" textAlign="center"/>
+                      <Cell col="2" text="bind:ITEM_CODE" edittype="text" textAlign="center"/>
+                      <Cell col="3" text="bind:ITEM_NAME" edittype="text" textAlign="center"/>
+                      <Cell col="4" text="bind:UNIT_OF_STOCK" edittype="text" textAlign="center"/>
+                      <Cell col="5" text="bind:SAFETY_ALLOWANCE_AMOUNT" edittype="text" textAlign="center"/>
+                      <Cell col="6" text="bind:STOCK_AMOUNT" edittype="text" textAlign="center"/>
+                      <Cell col="7" text="bind:ORDER_AMOUNT" edittype="text" textAlign="center"/>
                     </Band>
                   </Format>
                 </Formats>
               </Grid>
-              <Static id="Static00" taborder="3" text="📋 창고 관리" left="3.34%" top="38" width="11.93%" height="32" font="bold 18px/normal &quot;Gulim&quot;" color="black"/>
-              <Static id="Static00_00" taborder="4" text="창고 조회 및 정보 수정" left="3.74%" top="65" width="20.02%" height="32" font="bold 15px/normal &quot;Gulim&quot;" color="black"/>
-              <Button id="WarehouseInquiryB" taborder="5" text="창고 조회" left="3.64%" top="99" width="6.07%" height="30" border="0px none" background="black" font="bold 12px/normal &quot;Gulim&quot;" onclick="getWarehouseListyB_onclick" cssclass="btn_normal"/>
-              <Button id="WarehouseInsertB" taborder="6" text="창고 추가" left="10.72%" top="99" width="6.07%" height="30" background="black" font="bold 12px/normal &quot;Gulim&quot;" border="0px none" onclick="WarehouseInsertB_onclick" cssclass="btn_normal"/>
-              <Button id="WarehouseDeleteB" taborder="7" text="창고 삭제" left="17.80%" top="99" width="6.07%" height="30" background="black" font="bold 12px/normal &quot;Gulim&quot;" border="0px none" onclick="WarehouseDeleteB_onclick" cssclass="btn_normal"/>
-              <Static id="Static00_00_00" taborder="8" text="창고 자재 조회 및 정보 수정" left="3.54%" top="313" width="23.86%" height="32" font="bold 15px/normal &quot;Gulim&quot;" color="black"/>
-              <Button id="getWarehouseStockListB" taborder="9" text="자재 조회" left="3.64%" top="347" width="6.07%" height="30" border="0px none" background="black" font="bold 12px/normal &quot;Gulim&quot;" onclick="getWarehouseStockListB_onclick" cssclass="btn_normal"/>
-              <Button id="WarehouseStockInsertB" taborder="10" text="자재 추가" left="10.72%" top="347" width="6.07%" height="30" background="black" font="bold 12px/normal &quot;Gulim&quot;" border="0px none" onclick="WarehouseStockInsertB_onclick" cssclass="btn_normal"/>
-              <Button id="WarehouseStockDeleteB" taborder="11" text="자재 삭제" left="17.80%" top="347" width="6.07%" height="30" background="black" font="bold 12px/normal &quot;Gulim&quot;" border="0px none" onclick="WarehouseStockDeleteB_onclick" cssclass="btn_normal"/>
-              <Button id="WarehouseSaveB" taborder="12" text="창고일괄처리" left="73.71%" top="107" width="8.19%" height="30" background="black" font="bold 12px/normal &quot;Gulim&quot;" border="0px none" onclick="WarehouseSaveB_onclick" cssclass="btn_normal"/>
-              <Button id="WarehouseStockSaveB" taborder="13" text="자재일괄처리" left="73.71%" top="356" width="8.29%" height="30" background="black" font="bold 12px/normal &quot;Gulim&quot;" border="0px none" onclick="WarehouseStockSaveB_onclick" cssclass="btn_normal"/>
+              <Static id="Static00" taborder="3" text="📋 창고 관리" left="7.28%" top="38" width="11.73%" height="32" font="bold 18px/normal &quot;Gulim&quot;" color="black"/>
+              <Static id="Static00_00" taborder="4" text="창고 조회 및 정보 수정" left="7.28%" top="65" width="19.92%" height="32" font="bold 15px/normal &quot;Gulim&quot;" color="black"/>
+              <Button id="WarehouseInquiryB" taborder="5" text="창고 조회" left="7.38%" top="99" width="6.07%" height="30" border="0px none" background="black" font="bold 12px/normal &quot;Gulim&quot;" onclick="getWarehouseListyB_onclick" cssclass="btn_normal"/>
+              <Button id="WarehouseInsertB" taborder="6" text="창고 추가" left="14.56%" top="99" width="6.07%" height="30" background="black" font="bold 12px/normal &quot;Gulim&quot;" border="0px none" onclick="WarehouseInsertB_onclick" cssclass="btn_normal"/>
+              <Button id="WarehouseDeleteB" taborder="7" text="창고 삭제" left="21.84%" top="99" width="6.07%" height="30" background="black" font="bold 12px/normal &quot;Gulim&quot;" border="0px none" onclick="WarehouseDeleteB_onclick" cssclass="btn_normal"/>
+              <Static id="Static00_00_00" taborder="8" text="창고 자재 조회 및 정보 수정" left="6.57%" top="313" width="23.56%" height="32" font="bold 15px/normal &quot;Gulim&quot;" color="black"/>
+              <Button id="getWarehouseStockListB" taborder="9" text="자재 조회" left="6.57%" top="347" width="6.07%" height="30" border="0px none" background="black" font="bold 12px/normal &quot;Gulim&quot;" onclick="getWarehouseStockListB_onclick" cssclass="btn_normal"/>
+              <Button id="WarehouseStockInsertB" taborder="10" text="자재 추가" left="14.56%" top="347" width="6.07%" height="30" background="black" font="bold 12px/normal &quot;Gulim&quot;" border="0px none" onclick="WarehouseStockInsertB_onclick" cssclass="btn_normal"/>
+              <Button id="WarehouseStockDeleteB" taborder="11" text="자재 삭제" left="21.84%" top="347" width="6.07%" height="30" background="black" font="bold 12px/normal &quot;Gulim&quot;" border="0px none" onclick="WarehouseStockDeleteB_onclick" cssclass="btn_normal"/>
+              <Button id="WarehouseSaveB" taborder="12" text="창고일괄처리" left="80.08%" top="107" width="8.09%" height="30" background="black" font="bold 12px/normal &quot;Gulim&quot;" border="0px none" onclick="WarehouseSaveB_onclick" cssclass="btn_normal"/>
+              <Button id="WarehouseStockSaveB" taborder="13" text="자재일괄처리" left="80.08%" top="356" width="8.09%" height="30" background="black" font="bold 12px/normal &quot;Gulim&quot;" border="0px none" onclick="WarehouseStockSaveB_onclick" cssclass="btn_normal"/>
             </Layout>
           </Layouts>
         </Div>

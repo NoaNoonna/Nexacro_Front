@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <FDL version="2.1">
-  <Form id="output" width="1440" height="770" titletext="출고 관리" color="orangered" onload="output_onload" scrolltype="none">
+  <Form id="output" width="1440" height="770" titletext="output" color="orangered" onload="output_onload" scrolltype="none">
     <Layouts>
       <Layout height="770" horizontalgap="0" mobileorientation="landscape" spacing="0px" tabletemplate="1* / 1*" verticalgap="0" width="1440">
         <GroupBox id="Output_GroupBox" taborder="0" text="출고관리" left="10.00" top="10" width="1300" height="658" font="bold 28pt &quot;Arial&quot;" titlealign="topcenter" color="#020202" cssclass="grpBox_normal"/>
@@ -9,10 +9,10 @@
             <Tabpage id="Tabpage1" text="출고등록" font="12px/normal &quot;Calibri&quot;" letterSpacing="1px">
               <Layouts>
                 <Layout>
-                  <GroupBox id="searchCnt_GroupBox" taborder="0" text="수주검색조건" left="0.00" top="12" width="514" height="65" font="normal bold 11pt/normal &quot;Arial&quot;" titlealign="topcenter" cssclass="grpBox_normal"/>
-                  <Calendar id="Calendar01" taborder="1" left="374.00" top="36" width="133" height="34" dateformat="yyyy-MM-dd" displaynulltext="종료일" font="normal bold 12pt/normal &quot;Arial&quot;" visible="false" color="orangered"/>
-                  <Calendar id="Calendar00" taborder="2" left="239.00" top="36" width="133" height="34" dateformat="yyyy-MM-dd" displaynulltext="시작일" font="normal bold 12pt/normal &quot;Arial&quot;" visible="false" color="orangered"/>
-                  <Edit id="codeEdit" taborder="3" left="259.00" top="35" width="207" displaynulltext="거래처 조회" font="normal normal 11pt/normal &quot;Arial&quot;" visible="false" cssclass="edit_normal" height="34" oneditclick="Tab_Tabpage1_codeEdit_oneditclick" onchanged="Tab_Tabpage1_codeEdit_onchanged"/>
+                  <GroupBox id="searchCnt_GroupBox" taborder="0" text="수주검색조건" left="0" top="12" width="579" height="65" font="normal bold 11pt/normal &quot;Arial&quot;" titlealign="topcenter" cssclass="grpBox_normal"/>
+                  <Calendar id="Calendar01" taborder="1" left="394.00" top="36" width="156" height="34" dateformat="yyyy-MM-dd" displaynulltext="종료일" font="normal bold 12pt/normal &quot;Arial&quot;" visible="false" color="orangered"/>
+                  <Calendar id="Calendar00" taborder="2" left="230.00" top="36" width="156" height="34" dateformat="yyyy-MM-dd" displaynulltext="시작일" font="normal bold 12pt/normal &quot;Arial&quot;" visible="false" color="orangered"/>
+                  <Edit id="codeEdit" taborder="3" left="259.00" top="35" width="207" displaynulltext="거래처 조회" font="normal normal 11pt/normal &quot;Arial&quot;" visible="false" cssclass="edit_normal" height="34" oneditclick="Tab_Tabpage1_codeEdit_oneditclick"/>
                   <Radio id="searchRadio" taborder="4" left="7.00" top="37" width="193" height="24" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" direction="vertical" font="normal bold 11pt/normal &quot;Arial&quot;" cssclass="edit_normal" onitemchanged="Tab_Tabpage1_searchRadio_onitemchanged" onitemclick="Tab_Tabpage1_searchRadio_onitemclick">
                     <Dataset id="innerdataset">
                       <ColumnInfo>
@@ -31,9 +31,9 @@
                       </Rows>
                     </Dataset>
                   </Radio>
-                  <Button id="searchCont_Button" taborder="5" text="수주현황" left="539.00" top="36" width="90" height="34" color="black" textAlign="center" font="bold 10pt/normal &quot;Calibri&quot;" background="lightgray" onclick="Tab_Tabpage1_searchCont_Button_onclick" borderRadius="5px"/>
-                  <Button id="AddOutput_Button" taborder="6" text="출고등록" left="642.00" top="36" width="90" height="34" background="lightcyan" font="bold 10pt/normal &quot;Calibri&quot;" color="black" onclick="Tab_Tabpage1_AddOutput_Button_onclick" borderRadius="5px"/>
-                  <Grid id="Grid00" taborder="7" left="0" top="90" width="1250" height="240" binddataset="gds_contractInfo" color="orangered" oncellclick="Tab_Tabpage1_Grid00_oncellclick" scrolltype="none">
+                  <Button id="searchCont_Button" taborder="5" text="수주현황" left="589.00" top="36" width="90" height="34" color="black" textAlign="center" font="bold 10pt/normal &quot;Calibri&quot;" background="lightgray" onclick="Tab_Tabpage1_searchCont_Button_onclick" borderRadius="5px"/>
+                  <Button id="AddOutput_Button" taborder="6" text="출고등록" left="692.00" top="36" width="90" height="34" background="lightcyan" font="bold 10pt/normal &quot;Calibri&quot;" color="black" onclick="Tab_Tabpage1_AddOutput_Button_onclick" borderRadius="5px"/>
+                  <Grid id="Grid00" taborder="7" left="0" top="90" width="1260" height="240" binddataset="gds_contractInfo" color="orangered" oncellclick="Tab_Tabpage1_Grid00_oncellclick" scrolltype="none">
                     <Formats>
                       <Format id="default">
                         <Columns>
@@ -81,16 +81,16 @@
                       </Format>
                     </Formats>
                   </Grid>
-                  <Grid id="Grid01" taborder="8" left="0.00" top="349" width="1250" height="240" binddataset="gds_contractDetail" oncellclick="Tab_Tabpage1_Grid01_oncellclick" color="orangered">
+                  <Grid id="Grid01" taborder="8" left="0" top="349" width="1260" height="240" binddataset="gds_contractDetail" oncellclick="Tab_Tabpage1_Grid01_oncellclick" color="orangered">
                     <Formats>
                       <Format id="default">
                         <Columns>
                           <Column size="20"/>
                           <Column size="33"/>
-                          <Column size="130"/>
-                          <Column size="100"/>
+                          <Column size="140"/>
+                          <Column size="120"/>
                           <Column size="75"/>
-                          <Column size="110"/>
+                          <Column size="130"/>
                           <Column size="34"/>
                           <Column size="94"/>
                           <Column size="60"/>
@@ -100,8 +100,8 @@
                           <Column size="82"/>
                           <Column size="58"/>
                           <Column size="85"/>
-                          <Column size="80"/>
-                          <Column size="80"/>
+                          <Column size="60"/>
+                          <Column size="70"/>
                         </Columns>
                         <Rows>
                           <Row size="24" band="head"/>

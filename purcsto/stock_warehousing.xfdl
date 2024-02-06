@@ -39,7 +39,7 @@
               <Band id="body">
                 <Cell expr="currow+1" textAlign="center"/>
                 <Cell col="1" displaytype="checkboxcontrol" text="bind:CHECKED"/>
-                <Cell col="2" text="bind:ORDER_NO"/>
+                <Cell col="2" text="bind:ORDER_NO" textAlign="center"/>
                 <Cell col="3" text="bind:ORDER_DATE" textAlign="center"/>
                 <Cell col="4" text="bind:ORDER_INFO_STATUS" textAlign="center"/>
                 <Cell col="5" text="bind:ORDER_SORT" textAlign="center"/>

@@ -21,7 +21,7 @@
           </Dataset>
         </Radio>
         <Button id="Button00" taborder="4" text="현재 전개된 결과 발주 및 재고처리" left="223" top="86" width="214" height="31" onclick="Button00_onclick" color="white" cssclass="btn_normal" background="black"/>
-        <Grid id="Grid00" taborder="5" left="43" top="155" width="920" height="323" binddataset="gds_orderDialogTemp" color="orangered">
+        <Grid id="Grid00" taborder="5" left="43.00" top="155" width="857" height="323" binddataset="gds_orderDialogTemp" color="orangered">
           <Formats>
             <Format id="default">
               <Columns>
@@ -51,15 +51,15 @@
                 <Cell col="8" text="합계금액"/>
               </Band>
               <Band id="body">
-                <Cell expr="currow+1"/>
-                <Cell col="1" text="bind:ITEM_CODE"/>
-                <Cell col="2" text="bind:ITEM_NAME"/>
-                <Cell col="3" text="bind:UNIT_OF_MRP"/>
-                <Cell col="4" text="bind:REQUIRED_AMOUNT"/>
-                <Cell col="5" text="bind:STOCK_AMOUNT"/>
-                <Cell col="6" text="bind:CALCULATED_REQUIRED_AMOUNT"/>
-                <Cell col="7" text="bind:STANDARD_UNIT_PRICE"/>
-                <Cell col="8" text="bind:SUM_PRICE"/>
+                <Cell expr="currow+1" textAlign="center"/>
+                <Cell col="1" text="bind:ITEM_CODE" textAlign="center"/>
+                <Cell col="2" text="bind:ITEM_NAME" textAlign="center"/>
+                <Cell col="3" text="bind:UNIT_OF_MRP" textAlign="center"/>
+                <Cell col="4" text="bind:REQUIRED_AMOUNT" textAlign="center"/>
+                <Cell col="5" text="bind:STOCK_AMOUNT" textAlign="center"/>
+                <Cell col="6" text="bind:CALCULATED_REQUIRED_AMOUNT" textAlign="center"/>
+                <Cell col="7" text="bind:STANDARD_UNIT_PRICE" textAlign="center"/>
+                <Cell col="8" text="bind:SUM_PRICE" textAlign="center"/>
               </Band>
             </Format>
           </Formats>

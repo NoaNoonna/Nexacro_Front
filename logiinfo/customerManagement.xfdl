@@ -8,21 +8,19 @@
             <Format id="default">
               <Columns>
                 <Column size="20"/>
+                <Column size="60"/>
+                <Column size="60"/>
+                <Column size="110"/>
+                <Column size="50"/>
                 <Column size="55"/>
-                <Column size="55"/>
-                <Column size="68"/>
-                <Column size="55"/>
-                <Column size="55"/>
-                <Column size="125"/>
+                <Column size="120"/>
+                <Column size="95"/>
+                <Column size="100"/>
+                <Column size="70"/>
+                <Column size="150"/>
+                <Column size="120"/>
+                <Column size="100"/>
                 <Column size="80"/>
-                <Column size="105"/>
-                <Column size="115"/>
-                <Column size="80"/>
-                <Column size="80"/>
-                <Column size="80"/>
-                <Column size="80"/>
-                <Column size="80"/>
-                <Column size="55"/>
                 <Column size="65"/>
               </Columns>
               <Rows>
@@ -37,35 +35,31 @@
                 <Cell col="4" text="고객유형" font="12px/normal &quot;Gulim&quot;"/>
                 <Cell col="5" text="고객CEO" font="12px/normal &quot;Gulim&quot;"/>
                 <Cell col="6" text="비지니스라이센스번호" font="12px/normal &quot;Gulim&quot;"/>
-                <Cell col="7" text="사회보장번호" font="12px/normal &quot;Gulim&quot;"/>
-                <Cell col="8" text="고객비지니스조건" font="12px/normal &quot;Gulim&quot;"/>
-                <Cell col="9" text="고객비지니스아이템" font="12px/normal &quot;Gulim&quot;"/>
-                <Cell col="10" text="고객우편번호" font="12px/normal &quot;Gulim&quot;"/>
-                <Cell col="11" text="고객기본주소" font="12px/normal &quot;Gulim&quot;"/>
-                <Cell col="12" text="고객정보주소" font="12px/normal &quot;Gulim&quot;"/>
-                <Cell col="13" text="고객전화번호" font="12px/normal &quot;Gulim&quot;"/>
-                <Cell col="14" text="고객팩스번호" font="12px/normal &quot;Gulim&quot;"/>
-                <Cell col="15" text="고객노트" font="12px/normal &quot;Gulim&quot;"/>
-                <Cell col="16" text="생산된제품" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="7" text="고객비지니스조건" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="8" text="고객비지니스아이템" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="9" text="고객우편번호" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="10" text="고객기본주소" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="11" text="고객정보주소" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="12" text="고객전화번호" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="13" text="고객팩스번호" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="14" text="생산된제품" font="12px/normal &quot;Gulim&quot;"/>
               </Band>
               <Band id="body">
                 <Cell text="bind:CHECKED" displaytype="checkboxcontrol" edittype="none"/>
-                <Cell col="1" text="bind:CUSTOMER_CODE" font="12px/normal &quot;Gulim&quot;" edittype="none"/>
-                <Cell col="2" text="bind:WORKPLACE_CODE" font="12px/normal &quot;Gulim&quot;"/>
-                <Cell col="3" text="bind:CUSTOMER_NAME" font="12px/normal &quot;Gulim&quot;"/>
-                <Cell col="4" text="bind:CUSTOMER_TYPE" font="12px/normal &quot;Gulim&quot;"/>
-                <Cell col="5" text="bind:CUSTOMER_CEO" font="12px/normal &quot;Gulim&quot;"/>
-                <Cell col="6" text="bind:BUSINESS_LICENSE_NUMBER" font="12px/normal &quot;Gulim&quot;"/>
-                <Cell col="7" text="bind:SOCIAL_SECURITY_NUMBER" font="12px/normal &quot;Gulim&quot;"/>
-                <Cell col="8" text="bind:CUSTOMER_BUSINESS_CONDITIONS" font="12px/normal &quot;Gulim&quot;"/>
-                <Cell col="9" text="bind:CUSTOMER_BUSINESS_ITEMS" font="12px/normal &quot;Gulim&quot;"/>
-                <Cell col="10" text="bind:CUSTOMER_ZIP_CODE" font="12px/normal &quot;Gulim&quot;"/>
-                <Cell col="11" text="bind:CUSTOMER_BASIC_ADDRESS" font="12px/normal &quot;Gulim&quot;"/>
-                <Cell col="12" text="bind:CUSTOMER_DETAIL_ADDRESS" font="12px/normal &quot;Gulim&quot;"/>
-                <Cell col="13" text="bind:CUSTOMER_TEL_NUMBER" font="12px/normal &quot;Gulim&quot;"/>
-                <Cell col="14" text="bind:CUSTOMER_FAX_NUMBER" font="12px/normal &quot;Gulim&quot;"/>
-                <Cell col="15" text="bind:CUSTOMER_NOTE" font="12px/normal &quot;Gulim&quot;"/>
-                <Cell col="16" text="bind:PRODUCED_PRODUCT" font="12px/normal &quot;Gulim&quot;"/>
+                <Cell col="1" text="bind:CUSTOMER_CODE" font="12px/normal &quot;Gulim&quot;" edittype="none" textAlign="center"/>
+                <Cell col="2" text="bind:WORKPLACE_CODE" font="12px/normal &quot;Gulim&quot;" textAlign="center"/>
+                <Cell col="3" text="bind:CUSTOMER_NAME" font="12px/normal &quot;Gulim&quot;" textAlign="center"/>
+                <Cell col="4" text="bind:CUSTOMER_TYPE" font="12px/normal &quot;Gulim&quot;" textAlign="center"/>
+                <Cell col="5" text="bind:CUSTOMER_CEO" font="12px/normal &quot;Gulim&quot;" textAlign="center"/>
+                <Cell col="6" text="bind:BUSINESS_LICENSE_NUMBER" font="12px/normal &quot;Gulim&quot;" textAlign="center"/>
+                <Cell col="7" text="bind:CUSTOMER_BUSINESS_CONDITIONS" font="12px/normal &quot;Gulim&quot;" textAlign="center"/>
+                <Cell col="8" text="bind:CUSTOMER_BUSINESS_ITEMS" font="12px/normal &quot;Gulim&quot;" textAlign="center"/>
+                <Cell col="9" text="bind:CUSTOMER_ZIP_CODE" font="12px/normal &quot;Gulim&quot;" textAlign="center"/>
+                <Cell col="10" text="bind:CUSTOMER_BASIC_ADDRESS" font="12px/normal &quot;Gulim&quot;" textAlign="center"/>
+                <Cell col="11" text="bind:CUSTOMER_DETAIL_ADDRESS" font="12px/normal &quot;Gulim&quot;" textAlign="center"/>
+                <Cell col="12" text="bind:CUSTOMER_TEL_NUMBER" font="12px/normal &quot;Gulim&quot;" textAlign="center"/>
+                <Cell col="13" text="bind:CUSTOMER_FAX_NUMBER" font="12px/normal &quot;Gulim&quot;" textAlign="center"/>
+                <Cell col="14" text="bind:PRODUCED_PRODUCT" font="12px/normal &quot;Gulim&quot;" textAlign="center"/>
               </Band>
             </Format>
           </Formats>

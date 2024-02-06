@@ -97,7 +97,7 @@
                           <Cell col="4" text="bind:AMOUNT" textAlign="center"/>
                           <Cell col="5" text="bind:REASON" textAlign="center"/>
                           <Cell col="6" text="bind:CAUSE" textAlign="center"/>
-                          <Cell col="7" text="bind:EFFECT"/>
+                          <Cell col="7" text="bind:EFFECT" textAlign="center"/>
                         </Band>
                       </Format>
                     </Formats>

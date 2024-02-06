@@ -33,7 +33,7 @@
                   <Calendar id="endC" taborder="5" left="396" top="67" width="134" height="35" dateformat="yyyy-MM-dd" displaynulltext="종료일" color="orangered"/>
                   <Button id="btn_searchMps" taborder="6" text="MPS조회" left="544" top="67" width="92" height="35" onclick="Tab00_Tabpage1_Div00_btn_searchMps_onclick" cssclass="btn_normal" background="black"/>
                   <Button id="btn_simulate_mrp" taborder="7" text="선택한 MPS로 모의전개" left="695" top="67" width="141" height="35" onclick="Tab00_Tabpage1_Div00_btn_simulate_mrp_onclick" cssclass="btn_normal" background="black"/>
-                  <Grid id="Grid00" taborder="8" left="22.00" top="114" width="1176" height="482" binddataset="gds_mps" oncellclick="Tab00_Tabpage1_Grid00_oncellclick" color="orangered">
+                  <Grid id="Grid00" taborder="8" left="22.00" top="114" width="1186" height="482" binddataset="gds_mps" oncellclick="Tab00_Tabpage1_Grid00_oncellclick" color="orangered">
                     <Formats>
                       <Format id="default">
                         <Columns>
@@ -43,7 +43,7 @@
                           <Column size="76"/>
                           <Column size="138"/>
                           <Column size="83"/>
-                          <Column size="114"/>
+                          <Column size="130"/>
                           <Column size="70"/>
                           <Column size="97"/>
                           <Column size="80"/>

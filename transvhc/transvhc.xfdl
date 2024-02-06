@@ -6,7 +6,7 @@
         <GroupBox id="estimateManage" taborder="0" text="운송수단관리" left="20.00" top="15" width="1200" height="650" titlealign="topcenter" font="normal bold 25pt/normal &quot;Arial&quot;" cssclass="grpBox_normal"/>
         <Button id="Button00" taborder="1" text="운송수단 전체조회" left="250.00" top="87" width="160" height="34" font="normal 12pt/normal &quot;Arial&quot;" onclick="estimateForm_searchEstimate_Button00_onclick" cssclass="btn_normal"/>
         <Button id="Button00_00_00" taborder="2" text="삭제" left="1030" top="87" height="34" font="normal 12pt/normal &quot;Arial&quot;" cssclass="btn_normal" width="100" onclick="Button00_00_00_onclick"/>
-        <Grid id="Grid00" taborder="3" left="70.00" top="140" width="1101" height="480" binddataset="gds_transvhc" color="orangered" onheadclick="Grid00_onheadclick" oncelldblclick="Grid00_oncelldblclick" oncellclick="Grid00_oncellclick">
+        <Grid id="Grid00" taborder="3" left="70.00" top="140" width="1090" height="480" binddataset="gds_transvhc" color="orangered" onheadclick="Grid00_onheadclick" oncelldblclick="Grid00_oncelldblclick" oncellclick="Grid00_oncellclick">
           <Formats>
             <Format id="default">
               <Columns>
@@ -42,15 +42,15 @@
               <Band id="body">
                 <Cell/>
                 <Cell col="1" displaytype="checkboxcontrol" edittype="none" text="bind:CHECKED"/>
-                <Cell col="2" text="bind:VEHICLE_NUMBER" color="#666666"/>
-                <Cell col="3" text="bind:TYPE"/>
-                <Cell col="4" text="bind:MANUFACTURING_COMPANY"/>
-                <Cell col="5" text="bind:YEAR_OF_MANUFACTURE"/>
-                <Cell col="6" text="bind:LOAD_CAPACITY"/>
-                <Cell col="7" text="bind:MAINTENANCE_DATE"/>
-                <Cell col="8" text="bind:OPERATOR"/>
-                <Cell col="9" text="bind:FUEL_TYPE"/>
-                <Cell col="10" text="bind:TRANSPORTATION_STATUS"/>
+                <Cell col="2" text="bind:VEHICLE_NUMBER" color="#666666" textAlign="center"/>
+                <Cell col="3" text="bind:TYPE" textAlign="center"/>
+                <Cell col="4" text="bind:MANUFACTURING_COMPANY" textAlign="center"/>
+                <Cell col="5" text="bind:YEAR_OF_MANUFACTURE" textAlign="center"/>
+                <Cell col="6" text="bind:LOAD_CAPACITY" textAlign="center"/>
+                <Cell col="7" text="bind:MAINTENANCE_DATE" textAlign="center"/>
+                <Cell col="8" text="bind:OPERATOR" textAlign="center"/>
+                <Cell col="9" text="bind:FUEL_TYPE" textAlign="center"/>
+                <Cell col="10" text="bind:TRANSPORTATION_STATUS" textAlign="center"/>
               </Band>
             </Format>
           </Formats>

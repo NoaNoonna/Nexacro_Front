@@ -42,7 +42,7 @@
                           <Cell row="1" col="5" text="품목명"/>
                           <Cell row="1" col="6" text="단위"/>
                           <Cell row="1" col="7" text="정미수량"/>
-                          <Cell row="1" col="8" text="손실율"/>
+                          <Cell row="1" col="8" text="손실률"/>
                           <Cell row="1" col="9" text="필요수량"/>
                           <Cell row="1" col="10" text="리드타임"/>
                           <Cell row="1" col="11" text="비고"/>
@@ -56,9 +56,9 @@
                           <Cell col="5" text="bind:ITEM_NAME" textAlign="center"/>
                           <Cell col="6" text="bind:UNIT_OF_STOCK" textAlign="center"/>
                           <Cell col="7" text="bind:NET_AMOUNT" textAlign="center"/>
-                          <Cell col="8" text="bind:LOSS_RATE"/>
-                          <Cell col="9" text="bind:NECESSARY_AMOUNT"/>
-                          <Cell col="10" text="bind:LEAD_TIME"/>
+                          <Cell col="8" text="bind:LOSS_RATE" textAlign="center"/>
+                          <Cell col="9" text="bind:NECESSARY_AMOUNT" textAlign="center"/>
+                          <Cell col="10" text="bind:LEAD_TIME" textAlign="center"/>
                           <Cell col="11" text="bind:DESCRIPTION" textAlign="center"/>
                         </Band>
                       </Format>

@@ -392,8 +392,6 @@ this.Tab_Tabpage1_AddOutput_Button_onclick = function(obj:nexacro.Button,e:nexac
        var callback =  "callback";
       
 	   this.transaction(id, url, reqData, resData, args, callback);
-	   
-	   alert("등록 완료되었습니다.");
 	   this.close();
 	   }
    }

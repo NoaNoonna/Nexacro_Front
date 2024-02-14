@@ -122,7 +122,7 @@ this.WarehouseManageForm_onload = function(obj:nexacro.Form,e:nexacro.LoadEventI
 	obj.set_titletext("창고");
 	trace('RowCount값 : '+this.ds_warehouseList);
 	this.ds_warehouseList.clearData();
-	this.gds_stock.clearData();
+	nexa.gds_stock.clearData();
 
 };
 

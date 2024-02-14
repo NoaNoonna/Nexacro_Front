@@ -134,7 +134,7 @@
                           <Cell col="3" text="bind:ITEM_CODE" textAlign="center"/>
                           <Cell col="4" text="bind:ITEM_NAME" textAlign="center"/>
                           <Cell col="5" text="bind:UNIT_OF_CONTRACT" textAlign="center"/>
-                          <Cell col="6" text="bind:DUE_DATE_OF_CONTRACT" textAlign="center"/>
+                          <Cell col="6" text="bind:DUE_DATE_OF_CONTRACT" textAlign="center" calendardateformat="yyyy-MM-dd"/>
                           <Cell col="7" text="bind:ESTIMATE_AMOUNT" textAlign="center"/>
                           <Cell col="8" text="bind:STOCK_AMOUNT_USE" textAlign="center"/>
                           <Cell col="9" text="bind:PRODUCTION_REQUIREMENT" textAlign="center"/>
@@ -249,7 +249,7 @@
                           <Cell col="2" text="bind:ITEM_CODE" textAlign="center"/>
                           <Cell col="3" text="bind:ITEM_NAME" textAlign="center"/>
                           <Cell col="4" text="bind:UNIT_OF_ESTIMATE" textAlign="center"/>
-                          <Cell col="5" text="bind:DUE_DATE_OF_ESTIMATE" textAlign="center" displaytype="date" edittype="date"/>
+                          <Cell col="5" text="bind:DUE_DATE_OF_ESTIMATE" textAlign="center" displaytype="date" edittype="date" calendardateformat="yyyy-MM-dd"/>
                           <Cell col="6" text="bind:ESTIMATE_AMOUNT" textAlign="center"/>
                           <Cell col="7" text="bind:UNIT_PRICE_OF_ESTIMATE" textAlign="center"/>
                           <Cell col="8" text="bind:SUM_PRICE_OF_ESTIMATE" textAlign="center"/>
@@ -337,11 +337,11 @@ this.contract_Combo00_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemC
 this.contract_searchContract_Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {
    
-   trace("this.contract.searchContract.form.Calendar00: "+ this.contract.searchContract.form.Calendar00.value);
-   trace("this.contract.searchContract.form.Calendar01: "+ this.contract.searchContract.form.Calendar01.value);
+   trace("this.contract.searchContract.form.Calendar00: "+ this.contract.searchContract.form.Calendar00.text);
+   trace("this.contract.searchContract.form.Calendar01: "+ this.contract.searchContract.form.Calendar01.text);
    
-   var CstartDate=this.contract.searchContract.form.Calendar00.value;
-   var CendDate=this.contract.searchContract.form.Calendar01.value;
+   var CstartDate=this.contract.searchContract.form.Calendar00.text;
+   var CendDate=this.contract.searchContract.form.Calendar01.text;
    customerCode=nexa.g_customerCode;
    
    trace("CstartDate: "+ CstartDate);
@@ -388,7 +388,7 @@ this.contract_searchContract_Grid00_oncellclick = function(obj:nexacro.Grid,e:ne
    nexa.gds_contractDetail.filter("CONTRACT_NO=='"+cNo+"'");
    
 };
-/*================================================견적등록================================================================*/
+/*================================================수주등록================================================================*/
 
 this.contract_regContract_Combo00_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
 {
@@ -415,12 +415,12 @@ this.regContract_Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickE
       return;
    }
    if(searchType=="searchByPeriod"){
-      startDate=this.contract.regContract.form.Calendar00.value;
-      endDate=this.contract.regContract.form.Calendar01.value;
+      startDate=this.contract.regContract.form.Calendar00.text;
+      endDate=this.contract.regContract.form.Calendar01.text;
       
    }else if(searchType=="searchByDate"){
-      startDate=this.contract.regContract.form.Calendar02.value;
-      endDate=this.contract.regContract.form.Calendar02.value;
+      startDate=this.contract.regContract.form.Calendar02.text;
+      endDate=this.contract.regContract.form.Calendar02.text;
       
    }
    if(startDate==null || endDate==null){
@@ -485,6 +485,9 @@ this.contract_regContract_Button01_onclick = function(obj:nexacro.Button,e:nexac
 {      
    
    trace(nexa.gds_contract.getColumn(rowNO,"PERSON_CODE_IN_CHARGE"));
+   var contractDate = nexa.changeDate(this.gfn_today());
+   var personCodeInCharge = nexa.gds_contract.getColumn(rowNO,"PERSON_CODE_IN_CHARGE");
+   
    if(nexa.gds_contract.getColumn(rowNO,"CHECKED")==null){
       alert("체크박스를 선택 해주십시오");
       return;
@@ -497,8 +500,7 @@ this.contract_regContract_Button01_onclick = function(obj:nexacro.Button,e:nexac
       "svcLogisales::contract/new",
       "gds_contract=gds_contract:u gds_contractDetail=gds_contractDetail:u", // u: 수정한 데이터만 가져옴
       "",
-      "contractDate="+nexa.changeDate(this.gfn_today())+
-      "personCodeInCharge="+nexa.gds_contract.getColumn(rowNO,"PERSON_CODE_IN_CHARGE"),
+	  "contractDate='"+contractDate+"' personCodeInCharge='"+personCodeInCharge+"'",   
       "callback"
    );
 };

@@ -90,7 +90,7 @@
                         </Rows>
                         <Band id="head">
                           <Cell calendardateformat="yyyy-MM-dd" textAlign="center"/>
-                          <Cell col="1" calendardateformat="yyyy-MM-dd" textAlign="center" displaytype="checkboxcontrol"/>
+                          <Cell col="1" calendardateformat="yyyy-MM-dd" textAlign="center" displaytype="checkboxcontrol" text="expr:0"/>
                           <Cell col="2" text="작업지시일련번호" calendardateformat="yyyy-MM-dd" textAlign="center"/>
                           <Cell col="3" text="소요량취합번호" calendardateformat="yyyy-MM-dd" textAlign="center"/>
                           <Cell col="4" text="품목분류" calendardateformat="yyyy-MM-dd" textAlign="center"/>
